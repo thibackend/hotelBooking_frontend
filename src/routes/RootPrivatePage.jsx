@@ -9,8 +9,6 @@ const RootPrivatePage = () => {
   if (!isAuth) {
     return <Navigate to="/auth" />;
   }
-
-
   return (
     <Box>
       {/* header */}
