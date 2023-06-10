@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 import NotFound from "../pages/notFound";
 import Home from "../pages/home";
 
 import RootPrivatePage from "./RootPrivatePage";
-import AuthLayout from '../pages/auth/AuthLayout';
-import { Login, Register } from '../pages/auth';
+import AuthLayout from "../pages/auth/AuthLayout";
+import { Login, Register } from "../pages/auth";
 
 export const routes = () => [
   {
@@ -22,13 +22,15 @@ export const routes = () => [
     element: <RootPrivatePage />,
     children: [
       {
-        path: "",
+        path: "/",
         element: (
-          <Home />
+          <>
+            <Home />
+          </>
         ),
       },
-    ]
-  } ,
+    ],
+  },
   {
     path: "*",
     element: <NotFound />,

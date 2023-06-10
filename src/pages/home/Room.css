@@ -1,0 +1,19 @@
+.title {
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+}
+
+.infor {
+    font-size: 18px;
+    opacity: 80%;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif  ;
+}
+
+.star-icon {
+    padding-left: 20%;
+}
+
+.Box {
+    text-decoration: none;
+}
