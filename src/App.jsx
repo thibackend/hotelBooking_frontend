@@ -14,5 +14,4 @@ const App = () => {
     </ChakraProvider>
   );
 }
-
 export default App;

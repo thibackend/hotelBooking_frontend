@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   ChakraProvider,
   ColorModeProvider,
@@ -21,8 +22,6 @@ import {
   Image
 
 } from '@chakra-ui/react';
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
-
 const Register = () => {
   return (
     <ChakraProvider>
@@ -60,13 +59,6 @@ const ThemeSelector = () => {
   const { colorModel, toggleColorMode } = useColorMode();
   return (
     <Box textAlign={'right'} py={4}>
-      {/* <IconButton
-        icon={colorMode === "light" ? SunIcon : MoonIcon }
-        variant={'outline'}
-        colorScheme="cyan"
-        aria-label="Color mode switcher"
-        onClick={toggleColorMode}
-      /> */}
       <IconButton
         colorScheme="cyan"
         variant={'outline'}
@@ -90,72 +82,118 @@ const RegisterHeader = () => {
 }
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [age, setAge] = useState();
-  const [address, setAddress] = useState();
-  const [image, setImage] = useState("https://opensource.com/sites/default/files/lead-images/tux_linux_penguin_code_binary.jpg");
-  const [role, setRole] = useState();
-  const [phonenumber, setPhoneNumber] = useState(0);
+  let data = [
+    {
+      "id": 1,
+      "role_name": "Busenisman"
+    },
+    {
+      "id": 2,
+      "role_name": "Nomal User"
+    },
+    {
+      "id": 3,
+      "role_name": "Manager"
+    },
+    {
+      "id": 4,
+      "role_name": "Employee"
+    }
+  ]
+  const schema = yup.object().shape({
+    username: yup.string().required().min(4).max(59),
+    email: yup.string().email().max(50).min(3),
+    password: yup.string().required().min(5).max(30),
+    address: yup.string().required().min(5).max(30),
+    age: yup.number().min(18).max(200),
+    image: yup.string().url(),
+    role_id: yup.number().required(),
+    phonenumber: yup.string()
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ resolver: yupResolver(schema) });
 
-
-
-  const handleSigin = () => {
-    console.log("password:" + password + "Email:" + email);
+  const handleSigUp = (data) => {
+    console.log(data);
   }
   return (
     <Box my={8} textAlign={'left'}>
-      <form>
-        <FormControl isRequired>
+      <form onSubmit={handleSubmit((data) => handleSigUp(data))}>
+        <FormControl>
           <FormLabel>UserName </FormLabel>
-          <Input onChange={(e) => { setUsername(e.target.value) }} type="text" placeholder="Enter your username" />
+          <Input
+            {...register("username")}
+            type="text"
+            placeholder="Enter your username" />
+          {errors.username?.message && <p className="text-danger">{errors.username.message}</p>}
         </FormControl>
 
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel>Email address </FormLabel>
-          <Input onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder="Enter your email address" />
+          <Input
+            {...register('email')}
+            type="email"
+            placeholder="Enter your email address" />
+          {errors.email?.message && <p className="text-danger">{errors.email.message}</p>}
         </FormControl>
 
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel>Password </FormLabel>
-          <Input onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder="Enter your Password" />
+          <Input
+            {...register('password')}
+            type="password"
+            placeholder="Enter your Password" />
+          {errors.password?.message && <p className="text-danger">{errors.password.message}</p>}
         </FormControl>
 
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel>Age </FormLabel>
-          <Input onChange={(e) => { setAge(e.target.value) }} type="number" placeholder="Enter your Age" />
+          <Input
+            {...register('age')}
+            placeholder="Enter your Age" />
+          {errors.age?.message && <p className="text-danger">{errors.age.message}</p>}
         </FormControl>
 
         <FormControl>
           <FormLabel>Address</FormLabel>
-          <Input onChange={(e) => { setAddress(e.target.value) }} type="text" placeholder="Enter your Address" />
+          <Input
+            {...register('address')}
+            type="text" placeholder="Enter your Address" />
+          {errors.address?.message && <p className="text-danger">{errors.address.message}</p>}
         </FormControl>
 
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel>Image</FormLabel>
-          <Input onChange={(e) => { setImage(e.target.value) }} type="file" />
+          <Input
+            {...register("image")}
+            type="text" />
+          {errors.image?.message && <p className="text-danger">{errors.image.message}</p>}
         </FormControl>
 
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel> Role</FormLabel>
-          <Select onChange={(e) => { setRole(e.target.value) }}>
-            <option value='A'>Admin</option>
-            <option value='1'>Businessman</option>
-            <option value='2'>Employee</option>
-            <option value='3'>user</option>
+          <Select
+            {...register("role_id")}
+          >
+            {data.map(e =>(
+               <option key={e.id} value={e.id}>{e.role_name}</option>
+            ))}
+            {errors.role_id?.message && <p className="text-danger">{errors.role_id.message}</p>}
           </Select>
         </FormControl>
-
-        <FormControl isRequired>
+        <br/>
+        <FormControl>
           <FormLabel>Phone Number </FormLabel>
-          <Input onChange={(e) => { setPassword(e.target.value) }} type="number" placeholder="Enter your phoneNumber" />
+          <Input
+            {...register("phone")}
+            type="text"
+            placeholder="Enter your phoneNumber" />
         </FormControl>
-        <Button onClick={handleSigin} colorScheme="green" width={"full"} mt={4}>Register</Button>
+        <Button type="submit" colorScheme="green" width={"full"} mt={4}>Register</Button>
       </form>
-      <Box boxSize='sm'>
-        <Image src={image} alt="linux"/>
-      </Box>
     </Box >
 
   );

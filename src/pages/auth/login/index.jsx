@@ -1,5 +1,7 @@
 import * as React from "react";
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   ChakraProvider,
   ColorModeProvider,
@@ -17,21 +19,20 @@ import {
   Stack,
   Checkbox,
   Button
-
 } from '@chakra-ui/react';
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
-// import "bootstrap/dist/css/bootstrap.min.css"
-import { Route, Routes } from "react-router-dom";
 const Login = () => {
   return (
-    <ChakraProvider>
-      <ColorModeProvider>
-        <CSSReset />
-        <LoginArea />
-      </ColorModeProvider>
-    </ChakraProvider>
+    <ColorModeProvider>
+      <CSSReset />
+      <LoginArea />
+    </ColorModeProvider>
   );
+
+
 }
+
+
+
 const LoginArea = () => {
   return (
     <Flex minHeight={"100vh"} width={"full"} align={"center"} justifyContent={'center'}>
@@ -59,13 +60,7 @@ const ThemeSelector = () => {
   const { colorModel, toggleColorMode } = useColorMode();
   return (
     <Box textAlign={'right'} py={4}>
-      {/* <IconButton
-        icon={colorMode === "light" ? SunIcon : MoonIcon }
-        variant={'outline'}
-        colorScheme="cyan"
-        aria-label="Color mode switcher"
-        onClick={toggleColorMode}
-      /> */}
+
       <IconButton
         colorScheme="cyan"
         variant={'outline'}
@@ -87,35 +82,51 @@ const LoginHeader = () => {
     </Box>
   );
 }
-
 const LoginForm = () => {
-  const [password, setPassword] = useState();
-  const [email, setEmail] = useState();
-
-  const handleSigin = () => {
-    console.log("password:" + password + "Email:" + email);
+  const schema = yup.object().shape({
+    email: yup.string().email().min(4).max(100).required(),
+    password: yup.string().min(4).max(40).required(),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+  console.log(errors.email);
+  const handleSigin = (data) => {
+    console.log("password:" + data.password + "Email:" + data.email);
   }
   return (
     <Box my={8} textAlign={'left'}>
-      <form>
-        <FormControl isRequired>
+      <form onSubmit={handleSubmit(handleSigin)}>
+        <FormControl>
           <FormLabel>Email sddress </FormLabel>
-          <Input onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder="Enter your email address" />
+          <Input
+            type="text"
+            placeholder="Enter your email address"
+            {...register('email')}
+          />
+          {errors.email?.message && <p className="text-danger">{errors.email.message}</p>}
         </FormControl>
-        <FormControl isRequired>
+        <FormControl>
           <FormLabel>Password </FormLabel>
-          <Input onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder="Enter your Password" />
+          <Input
+            type="password"
+            placeholder="Enter your Password"
+            {...register('password')}
+          />
+          {errors.password?.message && <p className="text-danger">{errors.password.message}</p>}
         </FormControl>
         <Stack isInline justifyContent={"space-between"} mt={4}>
           <Box>
-            <Checkbox> Remenber Me</Checkbox>
+            <Checkbox>Remenber Me</Checkbox>
           </Box>
           <Box>
             <Link>Forgot password</Link> <br />
             <Link color={'green'}>Sig up</Link>
           </Box>
         </Stack>
-        <Button onClick={handleSigin} colorScheme="green" width={"full"} mt={4}>Sin In</Button>
+        <Button type="submit" colorScheme="green" width={"full"} mt={4}>Sin In</Button>
       </form>
     </Box>
   );
