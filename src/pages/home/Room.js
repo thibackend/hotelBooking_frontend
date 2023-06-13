@@ -13,6 +13,7 @@ import React, { useState } from "react";
 // import { FaStar } from "react-icons/fa";
 import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const MyComponent = () => {
   const [data, setData] = useState([]);
@@ -53,9 +54,9 @@ const MyComponent = () => {
 
               <Stack mt="6" spacing="0">
                 <Flex alignItems="center">
-                  <a href="" size="md" className="title" ml="auto">
+                  <Link to={'/detail'} size="md" className="title" ml="auto">
                     <b>{e.name}</b>
-                  </a>
+                  </Link>
                   {/* <Icon
                     as={FaStar}
                     color="yellow.500"

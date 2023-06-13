@@ -40,7 +40,7 @@ const Rooms = () => {
         mx="auto"
       >
         {rooms.map((room) => (
-          <Box key={room.id} alignSelf="flex-start">
+          <Link to={'/detail'} key={room.id} alignSelf="flex-start">
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
                 <Image
@@ -75,7 +75,7 @@ const Rooms = () => {
               </CardBody>
               <Divider />
             </Card>
-          </Box>
+          </Link>
         ))}
       </Grid>
     </>

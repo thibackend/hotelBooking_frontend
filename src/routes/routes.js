@@ -11,6 +11,7 @@ import Pool from "../pages/pool";
 // import Detail from "../pages/room/detail";
 // import Pool from "../pages/pool";
 import Header from "../pages/home/Header";
+import DetailRoom from "../pages/detail";
 
 export const routes = () => [
   {
@@ -22,26 +23,26 @@ export const routes = () => [
       { path: "register", element: <Register /> },
     ],
   },
-  // {
-  //   path: "/",
-  //   element: <RootPrivatePage />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: ( <><Home />  </> ),
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "/header",
-  //   element: ( <><Header/></>),
-  //   children: [
-  //     {
-  //       path: "room",
-  //       element: ( <><Rooms/></>)
-  //     },
-  //   ],
-  // },
+  {
+    path: "/",
+    element: <RootPrivatePage />,
+    children: [
+      {
+        path: "/",
+        element: ( <><Home />  </> ),
+      },
+    ],
+  },
+  {
+    path: "/header",
+    element: ( <><Header/></>),
+    children: [
+      {
+        path: "room",
+        element: ( <><Rooms/></>)
+      },
+    ],
+  },
   {
     path: "*",
     element: <NotFound />,
@@ -57,5 +58,9 @@ export const routes = () => [
   {
     path: "/pool",
     element: <Pool />,
+  },
+  {
+    path: "/detail",
+    element: <DetailRoom />,
   },
 ];

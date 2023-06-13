@@ -38,7 +38,7 @@ function Header() {
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-logo">
-            Nokia-Tesla <FontAwesomeIcon icon={faBolt} />
+            Nokola-Tesla <FontAwesomeIcon icon={faBolt} />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
