@@ -8,10 +8,6 @@ const App = () => {
   return (
    
         <DetailRoom/>
-
-
-
-
   );
 }
 
