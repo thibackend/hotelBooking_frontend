@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -22,6 +23,7 @@ import {
   Image
 
 } from '@chakra-ui/react';
+import { Navigate } from "react-router-dom";
 const Register = () => {
   return (
     <ChakraProvider>
@@ -101,7 +103,7 @@ const RegisterForm = () => {
     }
   ]
   const schema = yup.object().shape({
-    username: yup.string().required().min(4).max(59),
+    user_name: yup.string().required().min(4).max(59),
     email: yup.string().email().max(50).min(3),
     password: yup.string().required().min(5).max(30),
     address: yup.string().required().min(5).max(30),
@@ -116,19 +118,24 @@ const RegisterForm = () => {
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) });
 
-  const handleSigUp = (data) => {
+  const handleSigUp = async (data) => {
     console.log(data);
+    await axios.post('http://localhost:8000/api/users', data).then(() =>
+      <Navigate to={'login'} />
+    );
   }
+
+
   return (
     <Box my={8} textAlign={'left'}>
       <form onSubmit={handleSubmit((data) => handleSigUp(data))}>
         <FormControl>
           <FormLabel>UserName </FormLabel>
           <Input
-            {...register("username")}
+            {...register("user_name")}
             type="text"
             placeholder="Enter your username" />
-          {errors.username?.message && <p className="text-danger">{errors.username.message}</p>}
+          {errors.user_name?.message && <p className="text-danger">{errors.user_name.message}</p>}
         </FormControl>
 
         <FormControl>
@@ -178,13 +185,13 @@ const RegisterForm = () => {
           <Select
             {...register("role_id")}
           >
-            {data.map(e =>(
-               <option key={e.id} value={e.id}>{e.role_name}</option>
+            {data.map(e => (
+              <option key={e.id} value={e.id}>{e.role_name}</option>
             ))}
             {errors.role_id?.message && <p className="text-danger">{errors.role_id.message}</p>}
           </Select>
         </FormControl>
-        <br/>
+        <br />
         <FormControl>
           <FormLabel>Phone Number </FormLabel>
           <Input
