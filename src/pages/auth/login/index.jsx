@@ -2,6 +2,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import tokenService from "../../../services/token.service";
 import {
   ChakraProvider,
   ColorModeProvider,
@@ -20,6 +21,7 @@ import {
   Checkbox,
   Button
 } from '@chakra-ui/react';
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   return (
     <ColorModeProvider>
@@ -30,8 +32,6 @@ const Login = () => {
 
 
 }
-
-
 
 const LoginArea = () => {
   return (
@@ -92,9 +92,11 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+  const navigate = useNavigate();
   console.log(errors.email);
   const handleSigin = (data) => {
-    console.log("password:" + data.password + "Email:" + data.email);
+    tokenService.setToken(data);
+    navigate('/');
   }
   return (
     <Box my={8} textAlign={'left'}>
