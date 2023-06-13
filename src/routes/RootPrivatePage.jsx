@@ -5,10 +5,10 @@ import tokenService from '../services/token.service';
 
 const RootPrivatePage = () => {
   const isAuth = tokenService.getToken() || undefined
-  
   if (!isAuth) {
     return <Navigate to="/auth" />;
   }
+
   return (
     <Box>
       {/* header */}

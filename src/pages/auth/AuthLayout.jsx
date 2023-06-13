@@ -8,7 +8,6 @@ const AuthLayout = () => {
   if (isAuth) {
     return <Navigate to="/" />;
   }
-
   return (
     <div>
       <Outlet />
