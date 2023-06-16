@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Heading, Text, Box, SimpleGrid, Img, Center, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Heading, Text, SimpleGrid, Img, Center, Grid, GridItem } from '@chakra-ui/react'
 
 export default function DetailRoom() {
   return (
-    <Container p={100} bg="blue.500">
+    <Box p="100px">
         <Heading>Biệt thự trên đồi núi</Heading>
         <SimpleGrid columns={2} spacing={8} >
         <Box>
@@ -31,7 +31,7 @@ export default function DetailRoom() {
         </Grid>
         </SimpleGrid>
         <Text>Toàn bộ biệt thự. Chủ nhà Pongkuna (Praow)</Text>
-        <Text>12 khách3 phòng ngủ 9 giường4 phòng tắm đầy đủ và 1 phòng vệ sinh cơ bản</Text>
+        <Text>12 khách 3 phòng ngủ 9 giường4 phòng tắm đầy đủ và 1 phòng vệ sinh cơ bản</Text>
         <Box>
             <Text as="b">Không gian riêng để làm việc</Text>
             <Text>Một căn phòng có Wi-fi, rất phù hợp để làm việc.</Text>
@@ -40,7 +40,7 @@ export default function DetailRoom() {
             <Text as="b">Pongkuna (Praow) là Chủ nhà siêu cấp</Text>
             <Text>Chủ nhà siêu cấp là những chủ nhà có kinh nghiệm, được đánh giá cao và là những người cam kết mang lại quãng thời gian ở tuyệt vời cho khách.</Text>
         </Box>
-        <Heading as="h3">Nơi bạn sẽ ngủ nghỉ</Heading>
+        <Heading as="h5">Nơi bạn sẽ ngủ nghỉ</Heading>
         <SimpleGrid columns={3} marginLeft="10px">
             <Box border="solid 1px gray" w="50%" p="10px" textAlign="center" borderRadius="20px">
                 <Text as="b">Phòng ngủ 1</Text>
@@ -55,7 +55,7 @@ export default function DetailRoom() {
                 <Text>1 giường queen, 6 giường đơn</Text>
             </Box>
         </SimpleGrid>
-        <Heading as="h3">Nơi này có những gì cho bạn</Heading>
+        <Heading as="h5">Nơi này có những gì cho bạn</Heading>
         <SimpleGrid columns={2}>
             <Box>
                 <Text>Hướng nhìn ra núi</Text>
@@ -72,6 +72,6 @@ export default function DetailRoom() {
                 <Text>Máy báo khói</Text>
             </Box>
         </SimpleGrid>
-    </Container>
+    </Box>
   )
 }
