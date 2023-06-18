@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -83,20 +84,39 @@ const LoginHeader = () => {
   );
 }
 const LoginForm = () => {
+
   const schema = yup.object().shape({
     email: yup.string().email().min(4).max(100).required(),
     password: yup.string().min(4).max(40).required(),
+
   });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
-  console.log(errors.email);
+
+
+  // execute function......
   const handleSigin = (data) => {
-    tokenService.setToken(data);
-    navigate('/');
+    console.log(data);
+    const api = "http://localhost:8000/api/login";
+    const login = async () => {
+      await axios.post(api, data)
+        .then((res) => {
+          if(res.data.status){
+            tokenService.setToken(res.data);
+            navigate("/");
+          }else{
+            alert("account didn't exist");
+          }
+        })
+        ;
+    }
+    // login();
+    
   }
   return (
     <Box my={8} textAlign={'left'}>
@@ -113,7 +133,7 @@ const LoginForm = () => {
         <FormControl>
           <FormLabel>Password </FormLabel>
           <Input
-            type="password"
+            type="text"
             placeholder="Enter your Password"
             {...register('password')}
           />
