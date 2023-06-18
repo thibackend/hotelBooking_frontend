@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimes,
@@ -8,8 +8,10 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
+import tokenService from "../../services/token.service";
 
 function Header() {
+  const navigate =useNavigate();
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +34,11 @@ function Header() {
   };
 
   window.addEventListener("resize", showButton);
+
+  const handleLogout = () => {
+    tokenService.removeToken();
+    navigate('/');
+  }
 
   return (
     <>
@@ -69,15 +76,15 @@ function Header() {
             </li>
             <li className="nav-item">
               <Link
-                to="/sign-up"
+                to="/auth"
                 className="nav-links-mobile"
-                onClick={closeMobileMenu}
+                onClick={handleLogout}
               >
-                Sign up
+                Logout
               </Link>
             </li>
           </ul>
-          {button && <button buttonStyle="btn--outline">SIGN UP</button>}
+          {button && <button onClick={handleLogout} buttonStyle="btn--outline">Logout</button>}
         </div>
       </nav>
     </>

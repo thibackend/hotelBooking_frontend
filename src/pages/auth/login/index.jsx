@@ -115,8 +115,7 @@ const LoginForm = () => {
         })
         ;
     }
-    // login();
-    
+    login();
   }
   return (
     <Box my={8} textAlign={'left'}>

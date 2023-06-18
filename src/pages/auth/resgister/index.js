@@ -1,6 +1,7 @@
 import * as React from "react";
 import axios from 'axios';
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
@@ -24,14 +25,13 @@ import {
 
 } from '@chakra-ui/react';
 import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 const Register = () => {
   return (
-    <ChakraProvider>
-      <ColorModeProvider>
-        <CSSReset />
-        <RegisterArea />
-      </ColorModeProvider>
-    </ChakraProvider>
+    <ColorModeProvider>
+      <CSSReset />
+      <RegisterArea />
+    </ColorModeProvider>
   );
 }
 const RegisterArea = () => {
@@ -84,24 +84,7 @@ const RegisterHeader = () => {
 }
 
 const RegisterForm = () => {
-  let data = [
-    {
-      "id": 1,
-      "role_name": "Busenisman"
-    },
-    {
-      "id": 2,
-      "role_name": "Nomal User"
-    },
-    {
-      "id": 3,
-      "role_name": "Manager"
-    },
-    {
-      "id": 4,
-      "role_name": "Employee"
-    }
-  ]
+  const [role, setRole] = useState([]);
   const schema = yup.object().shape({
     user_name: yup.string().required().min(4).max(59),
     email: yup.string().email().max(50).min(3),
@@ -118,17 +101,32 @@ const RegisterForm = () => {
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) });
 
+  const fetchRole = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/roles');
+      setRole(response.data);
+    } catch (error) {
+      // Handle error, e.g., display an error message
+      console.error('Error fetching role:', error);
+    }
+  }
+  useEffect(
+    () => {
+        fetchRole();
+    }, []
+  );
   const handleSigUp = async (data) => {
     console.log(data);
-    await axios.post('http://localhost:8000/api/users', data).then(() =>
-      <Navigate to={'login'} />
-    );
+    // await axios.post('http://localhost:8000/api/users', data).then(() =>
+    //   <Navigate to={'login'} />
+    // );
+    console.log(role);
   }
 
 
   return (
     <Box my={8} textAlign={'left'}>
-      <form onSubmit={handleSubmit((data) => handleSigUp(data))}>
+      <form onSubmit={handleSubmit(handleSigUp)}>
         <FormControl>
           <FormLabel>UserName </FormLabel>
           <Input
@@ -185,8 +183,8 @@ const RegisterForm = () => {
           <Select
             {...register("role_id")}
           >
-            {data.map(e => (
-              <option key={e.id} value={e.id}>{e.role_name}</option>
+            {role.map(e => (
+              <option key={e.id} value={e.id}>{e.name}</option>
             ))}
             {errors.role_id?.message && <p className="text-danger">{errors.role_id.message}</p>}
           </Select>
