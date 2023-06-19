@@ -44,6 +44,7 @@ function Header() {
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
+            
             <li className="nav-item">
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                 Home
