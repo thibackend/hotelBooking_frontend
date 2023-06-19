@@ -12,7 +12,7 @@ const FormBooking = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [invalidDate, setInvalidDate] = useState(false); // Thêm state để lưu trạng thái ngày đặt phòng không hợp lệ
-
+const currentDate = new Date().toISOString().split('T')[0];
   useEffect(() => {
     calculatePrice();
     const currentDate = new Date().toISOString().split('T')[0];
@@ -47,6 +47,11 @@ const FormBooking = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (totalPrice <= 0) {
+      alert('Giá trị không hợp lệ');
+      // Hiển thị thông báo cho người dùng rằng giá trị không hợp lệ
+      return;
+    }
     let datacheckout = {
       checkInDate,
       checkOutDate,
@@ -58,31 +63,25 @@ const FormBooking = () => {
       cleaningFee
     }
     localStorage.setItem('datacheckout', JSON.stringify(datacheckout));
-    navigate('/checkout');
+    navigate('confirm');
   };
 
   return (
     <div className='container'>
       <form onSubmit={handleSubmit} className='containers'>
+        <h4 className="tail_name">{room_price}VNĐ/Ngày</h4>
         <div className="form-group">
           <label htmlFor="checkInDate">Ngày đặt:</label>
-          <input
-            type="date"
-            className="form-control"
-            id="checkInDate"
-            value={checkInDate}
-            onChange={(e) => setCheckInDate(e.target.value)}
-          />
+          <input type="date" className="form-control" id="checkInDate" value={checkInDate} onChange={(e) => 
+           setCheckInDate(e.target.value)} min={currentDate} // Thêm thuộc tính min
+/>
         </div>
         <div className="form-group">
           <label htmlFor="checkOutDate">Ngày trả:</label>
-          <input
-            type="date"
-            className="form-control"
-            id="checkOutDate"
-            value={checkOutDate}
-            onChange={(e) => setCheckOutDate(e.target.value)}
-          />
+          <input type="date" className="form-control" id="checkOutDate"
+          value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)}
+           min={checkInDate} // Thêm thuộc tính min, giá trị là ngày đặt 
+           />
         </div>
         <div className="form-group">
           <label htmlFor="numberOfGuests">Số lượng người:</label>
@@ -97,9 +96,7 @@ const FormBooking = () => {
         </div>
         <button type="submit" className="btn btn-primary">Đặt phòng</button>
         {/* Hiển thị thông báo ngày đặt phòng không hợp lệ */}
-        {invalidDate && (
-          <p className="error-message">Vui lòng chọn ngày đặt phòng không nhỏ hơn ngày hiện tại!</p>
-        )}
+       
         {/* Hiển thị giá phòng dựa trên số ngày đặt */}
         {numberOfNights > 0 && (
           <p className='tex-name'>Giá phòng ({numberOfNights} ngày): {room_price* numberOfNights} VNĐ</p>
@@ -110,7 +107,10 @@ const FormBooking = () => {
         <p className='tex-name'>Phí vệ sinh: {cleaningFee} VNĐ</p>
         <p className='tex-name'>Phí dịch vụ: {serviceFee} VNĐ</p>
         <hr></hr>
-        <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
+        {totalPrice >= 0 && (
+               <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
+        )}
+       
       </form>
     </div>
   );

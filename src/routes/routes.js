@@ -12,6 +12,9 @@ import Pool from "../pages/pool";
 // import Pool from "../pages/pool";
 import Header from "../pages/home/Header";
 import DetailRoom from "../pages/detail";
+import FormBooking from "../pages/checkout/FormBooking";
+import ConfirmationPage from "../pages/checkout/comfitBooking";
+import Checkout from "../pages/checkout";
 
 export const routes = () => [
   {
@@ -24,22 +27,31 @@ export const routes = () => [
     ],
   },
   {
+    path: "/checkout",
+    element: <Checkout />,
+    children: [
+      { path: "", element: <FormBooking /> },
+      { path: "confirm", element: <ConfirmationPage /> },
+      { path: "register", element: <Register /> },
+    ],
+  },
+  {
     path: "/",
     element: <RootPrivatePage />,
     children: [
       {
         path: "/",
-        element: ( <><Home />  </> ),
+        element: (<><Home />  </>),
       },
     ],
   },
   {
     path: "/header",
-    element: ( <><Header/></>),
+    element: (<><Header /></>),
     children: [
       {
         path: "room",
-        element: ( <><Rooms/></>)
+        element: (<><Rooms /></>)
       },
     ],
   },
