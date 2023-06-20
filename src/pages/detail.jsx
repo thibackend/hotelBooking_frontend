@@ -6,7 +6,7 @@ export default function DetailRoom() {
     const [hotelData, setHotelData] = useState(null);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/hotels/3')
+        fetch('http://127.0.0.1:8000/api/hotels/{id}')
             .then((response) => response.json())
             .then((data) => {
                 setHotelData(data);
