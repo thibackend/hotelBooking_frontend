@@ -1,19 +1,11 @@
 import React from "react";
-
 import NotFound from "../pages/notFound";
 import Home from "../pages/home";
-
 import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
-import Pool from "../pages/pool";
-// import Detail from "../pages/room/detail";
-// import Pool from "../pages/pool";
-import Header from "../pages/home/Header";
-import DetailRoom from "../pages/detail";
-import Test from "../test/test";
-
+import DetailRoom from "../pages/detail/hotelDetail";
 export const routes = () => [
   {
     path: "/auth",
@@ -28,43 +20,15 @@ export const routes = () => [
     path: "/",
     element: <RootPrivatePage />,
     children: [
-      {
-        path: "/",
-        element: (<><Home />  </>),
-      },
-    ],
-  },
-  {
-    path: "/header",
-    element: (<><Header /></>),
-    children: [
-      {
-        path: "room",
-        element: (<><Rooms /></>)
-      },
+      {path: "",element: <Home /> },
+      {path: "room",element: <Rooms /> },
+      {path: "detailHotel",element: <DetailRoom />},
+
     ],
   },
   {
     path: "*",
     element: <NotFound />,
   },
-  {
-    path: "/room",
-    element: <Rooms />,
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/pool",
-    element: <Pool />,
-  },
-  {
-    path: "/detail",
-    element: <DetailRoom />,
-  },
-  {
-    path: '/test', element: <Test />
-  }
+  
 ];

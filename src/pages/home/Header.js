@@ -84,7 +84,7 @@ function Header() {
               </Link>
             </li>
           </ul>
-          {button && <button onClick={handleLogout} buttonStyle="btn--outline">Logout</button>}
+          {button && <button onClick={handleLogout} type="btn--outline">Logout</button>}
         </div>
       </nav>
     </>

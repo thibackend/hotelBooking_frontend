@@ -6,6 +6,7 @@ import {
   Text,
   Divider,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -14,22 +15,41 @@ import React, { useEffect, useState } from "react";
 import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-
 const MyComponent = () => {
-  const [data, setData] = useState([]);
-  const getData = async () => {
-    await axios.get('http://localhost:8000/api/hotel_and_images')
-      .then(res => { 
-        console.log("data :", res.data); 
-        setData(res.data)
-      })
-  }
-  useEffect(
-    () => {
-      getData();
+  const [data, setData] = useState();
+  // const [datahotels, setDatahotels] = useState([]);
+  // const [star ,setStar ]= useState([]);
+  const Star = (star) => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i >= star) {
+        stars.push(<i key={i} className="fa-sharp far fa-star"></i>);
+      } else {
+        stars.push(
+          <i
+            key={i}
+            className="fa-solid fa fa-star"
+            style={{ color: "#fffa61" }}
+          ></i>
+        );
+      }
     }
-    , []
-  )
+    return stars;
+  };
+
+  const fetchData = async () => {
+    try {
+      await axios
+        .get("http://127.0.0.1:8000/api/hotel_and_images")
+        .then((res) => setData(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <Grid
       templateColumns="repeat(4, 1fr)"
@@ -37,51 +57,54 @@ const MyComponent = () => {
       justifyItems="center"
       mx="auto"
     >
-      {data ? data.map(e => (
-        <Box alignSelf="flex-start" key={e.id}>
-          <Card maxW="sm" p="4" mt="4">
-            <CardBody className="Box">
-              <Image
-                src={e.image[0]}
-                alt="Green double couch with wooden legs"
-                borderRadius="20px"
-                width="400px"
-                height="350px"
-                cursor="pointer"
-                objectFit="cover"
-              />
+      {data ? (
+        data.map((e, index) => (
+          <Box alignSelf="flex-start" key={index}>
+            <Card maxW="sm" p="4" mt="4">
+              <CardBody className="Box">
+                <Image
+                  src={e.image[0]}
+                  alt="Green double couch with wooden legs"
+                  borderRadius="20px"
+                  width="400px"
+                  height="350px"
+                  cursor="pointer"
+                  objectFit="cover"
+                />
 
-              <Stack mt="6" spacing="0">
-                <Flex alignItems="center">
-                  <Link to={'/detail'} size="md" className="title" ml="auto">
-                    <b>{e.name}</b>
+                <Stack mt="6" spacing="0">
+                  <Flex alignItems="center">
+                    <Link href="/somewhere" size="md" className="title" ml="auto">
+                      <b>{e.name}</b>
+                    </Link>
+                    <br></br>
+
+                    <Text fontSize="sm"></Text>
+                  </Flex>
+
+                  <Text className="infor">
+                    <div
+                      className="my-5"
+                      style={{ display: "flex", paddingRight: "100%" }}
+                    >
+                      {Star(e.star)}
+                    </div>
+                    Địa điểm: {e.address} <br />
+                    hoạt động : {e.status ? "Open" : "Closed"}
+                  </Text>
+                  <b>${e.star * 50} / Đêm</b>
+                  <Link to={"/detailHotel"}>
+                    <button>dettail</button>
                   </Link>
-                  {/* <Icon
-                    as={FaStar}
-                    color="yellow.500"
-                    boxSize={18}
-                    mr={1}
-                    className="star-icon"
-                  /> */}
-                  <i className="fa-sharp fa-regular fa-star"></i>
-                  <Text fontSize="sm">25 Likes</Text>
-                </Flex>
-
-                <Text className="infor">
-                  Địa điểm: {e.address} <br />
-                  hoạt động : {e.status ? "Open" : "Close"}
-                </Text>
-                <b>${e.star * 50} / Đêm</b>
-              </Stack>
-            </CardBody>
-            <Divider />
-          </Card>
-        </Box>
-      )) : <h1> Have no data </h1>}
-
-      <>
-
-      </>
+                </Stack>
+              </CardBody>
+              <Divider />
+            </Card>
+          </Box>
+        ))
+      ) : (
+        <h1 className="d-flex justify-content-center"> Loading ...</h1>
+      )}
     </Grid>
   );
 };

@@ -133,7 +133,7 @@ const RegisterForm = () => {
             {...register("user_name")}
             type="text"
             placeholder="Enter your username" />
-          {errors.user_name?.message && <p className="text-danger">{errors.user_name.message}</p>}
+          {errors.user_name?.message && <li className="text-danger">{errors.user_name.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -142,7 +142,7 @@ const RegisterForm = () => {
             {...register('email')}
             type="email"
             placeholder="Enter your email address" />
-          {errors.email?.message && <p className="text-danger">{errors.email.message}</p>}
+          {errors.email?.message && <li className="text-danger">{errors.email.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -151,7 +151,7 @@ const RegisterForm = () => {
             {...register('password')}
             type="password"
             placeholder="Enter your Password" />
-          {errors.password?.message && <p className="text-danger">{errors.password.message}</p>}
+          {errors.password?.message && <li className="text-danger">{errors.password.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -159,7 +159,7 @@ const RegisterForm = () => {
           <Input
             {...register('age')}
             placeholder="Enter your Age" />
-          {errors.age?.message && <p className="text-danger">{errors.age.message}</p>}
+          {errors.age?.message && <li className="text-danger">{errors.age.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -167,7 +167,7 @@ const RegisterForm = () => {
           <Input
             {...register('address')}
             type="text" placeholder="Enter your Address" />
-          {errors.address?.message && <p className="text-danger">{errors.address.message}</p>}
+          {errors.address?.message && <li className="text-danger">{errors.address.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -175,7 +175,7 @@ const RegisterForm = () => {
           <Input
             {...register("image")}
             type="text" />
-          {errors.image?.message && <p className="text-danger">{errors.image.message}</p>}
+          {errors.image?.message && <li className="text-danger">{errors.image.message}</li>}
         </FormControl>
 
         <FormControl>
@@ -186,7 +186,7 @@ const RegisterForm = () => {
             {role.map(e => (
               <option key={e.id} value={e.id}>{e.name}</option>
             ))}
-            {errors.role_id?.message && <p className="text-danger">{errors.role_id.message}</p>}
+            {errors.role_id?.message && <li className="text-danger">{errors.role_id.message}</li>}
           </Select>
         </FormControl>
         <br />

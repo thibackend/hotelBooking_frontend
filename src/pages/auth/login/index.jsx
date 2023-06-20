@@ -31,7 +31,6 @@ const Login = () => {
     </ColorModeProvider>
   );
 }
-
 const LoginArea = () => {
   return (
     <Flex minHeight={"100vh"} width={"full"} align={"center"} justifyContent={'center'}>
@@ -125,7 +124,7 @@ const LoginForm = () => {
             placeholder="Enter your email address"
             {...register('email')}
           />
-          {errors.email?.message && <p className="text-danger">{errors.email.message}</p>}
+          {errors.email?.message && <li className="text-danger">{errors.email.message}</li>}
         </FormControl>
         <FormControl>
           <FormLabel>Password </FormLabel>
@@ -134,7 +133,7 @@ const LoginForm = () => {
             placeholder="Enter your Password"
             {...register('password')}
           />
-          {errors.password?.message && <p className="text-danger">{errors.password.message}</p>}
+          {errors.password?.message && <li className="text-danger">{errors.password.message}</li>}
         </FormControl>
         <Stack isInline justifyContent={"space-between"} mt={4}>
           <Box>
