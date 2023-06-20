@@ -12,6 +12,7 @@ import Pool from "../pages/pool";
 // import Pool from "../pages/pool";
 import Header from "../pages/home/Header";
 import DetailRoom from "../pages/detail";
+import Test from "../test/test";
 
 export const routes = () => [
   {
@@ -29,17 +30,17 @@ export const routes = () => [
     children: [
       {
         path: "/",
-        element: ( <><Home />  </> ),
+        element: (<><Home />  </>),
       },
     ],
   },
   {
     path: "/header",
-    element: ( <><Header/></>),
+    element: (<><Header /></>),
     children: [
       {
         path: "room",
-        element: ( <><Rooms/></>)
+        element: (<><Rooms /></>)
       },
     ],
   },
@@ -63,4 +64,7 @@ export const routes = () => [
     path: "/detail",
     element: <DetailRoom />,
   },
+  {
+    path: '/test', element: <Test />
+  }
 ];

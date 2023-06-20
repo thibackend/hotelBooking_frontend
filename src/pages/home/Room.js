@@ -8,7 +8,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Icon } from "@chakra-ui/react";
 // import { FaStar } from "react-icons/fa";
 import "./Room.css";
@@ -17,20 +17,19 @@ import { Link } from "react-router-dom";
 
 const MyComponent = () => {
   const [data, setData] = useState([]);
-
-  async function fetchData() {
-    try {
-      const response = await axios.get(
-        "https://63a571e42a73744b008e23f7.mockapi.io/API/product"
-      );
-      // Handle the response data
-      console.log(setData(response.data));
-    } catch (error) {
-      // Error handling code here
-      console.log(error);
-    }
+  const getData = async () => {
+    await axios.get('http://localhost:8000/api/hotel_and_images')
+      .then(res => { 
+        console.log("data :", res.data); 
+        setData(res.data)
+      })
   }
-  fetchData();
+  useEffect(
+    () => {
+      getData();
+    }
+    , []
+  )
   return (
     <Grid
       templateColumns="repeat(4, 1fr)"
@@ -38,12 +37,12 @@ const MyComponent = () => {
       justifyItems="center"
       mx="auto"
     >
-      {data.map(e => (
-        <Box alignSelf="flex-start" key={e.ID}>
+      {data ? data.map(e => (
+        <Box alignSelf="flex-start" key={e.id}>
           <Card maxW="sm" p="4" mt="4">
             <CardBody className="Box">
               <Image
-                src={e.avatar}
+                src={e.image[0]}
                 alt="Green double couch with wooden legs"
                 borderRadius="20px"
                 width="400px"
@@ -66,22 +65,22 @@ const MyComponent = () => {
                   /> */}
                   <i className="fa-sharp fa-regular fa-star"></i>
                   <Text fontSize="sm">25 Likes</Text>
-                </Flex> 
+                </Flex>
 
                 <Text className="infor">
-                  Địa điểm: Singapore <br />
-                  Ngày hoạt động : {e.date}
+                  Địa điểm: {e.address} <br />
+                  hoạt động : {e.status ? "Open" : "Close"}
                 </Text>
-                <b>${e.price} / Đêm</b>
+                <b>${e.star * 50} / Đêm</b>
               </Stack>
             </CardBody>
             <Divider />
           </Card>
         </Box>
-      ))}
+      )) : <h1> Have no data </h1>}
 
       <>
-        
+
       </>
     </Grid>
   );
