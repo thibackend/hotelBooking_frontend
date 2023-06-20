@@ -5,9 +5,9 @@ import tokenService from '../../services/token.service';
 const AuthLayout = () => {
   const isAuth = tokenService.getToken() || undefined
 
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
+  //if (isAuth) {
+  //  return <Navigate to="/" />;
+  //}
   return (
     <div >
       <div className="d-flex justify-content-center ">
