@@ -1,30 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, SimpleGrid, Img, Grid, GridItem } from '@chakra-ui/react';
-import '../style/detail_room.css';
+import '../../style/detail_room.css';
+import axios from 'axios';
 
 export default function DetailRoom() {
-    const [hotelData, setHotelData] = useState(null);
-
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/hotels/{id}')
-            .then((response) => response.json())
-            .then((data) => {
-                setHotelData(data);
+    const [hotelData, setHotelData] = useState([]);
+    const [dataRun, setDataRun] = useState([]);
+    const [imgs, setImgs] = useState([]);
+    const fetchData = async () => {
+        await axios.get('http://127.0.0.1:8000/api/hotel_and_images')
+            .then(res => {
+                setHotelData(res.data);
+                let idhotel = res.data[0].id;
+                console.log("id hotel:",idhotel);
+                setDataRun(
+                    hotelData.find(
+                        (hotel) => (hotel.id === idhotel)
+                    ));
+                console.log("data res api: ", res.data);
+                console.log("first data hotel: ", hotelData);
+                console.log(dataRun);
             });
-    }, []);
+    }
+    useEffect(
+        () => {
+            fetchData();
 
+        }, []);
     return (
         <Box p="100px">
-            {hotelData ? (
+            {hotelData && imgs ? (
                 <div>
-                    <Heading>{hotelData.name} phòng {hotelData.star} sao</Heading>
+                    <Heading>{dataRun.name} phòng {dataRun.star} sao</Heading>
                     <SimpleGrid columns={2} spacing={3}>
                         <Box>
-                            <Img src={hotelData.images[0]} alt="" w='100%' h='299px' borderTopLeftRadius="10px" borderBottomLeftRadius="10px" />
+                            <Img src={dataRun.images} alt="" w='100%' h='299px' borderTopLeftRadius="10px" borderBottomLeftRadius="10px" />
                         </Box>
                         <Box>
                             <SimpleGrid columns={2} spacing={3}>
-                                {hotelData.images.slice(1, 5).map((image, index) => (
+                                {imgs.slice(1, 5).map((image, index) => (
                                     <Box key={index} className={index === 0 ? 'image-top' : 'image-bottom'}>
                                         <Img src={image} alt="" w='100%' h='143.5px' />
                                     </Box>
@@ -36,9 +50,9 @@ export default function DetailRoom() {
                             <GridItem as="div" colSpan={4}></GridItem>
                         </Grid>
                     </SimpleGrid>
-                    <Text>Địa chỉ: {hotelData.address}</Text>
-                    <Text>{hotelData.desc}</Text>
-                    <Text>Liên hệ chủ nhà {hotelData.contact}</Text>
+                    <Text>Địa chỉ: {dataRun.address}</Text>
+                    <Text>{dataRun.desc}</Text>
+                    <Text>Liên hệ chủ nhà {dataRun.contact}</Text>
                     <Text>12 khách 3 phòng ngủ 9 giường4 phòng tắm đầy đủ và 1 phòng vệ sinh cơ bản</Text>
                     <Box>
                         <Text as="b">Không gian riêng để làm việc</Text>

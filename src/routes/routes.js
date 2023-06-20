@@ -5,8 +5,7 @@ import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
-import Pool from "../pages/pool";
-import DetailHotel from "../pages/hotel/DetailHotel";
+import DetailRoom from "../pages/detail/hotelDetail";
 export const routes = () => [
   {
     path: "/auth",
@@ -23,8 +22,7 @@ export const routes = () => [
     children: [
       {path: "",element: <Home /> },
       {path: "room",element: <Rooms /> },
-      {path: "pool",element: <Pool />},
-      {path: "detailHotel",element: <DetailHotel />},
+      {path: "detailHotel",element: <DetailRoom />},
 
     ],
   },
