@@ -6,12 +6,9 @@ import MyComponent from "./Room";
 const Home = () => {
   return (
     <>
-      <Header />
-      <Hero />
       <MyComponent />
     </>
   );
 };
-
 export default Home;
 

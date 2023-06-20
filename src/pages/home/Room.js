@@ -6,6 +6,7 @@ import {
   Text,
   Divider,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -13,53 +14,70 @@ import React, { useEffect, useState } from "react";
 // import { FaStar } from "react-icons/fa";
 import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 const MyComponent = () => {
   const [data, setData] = useState();
-  const [datahotels, setDatahotels] = useState([]) || undefined;
-
-  if (data) {
-    let hotel;
-    data.hotels.map((e) => {
-      let a = e.id;
-      let image = '';
-      data.images.filter((id) => id.hotel_id == a)
-        .filter((id) => id.hotel_id == a)
-        .map((img) => {
-          image =img.image;
-          return null;
-        });
-
-      let datahotel = [
-        {
-        'id':a,
-        "name":e.name,
-        "address":e.address,
-        "image":image,
-        "contact":e.contact,
-        "star":e.star,
-        "status":e.status,
-        }
-      ]
-      if(!datahotels){
-        setDatahotels(datahotel);
-      }else{
-        hotel = datahotels.concat(datahotel);
+  // const [datahotels, setDatahotels] = useState([]);
+  // const [star ,setStar ]= useState([]);
+  const Star = (star) => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i >= star) {
+        stars.push(<i key={i} className="fa-sharp far fa-star"></i>);
+      } else {
+        stars.push(
+          <i
+            key={i}
+            className="fa-solid fa fa-star"
+            style={{ color: "#fffa61" }}
+          ></i>
+        );
       }
-    });
-    setDatahotels(hotel);
-    console.log('===============data hotels=====================');
-    console.log(datahotels);
-    console.log('====================================');
-  }
+    }
+    return stars;
+  };
+
+  const fetchData = async () => {
+    try {
+      await axios
+        .get("http://127.0.0.1:8000/api/hotel_and_images")
+        .then((res) => setData(res.data));
+      // if (data) {
+      //   let arrayHotel = data.hotels.map((e) => {
+      //     let a = e.id;
+      //     let image = "";
+      //     let hotel_images = data.images.filter((id_hotel) => {
+      //       return id_hotel.hotel_id === a;
+      //     });
+      //     image = hotel_images.map((img, index) => {
+      //       if (index === 0) {
+      //         return img.image;
+      //       } else {
+      //         return null;
+      //       }
+      //     });
+      //     let datahotel = {
+      //       id: e.id,
+      //       name: e.name,
+      //       address: e.address,
+      //       image: image,
+      //       contact: e.contact,
+      //       star: e.star,
+      //       status: e.status,
+      //     };
+      //     return datahotel;
+      //   });
+      //   // setDatahotels(arrayHotel);
+      //   setDatahotels(arrayHotel);
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
-
-  const fetchData = async () => {
-    await axios.get("http://127.0.0.1:8000/api/hotels").then((res) => {
-      setData(res.data);
-    });
-  };
   return (
     <Grid
       templateColumns="repeat(4, 1fr)"
@@ -67,49 +85,54 @@ const MyComponent = () => {
       justifyItems="center"
       mx="auto"
     >
-      {data
-        ? data.hotels.map((e) => (
-            <Box alignSelf="flex-start" key={e.id}>
-              <Card maxW="sm" p="4" mt="4">
-                <CardBody className="Box">
-                  <Image
-                    src={""}
-                    alt="Green double couch with wooden legs"
-                    borderRadius="20px"
-                    width="400px"
-                    height="350px"
-                    cursor="pointer"
-                    objectFit="cover"
-                  />
+      {data ? (
+        data.map((e, index) => (
+          <Box alignSelf="flex-start" key={index}>
+            <Card maxW="sm" p="4" mt="4">
+              <CardBody className="Box">
+                <Image
+                  src={e.image[0]}
+                  alt="Green double couch with wooden legs"
+                  borderRadius="20px"
+                  width="400px"
+                  height="350px"
+                  cursor="pointer"
+                  objectFit="cover"
+                />
 
-                  <Stack mt="6" spacing="0">
-                    <Flex alignItems="center">
-                      <a href="" size="md" className="title" ml="auto">
-                        <b>{e.name}</b>
-                      </a>
-                      {/* <Icon
-                    as={FaStar}
-                    color="yellow.500"
-                    boxSize={18}
-                    mr={1}
-                    className="star-icon"
-                  /> */}
-                      <i className="fa-sharp fa-regular fa-star"></i>{" "}
-                      <Text fontSize="sm"></Text>
-                    </Flex>
+                <Stack mt="6" spacing="0">
+                  <Flex alignItems="center">
+                    <a href="/somewhere" size="md" className="title" ml="auto">
+                      <b>{e.name}</b>
+                    </a>
+                    <br></br>
 
-                    <Text className="infor">
-                      Địa điểm: {e.address} <br />
-                      hoạt động : {e.status ? "Open" : "Closed"}
-                    </Text>
-                    <b>${"100 $"} / Đêm</b>
-                  </Stack>
-                </CardBody>
-                <Divider />
-              </Card>
-            </Box>
-          ))
-        : ""}
+                    <Text fontSize="sm"></Text>
+                  </Flex>
+
+                  <Text className="infor">
+                    <div
+                      className="my-5"
+                      style={{ display: "flex", paddingRight: "100%" }}
+                    >
+                      {Star(e.star)}
+                    </div>
+                    Địa điểm: {e.address} <br />
+                    hoạt động : {e.status ? "Open" : "Closed"}
+                  </Text>
+                  <b>${e.star * 50} / Đêm</b>
+                  <Link to={"/detailHotel"}>
+                    <button>dettail</button>
+                  </Link>
+                </Stack>
+              </CardBody>
+              <Divider />
+            </Card>
+          </Box>
+        ))
+      ) : (
+        <h1 className="d-flex justify-content-center"> Loading ...</h1>
+      )}
     </Grid>
   );
 };
