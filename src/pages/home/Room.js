@@ -74,9 +74,9 @@ const MyComponent = () => {
 
                 <Stack mt="6" spacing="0">
                   <Flex alignItems="center">
-                    <a href="/somewhere" size="md" className="title" ml="auto">
+                    <Link href="/somewhere" size="md" className="title" ml="auto">
                       <b>{e.name}</b>
-                    </a>
+                    </Link>
                     <br></br>
 
                     <Text fontSize="sm"></Text>

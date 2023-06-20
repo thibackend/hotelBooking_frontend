@@ -37,7 +37,7 @@ const Rooms = () => {
         mx="auto"
       >
         {rooms.map((room) => (
-          <Link to={'/detail'} key={room.id} alignSelf="flex-start">
+          <Link to={'/detail'} key={room.id}>
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
                 <Image

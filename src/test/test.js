@@ -13,10 +13,10 @@ function Test() {
     },[]
   )
   return (
-    <div>
+    <>
       <h2>Seasons of the year</h2>
       <ul className="d-flex justify-content-between my-5 mx-5">{seasonsList}</ul>
-    </div>
+    </>
   );
 }
 
