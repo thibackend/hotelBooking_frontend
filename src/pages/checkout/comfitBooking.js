@@ -78,18 +78,16 @@ const ConfirmationPage = () => {
   const handlePaymentSubmit = (event) => {
     event.preventDefault();
 
-    // Perform payment processing here
+  
     if (paymentMethod === 'momo') {
-      // Perform MoMo payment processing
+    
       const paymentResult = {
         status: 'success', // Set the payment status based on the actual result
         message: 'Payment successful', // Add the actual payment result message
       };
       setPaymentResult(paymentResult);
     } else {
-      // Perform card payment processing
-
-      // Example code to log payment details
+     
       console.log('Email:', email);
       console.log('Payment method:', paymentMethod);
       console.log('Card number:', cardNumber);

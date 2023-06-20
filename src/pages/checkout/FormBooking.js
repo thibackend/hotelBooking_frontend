@@ -22,17 +22,6 @@ const currentDate = new Date().toISOString().split('T')[0];
     }
     setInvalidDate(false);
   }, [checkInDate, checkOutDate, numberOfGuests]);
-  // const handleCheckInChange = (event) => {
-  //   setCheckInDate(event.target.value);
-  // };
-
-  // const handleCheckOutChange = (event) => {
-  //   setCheckOutDate(event.target.value);
-  // };
-
-  // const handleGuestsChange = (event) => {
-  //   setNumberOfGuests(event.target.value);
-  // };
 
   const calculatePrice = () => {
     const nights = Math.ceil((new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 3600 * 24)); // Số đêm
