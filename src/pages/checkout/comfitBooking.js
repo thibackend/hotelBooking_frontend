@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ConfirmationPage = () => {
   const [datacheckout, setDataCheckout] = useState({});
@@ -28,7 +28,7 @@ const ConfirmationPage = () => {
     setStartDate(datacheck.checkInDate);
     setEndDate(datacheck.checkOutDate);
     setGuests(datacheck.numberOfGuests);
-    setroom_price(datacheck.room_price)
+    setroom_price(datacheck.room_price);
     setNumberOfNights(datacheck.numberOfNights);
     setServiceFee(datacheck.serviceFee);
     setTotalPrice(datacheck.totalPrice);
@@ -103,6 +103,7 @@ const ConfirmationPage = () => {
       setPaymentResult(paymentResult);
     }
   };
+
   const navigate = useNavigate();
   const handleCancel = () => {
     navigate('/checkout'); // Chuyển hướng về trang trước đó
@@ -125,7 +126,7 @@ const ConfirmationPage = () => {
               {editing ? (
                 <div>
                   <label htmlFor="startDate">Ngày đặt:</label>
-                  <input type="date" id="startDate" value={newStartDate} onChange={(e) => setNewStartDate(e.target.value)}/>
+                  <input type="date" id="startDate" value={newStartDate} onChange={(e) => setNewStartDate(e.target.value)} />
                   <label htmlFor="endDate">Ngày trả:</label>
                   <input type="date" id="endDate" value={newEndDate} onChange={(e) => setNewEndDate(e.target.value)} />
                 </div>
@@ -140,26 +141,28 @@ const ConfirmationPage = () => {
             <div className="guest-info">
               <h3>Khách</h3>
               <span>{guests} khách</span>
-           
+
               <hr />
             </div>
             <form onSubmit={handlePaymentSubmit}>
               <div className="payment-methods">
                 <h2>Chọn phương thức thanh toán</h2>
-                <select value={paymentMethod} onChange={handlePaymentMethodChange} >
+                <select value={paymentMethod} onChange={handlePaymentMethodChange}>
                   <option value="">-- Chọn phương thức --</option>
                   <option value="visa">Thẻ Visa</option>
                   <option value="mastercard">Thẻ Mastercard</option>
                   <option value="amex">Thẻ American Express</option>
                   <option value="paypal">PayPal</option>
                   <option value="momo">MoMo</option>
+                  <option value="agribank">Agribank</option>
+                  <option value="acb">ACB</option>
                 </select>
                 {paymentMethod && (
                   <>
                     {paymentMethod === 'momo' && (
                       <div className="momo-number">
                         <label htmlFor="momo-number">Số điện thoại MoMo</label>
-                        <input type="text" id="momo-number" value={momoNumber} onChange={(event) => setMomoNumber(event.target.value)}/>
+                        <input type="text" id="momo-number" value={momoNumber} onChange={(event) => setMomoNumber(event.target.value)} />
                       </div>
                     )}
                     {paymentMethod !== 'momo' && (

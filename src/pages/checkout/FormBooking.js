@@ -68,7 +68,7 @@ const currentDate = new Date().toISOString().split('T')[0];
 
   return (
     <div className='container'>
-      <form onSubmit={handleSubmit} className='containers'>
+      <form onSubmit={handleSubmit} className='containers my-4 '>
         <h4 className="tail_name">{room_price}VNĐ/Ngày</h4>
         <div className="form-group">
           <label htmlFor="checkInDate">Ngày đặt:</label>
