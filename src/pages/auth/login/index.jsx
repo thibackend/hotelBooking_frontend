@@ -30,8 +30,6 @@ const Login = () => {
       <LoginArea />
     </ColorModeProvider>
   );
-
-
 }
 
 const LoginArea = () => {
