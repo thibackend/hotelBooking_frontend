@@ -11,11 +11,10 @@ import "./Header.css";
 import tokenService from "../../services/token.service";
 
 function Header() {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
@@ -37,7 +36,7 @@ function Header() {
 
   const handleLogout = () => {
     tokenService.removeToken();
-    navigate('/');
+    if (tokenService.getToken()) navigate('/');
   }
 
   return (
@@ -84,7 +83,7 @@ function Header() {
               </Link>
             </li>
           </ul>
-          {button && <button onClick={handleLogout} type="btn--outline">Logout</button>}
+          {button && <Link to={"/"}><button onClick={handleLogout}>Logout</button></Link>}
         </div>
       </nav>
     </>
