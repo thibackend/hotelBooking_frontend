@@ -5,7 +5,10 @@ import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
-import DetailHotel from "../pages/detail/hotelDetail";
+import FormBooking from "../pages/checkout/FormBooking";
+import ConfirmationPage from "../pages/checkout/comfitBooking";
+import Checkout from "../pages/checkout";
+
 export const routes = () => [
   {
     path: "/auth",
@@ -13,6 +16,15 @@ export const routes = () => [
     children: [
       { path: "", element: <Login /> },
       { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+    ],
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
+    children: [
+      { path: "", element: <FormBooking /> },
+      { path: "confirm", element: <ConfirmationPage /> },
       { path: "register", element: <Register /> },
     ],
   },
