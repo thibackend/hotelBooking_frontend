@@ -99,7 +99,7 @@ const currentDate = new Date().toISOString().split('T')[0];
        
         {/* Hiển thị giá phòng dựa trên số ngày đặt */}
         {numberOfNights > 0 && (
-          <p className='tex-name'>Giá phòng ({numberOfNights} ngày): {room_price* numberOfNights} VNĐ</p>
+          <p className='tex-name'>Giá phòng ({numberOfNights} ): {room_price* numberOfNights} VNĐ</p>
         )}
         {numberOfNights > 0 && (
           <p className='tex-name'>Số ngày đặt: {numberOfNights} Ngày</p>

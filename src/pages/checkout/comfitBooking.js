@@ -28,7 +28,7 @@ const ConfirmationPage = () => {
     setStartDate(datacheck.checkInDate);
     setEndDate(datacheck.checkOutDate);
     setGuests(datacheck.numberOfGuests);
-    setroom_price(datacheck.room_price);
+    setroom_price(datacheck.room_price)
     setNumberOfNights(datacheck.numberOfNights);
     setServiceFee(datacheck.serviceFee);
     setTotalPrice(datacheck.totalPrice);
@@ -103,7 +103,6 @@ const ConfirmationPage = () => {
       setPaymentResult(paymentResult);
     }
   };
-
   const navigate = useNavigate();
   const handleCancel = () => {
     navigate('/checkout'); // Chuyển hướng về trang trước đó
@@ -147,7 +146,7 @@ const ConfirmationPage = () => {
             <form onSubmit={handlePaymentSubmit}>
               <div className="payment-methods">
                 <h2>Chọn phương thức thanh toán</h2>
-                <select value={paymentMethod} onChange={handlePaymentMethodChange}>
+                <select value={paymentMethod} onChange={handlePaymentMethodChange} >
                   <option value="">-- Chọn phương thức --</option>
                   <option value="visa">Thẻ Visa</option>
                   <option value="mastercard">Thẻ Mastercard</option>
