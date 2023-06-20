@@ -3,10 +3,10 @@ import { Box, Heading, Text, SimpleGrid, Img, Grid, GridItem } from '@chakra-ui/
 import '../../style/detail_room.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { isMotionComponent } from 'framer-motion';
-import {RoomDetail} from './roomDetai';
-
-export default function DetailHotel() {
+// import { isMotionComponent } from 'framer-motion';
+import { RoomDetail } from './roomDetai';
+export default  HotelDetail;
+function HotelDetail() {
     const { id } = useParams();
     let idHotel = id;
     const [hotelData, setHotelData] = useState([]);
@@ -36,12 +36,6 @@ export default function DetailHotel() {
                     setImgs(data.image);
                     setDataRun(data);
                 }
-                if (imgs) {
-                    console.log("images:", imgs);
-                }
-                if (dataRun) {
-                    console.log("data run:", dataRun);
-                }
             }
         }, [hotelData]);
     return (
@@ -55,7 +49,7 @@ export default function DetailHotel() {
                         </Box>
                         <Box>
                             <SimpleGrid columns={2} spacing={3}>
-                                {imgs.slice(1,5).map((image, index) => (
+                                {imgs.slice(1, 5).map((image, index) => (
                                     <Box key={index} className={index === 0 ? 'image-top' : 'image-bottom'}>
                                         <Img src={image} alt="" w='100%' h='143.5px' />
                                     </Box>
@@ -115,8 +109,7 @@ export default function DetailHotel() {
             ) : (
                 <p>Loading...</p>
             )}
-
-            <RoomDetail idHotel={idHotel} />
+            <RoomDetail idHotel={id} />
         </Box>
     );
 }

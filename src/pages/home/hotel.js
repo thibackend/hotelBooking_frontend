@@ -91,12 +91,10 @@ const MyComponent = () => {
                   </Text>
                   <b>${e.star * 50} / Đêm</b>
                   <Box>
-                     <Link to={`detailHotel/${e.id}`}>
-                    dettail
-                  </Link>
-                    <Link to={`checkout/${e.id}`}>
-                      _Checkout_
-                    </Link></Box>
+                    <Link to={`detailHotel/${e.id}`}>
+                      dettail
+                    </Link>
+                  </Box>
 
                 </Stack>
               </CardBody>
