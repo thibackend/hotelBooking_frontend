@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -20,7 +20,7 @@ const Rooms = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/hotels")
+      .get("http://127.0.0.1:8000/api/rooms")
       .then((response) => {
         setRooms(response.data);
       })
@@ -30,9 +30,6 @@ const Rooms = () => {
   }, []);
   return (
     <>
-      <Header />
-      <Hero />
-
       <Grid
         templateColumns="repeat(4, 1fr)"
         gap={4}
@@ -44,7 +41,7 @@ const Rooms = () => {
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
                 <Image
-                  src={room.image}
+                  src={""}
                   alt={room.name}
                   borderRadius="20px"
                   width="400px"
