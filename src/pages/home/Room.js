@@ -42,34 +42,6 @@ const MyComponent = () => {
       await axios
         .get("http://127.0.0.1:8000/api/hotel_and_images")
         .then((res) => setData(res.data));
-      // if (data) {
-      //   let arrayHotel = data.hotels.map((e) => {
-      //     let a = e.id;
-      //     let image = "";
-      //     let hotel_images = data.images.filter((id_hotel) => {
-      //       return id_hotel.hotel_id === a;
-      //     });
-      //     image = hotel_images.map((img, index) => {
-      //       if (index === 0) {
-      //         return img.image;
-      //       } else {
-      //         return null;
-      //       }
-      //     });
-      //     let datahotel = {
-      //       id: e.id,
-      //       name: e.name,
-      //       address: e.address,
-      //       image: image,
-      //       contact: e.contact,
-      //       star: e.star,
-      //       status: e.status,
-      //     };
-      //     return datahotel;
-      //   });
-      //   // setDatahotels(arrayHotel);
-      //   setDatahotels(arrayHotel);
-      // }
     } catch (error) {
       console.log(error);
     }
