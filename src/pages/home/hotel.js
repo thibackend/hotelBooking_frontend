@@ -61,7 +61,7 @@ const MyComponent = () => {
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
                 <Image
-                  src={e.image[0]}
+                  src="{e.image[0]}"
                   alt="Green double couch with wooden legs"
                   borderRadius="20px"
                   width="400px"
