@@ -2,39 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, SimpleGrid, Img, Grid, GridItem } from '@chakra-ui/react';
 import '../../style/detail_room.css';
 import axios from 'axios';
-
-export default function DetailRoom() {
+import { useParams } from 'react-router-dom';
+// import { isMotionComponent } from 'framer-motion';
+import { RoomDetail } from './roomDetai';
+export default  HotelDetail;
+function HotelDetail() {
+    const { id } = useParams();
+    let idHotel = id;
     const [hotelData, setHotelData] = useState([]);
     const [dataRun, setDataRun] = useState([]);
     const [imgs, setImgs] = useState([]);
+    const [status, setStatus] = useState(true);
     const fetchData = async () => {
-        await axios.get('http://127.0.0.1:8000/api/hotel_and_images')
-            .then(res => {
+        try {
+            let res = await axios.get(`http://127.0.0.1:8000/api/hotel_and_images/${id}`);
+            if (res.data) {
                 setHotelData(res.data);
-                let idhotel = res.data[0].id;
-                console.log("id hotel:",idhotel);
-                setDataRun(
-                    hotelData.find(
-                        (hotel) => (hotel.id === idhotel)
-                    ));
-                console.log("data res api: ", res.data);
-                console.log("first data hotel: ", hotelData);
-                console.log(dataRun);
-            });
+                if (hotelData) {
+                    setStatus(false);
+                }
+            }
+        } catch (error) {
+        }
     }
     useEffect(
         () => {
-            fetchData();
-
-        }, []);
+            if (status) {
+                fetchData();
+            }
+            if (hotelData) {
+                const data = hotelData[0];
+                if (data && data.image) {
+                    setImgs(data.image);
+                    setDataRun(data);
+                }
+            }
+        }, [hotelData]);
     return (
         <Box p="100px">
-            {hotelData && imgs ? (
-                <div>
+            {hotelData && imgs && dataRun ? (
+                <>
                     <Heading>{dataRun.name} phòng {dataRun.star} sao</Heading>
                     <SimpleGrid columns={2} spacing={3}>
                         <Box>
-                            <Img src={dataRun.images} alt="" w='100%' h='299px' borderTopLeftRadius="10px" borderBottomLeftRadius="10px" />
+                            <Img src={imgs[0]} alt="" w='100%' h='299px' borderTopLeftRadius="10px" borderBottomLeftRadius="10px" />
                         </Box>
                         <Box>
                             <SimpleGrid columns={2} spacing={3}>
@@ -94,10 +105,11 @@ export default function DetailRoom() {
                             <Text>Máy báo khói</Text>
                         </Box>
                     </SimpleGrid>
-                </div>
+                </>
             ) : (
                 <p>Loading...</p>
             )}
+            <RoomDetail idHotel={id} />
         </Box>
     );
 }

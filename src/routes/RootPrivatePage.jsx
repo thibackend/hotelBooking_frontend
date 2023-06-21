@@ -7,7 +7,7 @@ import Hero from "../pages/home/Hero";
 const RootPrivatePage = () => {
   const isAuth = tokenService.getToken() || undefined
   if (!isAuth) {
-    return <Navigate to="/auth" />;
+   return <Navigate to="/auth" />;
   }
 
   return (

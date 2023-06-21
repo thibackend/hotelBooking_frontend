@@ -10,15 +10,13 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import { Icon } from "@chakra-ui/react";
-// import { FaStar } from "react-icons/fa";
 import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 const MyComponent = () => {
   const [data, setData] = useState();
-  // const [datahotels, setDatahotels] = useState([]);
-  // const [star ,setStar ]= useState([]);
+
+  // hàm dùng đé tạo sao cho hotel
   const Star = (star) => {
     let stars = [];
     for (let i = 0; i < 5; i++) {
@@ -37,6 +35,7 @@ const MyComponent = () => {
     return stars;
   };
 
+  // lấy data để show ra.
   const fetchData = async () => {
     try {
       await axios
@@ -46,7 +45,6 @@ const MyComponent = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -71,7 +69,6 @@ const MyComponent = () => {
                   cursor="pointer"
                   objectFit="cover"
                 />
-
                 <Stack mt="6" spacing="0">
                   <Flex alignItems="center">
                     <Link href="/somewhere" size="md" className="title" ml="auto">
@@ -93,9 +90,12 @@ const MyComponent = () => {
                     hoạt động : {e.status ? "Open" : "Closed"}
                   </Text>
                   <b>${e.star * 50} / Đêm</b>
-                  <Link to={"/detailHotel"}>
-                    <button>dettail</button>
-                  </Link>
+                  <Box>
+                    <Link to={`detailHotel/${e.id}`}>
+                      dettail
+                    </Link>
+                  </Box>
+
                 </Stack>
               </CardBody>
               <Divider />
