@@ -7,6 +7,7 @@ import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
 import HotelDetail from "../pages/detail/hotelDetail";
 import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
+import Search from "../pages/search";
 export const routes = () => [
   {
     path: "/auth",
@@ -25,6 +26,7 @@ export const routes = () => [
       { path: "room", element: <Rooms /> },
       { path: "detailHotel/:id", element: <HotelDetail /> },
       { path: "confirm", element: <ConfirmCheckout /> },
+      { path: "search", element: <Search /> },
     ],
   },
   {
