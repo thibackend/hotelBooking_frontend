@@ -3,7 +3,6 @@ import tokenService from './token.service';
 const handleError = error => {
   if (error.response) {
     const { data } = error.response || {};
-
     return data;
   }
   return error;

@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { ApiService } from "../../services/api.service";
 const MyComponent = () => {
   const [data, setData] = useState();
 
