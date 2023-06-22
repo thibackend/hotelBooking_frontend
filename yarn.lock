@@ -1534,7 +1534,7 @@
     "@chakra-ui/react-context" "2.0.8"
     "@chakra-ui/react-use-safe-layout-effect" "2.0.5"
 
-"@chakra-ui/progress@2.1.6":
+"@chakra-ui/progress@^2.1.6", "@chakra-ui/progress@2.1.6":
   version "2.1.6"
   resolved "https://registry.npmjs.org/@chakra-ui/progress/-/progress-2.1.6.tgz"
   integrity sha512-hHh5Ysv4z6bK+j2GJbi/FT9CVyto2PtNUNwBmr3oNMVsoOUMoRjczfXvvYqp0EHr9PCpxqrq7sRwgQXUzhbDSw==

@@ -7,6 +7,7 @@ import {
   Divider,
   Flex,
   Button,
+  CircularProgress,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -90,7 +91,7 @@ const MyComponent = () => {
                     Địa điểm: {e.address} <br />
                     hoạt động : {e.status ? "Open" : "Closed"}
                   </Text>
-                  <b>${e.star * 50} / Đêm</b>
+                  <b>${e.star * 50} / Đêm</b> 
                   <Box>
                     <Link to={`detailHotel/${e.id}`}>
                       dettail
@@ -104,7 +105,7 @@ const MyComponent = () => {
           </Box>
         ))
       ) : (
-        <h1 className="d-flex justify-content-center"> Loading ...</h1>
+        <CircularProgress alignContent={'center'} isIndeterminate color='green.300' />
       )}
     </Grid>
   );

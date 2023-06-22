@@ -28,7 +28,6 @@ export class ApiService {
   }
   static async get(url, params, getAll) {
     const header = this.getHeader();
-
     return instance
       .get(url, {
         headers: header,

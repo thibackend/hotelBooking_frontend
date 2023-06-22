@@ -7,6 +7,7 @@ import {
   Divider,
   Flex,
   Button,
+  CircularProgress,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -120,7 +121,7 @@ const Search = () => {
           </Box>
         ))
       ) : (
-        <h1 className="d-flex justify-content-center"> Loading ...</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       )}
     </Grid>
   );
