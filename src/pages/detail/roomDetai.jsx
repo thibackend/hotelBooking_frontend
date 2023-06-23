@@ -32,9 +32,6 @@ export function RoomDetail(props) {
                     <CardFooter>
                         <ButtonGroup spacing='2'>
                             <CheckoutForm />
-                            <Button variant='ghost' colorScheme='blue'>
-                                Add to cart
-                            </Button>
                         </ButtonGroup>
                     </CardFooter>
                 </Card>
