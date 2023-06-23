@@ -1,21 +1,12 @@
 import React from "react";
-
 import NotFound from "../pages/notFound";
 import Home from "../pages/home";
-
 import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
-import Pool from "../pages/pool";
-// import Detail from "../pages/room/detail";
-// import Pool from "../pages/pool";
-import Header from "../pages/home/Header";
-import DetailRoom from "../pages/detail";
-import FormBooking from "../pages/checkout/FormBooking";
-import ConfirmationPage from "../pages/checkout/comfitBooking";
-import Checkout from "../pages/checkout";
-
+import HotelDetail from "../pages/detail/hotelDetail";
+import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
 export const routes = () => [
   {
     path: "/auth",
@@ -27,52 +18,18 @@ export const routes = () => [
     ],
   },
   {
-    path: "/checkout",
-    element: <Checkout />,
-    children: [
-      { path: "", element: <FormBooking /> },
-      { path: "confirm", element: <ConfirmationPage /> },
-      { path: "register", element: <Register /> },
-    ],
-  },
-  {
     path: "/",
     element: <RootPrivatePage />,
     children: [
-      {
-        path: "/",
-        element: (<><Home />  </>),
-      },
-    ],
-  },
-  {
-    path: "/header",
-    element: (<><Header /></>),
-    children: [
-      {
-        path: "room",
-        element: (<><Rooms /></>)
-      },
+      { path: "", element: <Home /> },
+      { path: "room", element: <Rooms /> },
+      { path: "detailHotel/:id", element: <HotelDetail /> },
+      { path: "confirm", element: <ConfirmCheckout /> },
     ],
   },
   {
     path: "*",
     element: <NotFound />,
   },
-  {
-    path: "/room",
-    element: <Rooms />,
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/pool",
-    element: <Pool />,
-  },
-  {
-    path: "/detail",
-    element: <DetailRoom />,
-  },
+
 ];

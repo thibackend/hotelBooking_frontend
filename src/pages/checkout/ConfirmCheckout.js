@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './boking.css';
 
-const ConfirmationPage = () => {
+const ConfirmCheckout = () => {
   const [datacheckout, setDataCheckout] = useState({});
   const [paymentMethod, setPaymentMethod] = useState('');
   const [email, setEmail] = useState('');
@@ -103,13 +104,13 @@ const ConfirmationPage = () => {
   };
   const navigate = useNavigate();
   const handleCancel = () => {
-    navigate('/checkout'); // Chuyển hướng về trang trước đó
+    navigate('checkout'); // Chuyển hướng về trang trước đó
   };
 
   return (
-    <div className="container">
+    <div className="container my-5">
       <div className="main my">
-        <h1>Xác nhận và thanh toán</h1>
+        <h1 className='h2'>Xác nhận và thanh toán</h1>
         {paymentResult ? (
           <div>
             <h3>{paymentResult.message}</h3>
@@ -259,4 +260,4 @@ const ConfirmationPage = () => {
   );
 };
 
-export default ConfirmationPage;
+export default ConfirmCheckout;

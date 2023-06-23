@@ -1,17 +1,10 @@
 import * as React from "react";
-import { Routes, Route} from "react-router-dom";
-import Hero from "./Hero";
-import Header from "./Header";
-import MyComponent from "./Room";
+import { Routes, Route } from "react-router-dom";
+import MyComponent from "./hotel";
 const Home = () => {
   return (
-    <>
-      <Header />
-      <Hero />
-      <MyComponent />
-    </>
+    <MyComponent />
   );
 };
-
 export default Home;
 

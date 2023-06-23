@@ -1,12 +1,22 @@
 .containers{
-    border-radius: 12px;
-    width: 370px;
-    height: 630px;
+    border-radius: 10px;
+    width: 600px;
+    height: auto;
     background: whitesmoke;
     border: #dddd solid 1px;
     line-height: 20px;
     color:#222;
     transition: none;
+}
+.container{
+
+    width: 600px;
+    height: auto;
+
+
+
+
+
 }
 .tail_name{
   margin-top: 17px;
@@ -36,6 +46,8 @@
 }
 
 
+
+ /* confim checkout */
 
 .container {
     display: flex;
