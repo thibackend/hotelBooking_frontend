@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTimes,
-  faBars,
-  faBolt,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import {faTimes,faBars,faBolt,faSearch,} from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import tokenService from "../../services/token.service";
 
@@ -43,7 +38,7 @@ function Header() {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-logo">
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             Nokola-Tesla <FontAwesomeIcon icon={faBolt} />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
