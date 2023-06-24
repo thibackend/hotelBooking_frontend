@@ -1,8 +1,8 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import tokenService from '../../services/token.service';
 import { LoginForm } from "./login";
 import { Box, Flex, Heading, IconButton, Text, useColorMode } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Register from "./resgister";
 
 
@@ -19,11 +19,6 @@ const AuthLayout = () => {
   const registerShow = () => {
     setLogin(false);
   }
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-
-  };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
@@ -83,7 +78,7 @@ export default AuthLayout;
 
 
 const ThemeSelector = () => {
-  const { colorModel, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
   return (
     <Box textAlign={'right'} py={4}>
       <IconButton

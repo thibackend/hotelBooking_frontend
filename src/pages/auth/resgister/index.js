@@ -23,7 +23,6 @@ const Register = () => {
 const RegisterForm = () => {
   const [role, setRole] = useState([]);
   const [isManager, setIsmanager] = useState('');
-  const [hotels, setHotels] = useState();
 
 
   const schema = yup.object().shape({
@@ -52,7 +51,7 @@ const RegisterForm = () => {
   useEffect(
     () => {
       fetchRole();
-       ApiService.get('http://localhost:8000/api/hotels').then(res=>console.log("api service response:",res));
+      ApiService.get('http://localhost:8000/api/hotels').then(res => console.log("api service response:", res));
     }, []
   );
   const handleSigUp = async (data) => {
