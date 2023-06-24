@@ -6,7 +6,6 @@ import {
   Text,
   Divider,
   Flex,
-  Button,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -60,8 +59,9 @@ const MyComponent = () => {
           <Box alignSelf="flex-start" key={index}>
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
+                <Link to={`detailHotel/${e.id}`}>
                 <Image
-                  src="{e.image[0]}"
+                  src="../../public/images/hotel/{e.image[0]}"
                   alt="Green double couch with wooden legs"
                   borderRadius="20px"
                   width="400px"
@@ -69,6 +69,7 @@ const MyComponent = () => {
                   cursor="pointer"
                   objectFit="cover"
                 />
+                </Link>
                 <Stack mt="6" spacing="0">
                   <Flex alignItems="center">
                     <Link href="/somewhere" size="md" className="title" ml="auto">
