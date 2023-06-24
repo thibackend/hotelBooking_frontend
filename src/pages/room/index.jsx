@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../home/Header";
 import Hero from "../home/Hero";
 
+
 import { Grid, Box } from "@chakra-ui/react";
 
 const Rooms = () => {
