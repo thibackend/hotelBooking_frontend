@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import tokenService from "../../services/token.service";
+import axios from "axios";
 
 function Header() {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [data, setData] = useState([]);
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -36,8 +40,55 @@ function Header() {
 
   const handleLogout = () => {
     tokenService.removeToken();
-    if (tokenService.getToken()) navigate('/');
+    if (tokenService.getToken()) navigate("/");
+  };
+  //TÌM KIẾM
+  async function fetchData() {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/hotel_and_images"
+      );
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSearchs = (keyword) => {
+    if (keyword.trim() === "") {
+      return;
+    }
+    sessionStorage.setItem("searchKeyword", keyword);
+    navigate("/search");
+    setSearchKeyword("");
+    setSuggestions([]);
+  };
+
+  const handleChange = (e) => {
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+    const suggestions = getSuggestions(keyword);
+    setSuggestions(suggestions);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchKeyword(suggestion);
+    setSuggestions([]);
+    handleSearchs(suggestion);
+  };
+
+  const getSuggestions = (keyword) => {
+    if (keyword.trim() === "") {
+      return [];
+    }
+    return data
+      .filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()))
+      .map((item) => item.name);
+  };
 
   return (
     <>
@@ -49,6 +100,40 @@ function Header() {
           <div className="menu-icon" onClick={handleClick}>
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
+          <div className="searchbar">
+            <form className="search-form" onSubmit={(e) => e.handleChange}>
+              <div className="search-container">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search..."
+                  value={searchKeyword}
+                  onChange={handleChange}
+                />
+                <button
+                  type="submit"
+                  className="search-button"
+                  onClick={() => handleSearchs(searchKeyword)}
+                >
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </div>
+              {suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {suggestions.map((suggestion) => (
+                    <li
+                      key={suggestion}
+                      className="suggestion-item"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      <Link>{suggestion}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </form>
+          </div>
+
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
@@ -83,7 +168,11 @@ function Header() {
               </Link>
             </li>
           </ul>
-          {button && <Link to={"/"}><button onClick={handleLogout}>Logout</button></Link>}
+          {button && (
+            <Link to={"/"}>
+              <button onClick={handleLogout}>Logout</button>
+            </Link>
+          )}
         </div>
       </nav>
     </>

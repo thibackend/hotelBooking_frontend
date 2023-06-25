@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./Room.css";
 import { Grid, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { ApiService } from "../../services/api.service";
-const MyComponent = () => {
+const Search = () => {
   const [data, setData] = useState();
+  const [searchResults, setSearchResults] = useState([]);
+  const searchKeyword = sessionStorage.getItem("searchKeyword") || "";
 
   // hàm dùng đé tạo sao cho hotel
   const Star = (star) => {
@@ -37,7 +37,7 @@ const MyComponent = () => {
     return stars;
   };
 
-  // lấy data để show ra.
+  // lấy data để so sánh.
   const fetchData = async () => {
     try {
       await axios
@@ -50,6 +50,22 @@ const MyComponent = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    searchProducts();
+  }, [searchKeyword, data]);
+  function searchProducts() {
+    if (data === undefined ||data.length=== 0) {
+      return;
+    }
+    let searchData = data.filter((item) =>
+      item.name.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+    setSearchResults(searchData);
+  }
+  if (searchResults.length === 0) {
+    return <h1>NO RESULTS</h1>;
+  }
+
   return (
     <Grid
       templateColumns="repeat(4, 1fr)"
@@ -57,13 +73,13 @@ const MyComponent = () => {
       justifyItems="center"
       mx="auto"
     >
-      {data ? (
-        data.map((e, index) => (
+      {searchResults ? (
+        searchResults.map((e, index) => (
           <Box alignSelf="flex-start" key={index}>
             <Card maxW="sm" p="4" mt="4">
               <CardBody className="Box">
                 <Image
-                  src="{e.image[0]}"
+                  src={e.image[0]}
                   alt="Green double couch with wooden legs"
                   borderRadius="20px"
                   width="400px"
@@ -91,9 +107,9 @@ const MyComponent = () => {
                     Địa điểm: {e.address} <br />
                     hoạt động : {e.status ? "Open" : "Closed"}
                   </Text>
-                  <b>${e.star * 50} / Đêm</b> 
+                  <b>${e.star * 50} / Đêm</b>
                   <Box>
-                    <Link to={`detailHotel/${e.id}`}>
+                    <Link to={`../detailHotel/${e.id}`}>
                       dettail
                     </Link>
                   </Box>
@@ -105,10 +121,10 @@ const MyComponent = () => {
           </Box>
         ))
       ) : (
-        <CircularProgress alignContent={'center'} isIndeterminate color='green.300' />
+        <CircularProgress isIndeterminate color='green.300' />
       )}
     </Grid>
   );
 };
 
-export default MyComponent;
+export default Search;

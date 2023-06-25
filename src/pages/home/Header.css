@@ -156,3 +156,27 @@
       transition: 250ms;
     }
   }
+
+  .suggestions-list {
+    list-style: none;
+    position: absolute;
+    width: 233px;
+    background-color: beige;
+    color: black;
+  }
+  .nav-links,
+  .nav-links-mobile,
+  .suggestion-item a {
+    text-decoration: none;
+  }
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  .searchbar {
+    position: absolute;
+    left: 670px;
+    bottom: 23px;
+
+  }
+    

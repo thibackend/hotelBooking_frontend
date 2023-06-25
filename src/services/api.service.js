@@ -3,7 +3,6 @@ import tokenService from './token.service';
 const handleError = error => {
   if (error.response) {
     const { data } = error.response || {};
-
     return data;
   }
   return error;
@@ -29,7 +28,6 @@ export class ApiService {
   }
   static async get(url, params, getAll) {
     const header = this.getHeader();
-
     return instance
       .get(url, {
         headers: header,
