@@ -3,9 +3,10 @@ import { Box, Heading, Text, SimpleGrid, Img, Grid, GridItem } from '@chakra-ui/
 import '../../style/detail_room.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-// import { isMotionComponent } from 'framer-motion';
-import { RoomDetail } from './roomDetai';
-export default  HotelDetail;
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 function HotelDetail() {
     const { id } = useParams();
     let idHotel = id;
@@ -13,36 +14,91 @@ function HotelDetail() {
     const [dataRun, setDataRun] = useState([]);
     const [imgs, setImgs] = useState([]);
     const [status, setStatus] = useState(true);
+    const [roomList, setRoomList] = useState([]);
+
     const fetchData = async () => {
         try {
             let res = await axios.get(`http://127.0.0.1:8000/api/hotel_and_images/${id}`);
             if (res.data) {
                 setHotelData(res.data);
-                if (hotelData) {
+                if (res.data.length > 0) {
                     setStatus(false);
                 }
             }
         } catch (error) {
+            console.log(error);
         }
-    }
-    useEffect(
-        () => {
-            if (status) {
-                fetchData();
+    };
+
+    useEffect(() => {
+        if (status) {
+            fetchData();
+        }
+        if (hotelData.length > 0) {
+            const data = hotelData[0];
+            if (data && data.image) {
+                setImgs(data.image);
+                setDataRun(data);
             }
-            if (hotelData) {
-                const data = hotelData[0];
-                if (data && data.image) {
-                    setImgs(data.image);
-                    setDataRun(data);
+        }
+    }, [status, hotelData]);
+
+    useEffect(() => {
+        const fetchRoomData = async () => {
+            try {
+                const res = await axios.get(`http://127.0.0.1:8000/api/room_and_images/${idHotel}`);
+                setRoomList(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchRoomData();
+    }, [idHotel]);
+
+    const sliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        centerMode: true,
+        centerPadding: '100px',
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    centerMode: false
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    centerMode: false
                 }
             }
-        }, [hotelData]);
+        ]
+    };
+
+    const [slider, setSlider] = useState(null);
+
+    const next = () => {
+        slider.slickNext();
+    };
+
+    const previous = () => {
+        slider.slickPrev();
+    };
+
     return (
-        <Box p="100px">
+        <Box p="100px" mt="-50px">
             {hotelData && imgs && dataRun ? (
                 <>
-                    <Heading>{dataRun.name} phòng {dataRun.star} sao</Heading>
+                    <Heading mt="-30px" mb="30px">{dataRun.name} phòng {dataRun.star} sao</Heading>
                     <SimpleGrid columns={2} spacing={3}>
                         <Box>
                             <Img src={imgs[0]} alt="" w='100%' h='299px' borderTopLeftRadius="10px" borderBottomLeftRadius="10px" />
@@ -73,22 +129,27 @@ function HotelDetail() {
                         <Text as="b">Pongkuna (Praow) là Chủ nhà siêu cấp</Text>
                         <Text>Chủ nhà siêu cấp là những chủ nhà có kinh nghiệm, được đánh giá cao và là những người cam kết mang lại quãng thời gian ở tuyệt vời cho khách.</Text>
                     </Box>
-                    <Heading as="h5">Nơi bạn sẽ ngủ nghỉ</Heading>
-                    <SimpleGrid columns={3} marginLeft="10px">
-                        <Box border="solid 1px gray" w="50%" p="10px" textAlign="center" borderRadius="20px">
-                            <Text as="b">Phòng ngủ 1</Text>
-                            <Text>1 giường queen</Text>
-                        </Box>
-                        <Box border="solid 1px gray" w="50%" p="10px" textAlign="center" borderRadius="20px">
-                            <Text as="b">Phòng ngủ 2</Text>
-                            <Text>1 giường đôi</Text>
-                        </Box>
-                        <Box border="solid 1px gray" w="50%" p="10px" textAlign="center" borderRadius="20px">
-                            <Text as="b">Phòng ngủ 3</Text>
-                            <Text>1 giường queen, 6 giường đơn</Text>
-                        </Box>
-                    </SimpleGrid>
-                    <Heading as="h5">Nơi này có những gì cho bạn</Heading>
+                    <Heading size="lg">Nơi bạn sẽ ngủ nghỉ</Heading>
+                    <Slider {...sliderSettings} ref={(c) => setSlider(c)}>
+                        {roomList.map((room) => (
+                            <div className='detail-room'>
+                                <div key={room.image[0]} >
+                                    <Img src={room.image[0]} alt="" w="100%" h="200px" objectFit="cover" />
+                                    <Text as="b">{room.name}</Text>
+                                    <Text>{room.price}</Text>
+                                </div>
+                            </div>
+                        ))}
+                    </Slider>
+                    <div className='button-move-room'>
+                        <button className='button-move-left' onClick={previous}>
+                            <Img src='https://d29fhpw069ctt2.cloudfront.net/icon/image/39096/preview.png' />
+                        </button>
+                        <button className='button-move-right' onClick={next}>
+                            <Img src='https://d29fhpw069ctt2.cloudfront.net/icon/image/39097/preview.png' />
+                        </button>
+                    </div>
+                    <Heading size="lg">Nơi này có những gì cho bạn</Heading>
                     <SimpleGrid columns={2}>
                         <Box>
                             <Text>Hướng nhìn ra núi</Text>
@@ -109,7 +170,8 @@ function HotelDetail() {
             ) : (
                 <p>Loading...</p>
             )}
-            <RoomDetail idHotel={id} />
         </Box>
     );
 }
+
+export default HotelDetail;
