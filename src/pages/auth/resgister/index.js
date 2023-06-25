@@ -23,7 +23,6 @@ const Register = () => {
 const RegisterForm = () => {
   const [role, setRole] = useState([]);
   const [isManager, setIsmanager] = useState('');
-  const [hotels, setHotels] = useState();
 
 
   const schema = yup.object().shape({
