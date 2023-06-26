@@ -29,7 +29,7 @@ const ConfirmCheckout = () => {
     setStartDate(datacheck.checkInDate);
     setEndDate(datacheck.checkOutDate);
     setGuests(datacheck.numberOfGuests);
-    setroom_price(datacheck.room_price)
+    setroom_price(datacheck.room_price);
     setNumberOfNights(datacheck.numberOfNights);
     setServiceFee(datacheck.serviceFee);
     setTotalPrice(datacheck.totalPrice);
@@ -79,16 +79,13 @@ const ConfirmCheckout = () => {
   const handlePaymentSubmit = (event) => {
     event.preventDefault();
 
-  
     if (paymentMethod === 'momo') {
-    
       const paymentResult = {
         status: 'success', // Set the payment status based on the actual result
         message: 'Payment successful', // Add the actual payment result message
       };
       setPaymentResult(paymentResult);
     } else {
-     
       console.log('Email:', email);
       console.log('Payment method:', paymentMethod);
       console.log('Card number:', cardNumber);
@@ -101,10 +98,17 @@ const ConfirmCheckout = () => {
       };
       setPaymentResult(paymentResult);
     }
+
+    // In ra bill
+    const bill = `Email: ${email}\nPayment method: ${paymentMethod}\nCard number: ${cardNumber}\nExpiry date: ${expiryDate}\nCVV: ${cvv}`;
+    alert(bill);
   };
+
   const navigate = useNavigate();
-  const handleCancel = () => {
-    navigate('checkout'); // Chuyển hướng về trang trước đó
+
+  const handleCompleteCheckout = () => {
+    localStorage.removeItem('datacheckout');
+    navigate('/bookingcomplete');
   };
 
   return (
@@ -217,9 +221,9 @@ const ConfirmCheckout = () => {
               >
                 Xác nhận thanh toán
               </button>
-              <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+              {/* <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                 Hủy
-              </button>
+              </button> */}
             </form>
           </div>
         )}

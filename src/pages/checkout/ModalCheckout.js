@@ -13,28 +13,28 @@ import {
 import FormBooking from "./FormBooking";
 
 export default function CheckoutForm(props) {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <>
-            <Button onClick={onOpen} colorScheme='blue'>Checkout</Button>
+            <Button onClick={onOpen} colorScheme="blue">Checkout</Button>
 
-            <Modal isOpen={isOpen} onClose={onClose}  size={"2xl"}>
-                <ModalOverlay  size={"2xl"}>
-                    <ModalContent  size={"2xl"}>
-                        <ModalHeader>CHECK OUT</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody size={"2xl"}>
-                            <FormBooking />
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button colorScheme="blue" mr={3} onClick={onClose}>
-                                Close
-                            </Button>
-                            <Button variant="ghost">Secondary Action</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </ModalOverlay>
+            <Modal isOpen={isOpen} onClose={onClose} size="xl" className="bootstrap-modal">
+                <ModalOverlay />
+                <ModalContent borderWidth="2px" borderColor="gray.400">
+                    <ModalHeader className="modal-header">CHECK OUT</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody className="modal-body">
+                        <FormBooking />
+                    </ModalBody>
+                    <ModalFooter className="modal-footer">
+                        <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        {/* <Button variant="ghost">Secondary Action</Button> */}
+                    </ModalFooter>
+                </ModalContent>
             </Modal>
         </>
-    )
+    );
 }
