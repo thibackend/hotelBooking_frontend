@@ -20,15 +20,13 @@ const AuthLayout = () => {
     setLogin(false);
   }
 
-<<<<<<< HEAD
+
   if (isAuth) {
     return <Navigate to="/" />;
   }
-=======
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
->>>>>>> 98b646328fc2d88a99e1224c900888d06faede9b
   return (
     <>
       <Flex minHeight={"100vh"} width={"full"} align={"center"} justifyContent={'center'}>
