@@ -6,9 +6,15 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Alert,
+  AlertTitle,
+  AlertIcon,
+  AlertDescription,
 } from '@chakra-ui/react';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ApiService } from "../../../services/api.service";
+import { RegisterUser } from "../../../services/auth";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   return (
     <RegisterForm />
@@ -16,39 +22,80 @@ const Register = () => {
 }
 const RegisterForm = () => {
   const schema = yup.object().shape({
-    username: yup.string().required().min(4).max(59),
+    name: yup.string().required().min(4).max(59),
     email: yup.string().email().max(50).min(3),
     password: yup.string().required().min(5).max(30),
     address: yup.string().required().min(5).max(30),
     phone: yup.string()
   });
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) });
-  useEffect(
-    () => {
-      // ApiService.get('http://localhost:8000/api/hotels').then(res => console.log("api service response:", res));
-    }, []
-  );
+  const [errorrs, setErrorrs] = useState('' || undefined);
+  const [loginSucces, setSucces] = useState(false);
+
+  const navigate = useNavigate();
   const handleSigUp = (data) => {
-    console.log("data input:", data);
-    if(data){
-      ApiService.post()
-    }
+    RegisterUser(data)
+      .then(
+        (res) => {
+          if (res) {
+            setErrorrs(undefined);
+            setSucces(true);
+            setTimeout(function() {
+              navigate('/');
+            }, 3000);
+          }
+        }
+      )
+      .catch((errors) => {
+        if (errors?.message) {
+          console.log("errors", errors?.message);
+          setErrorrs(errors.message);
+          setSucces(false);
+        }
+      })
   }
-
-
   return (
     <form onSubmit={handleSubmit(handleSigUp)}>
+      {errorrs ?
+        <Alert status='error'>
+          <AlertIcon />
+          <AlertDescription>{errorrs}</AlertDescription>
+        </Alert>
+        : ''
+      }
+
+      {loginSucces ?
+        <Alert
+          status='success'
+          variant='subtle'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+          height='200px'
+        >
+          <AlertIcon boxSize='40px' mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize='lg'>
+            Successful
+          </AlertTitle>
+          <AlertDescription maxWidth='sm'>
+            Thank you for joined our Web!
+          </AlertDescription>
+        </Alert>
+        : ''
+      }
       <FormControl>
         <FormLabel>UserName </FormLabel>
         <Input
-          {...register("username")}
+          {...register("name")}
           type="text"
           placeholder="Enter your username" />
-        {errors.user_name?.message && <li className="text-danger">{errors.user_name.message}</li>}
+        {errors.name?.message && <li className="text-danger">{errors.name.message}</li>}
       </FormControl>
 
       <FormControl>

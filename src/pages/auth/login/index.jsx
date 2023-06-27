@@ -15,14 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../../services/auth";
-const Login = () => {
-  return (
-    <>
-      {/* <LoginArea /> */}
-    </>
-  );
-}
-export const LoginForm = () => {
+const LoginForm = () => {
   const schema = yup.object().shape({
     email: yup.string().email().min(4).max(100).required(),
     password: yup.string().min(4).max(40).required(),
@@ -35,13 +28,14 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   // execute function......
   const handleSigin = async (data) => {
-    console.log("data login",data)
+    // console.log("data login",data)
     try {
+      // handle submit login
       loginApi(data).then((res) => {
         if (res?.email) {
           tokenService.setToken(res);
-          // navigate("/");
-          console.log("token localL:",tokenService.getToken());
+          navigate("/");
+          // console.log("token localL:",tokenService.getToken());
         }
       })
     } catch (error) {
@@ -83,6 +77,6 @@ export const LoginForm = () => {
     </Box>
   );
 }
-export default Login;
 
 
+export default LoginForm;

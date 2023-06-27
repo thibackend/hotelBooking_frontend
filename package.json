@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/alert": "^2.1.0",
     "@chakra-ui/card": "^2.1.6",
     "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/modal": "^2.2.12",
