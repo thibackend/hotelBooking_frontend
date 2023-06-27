@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -15,6 +14,7 @@ import {
   Button
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
+import { loginApi } from "../../../services/auth";
 const Login = () => {
   return (
     <>
@@ -34,23 +34,21 @@ export const LoginForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
   // execute function......
-  const handleSigin = (data) => {
-    console.log(data);
-    const api = "http://localhost:8000/api/login";
-    const login = async () => {
-      await axios.post(api, data)
-        .then((res) => {
-          if (res.data.status) {
-            tokenService.setToken(res.data);
-            navigate("/");
-          } else {
-            alert("account didn't exist");
-          }
-        })
-        ;
+  const handleSigin = async (data) => {
+    console.log("data login",data)
+    try {
+      loginApi(data).then((res) => {
+        if (res?.email) {
+          tokenService.setToken(res);
+          // navigate("/");
+          console.log("token localL:",tokenService.getToken());
+        }
+      })
+    } catch (error) {
+      console.log(errors)
     }
-    login();
   }
+
   return (
     <Box my={8} textAlign={'left'}>
       <form onSubmit={handleSubmit(handleSigin)}>

@@ -18,6 +18,7 @@ const AuthLayout = () => {
   const registerShow = () => {
     setLogin(false);
   }
+
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
@@ -76,7 +77,7 @@ export default AuthLayout;
 
 
 const ThemeSelector = () => {
-  const { colorModel, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
   return (
     <Box textAlign={'right'} py={4}>
       <IconButton

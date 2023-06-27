@@ -46,7 +46,6 @@ export class ApiService {
   }
 
   static async post(url, data, headers) {
-   
     return instance({
       method: 'post',
       url,

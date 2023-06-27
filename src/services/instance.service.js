@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import ENV from '../constants/env';
 
 export const instance = axios.create({
-  baseURL: ENV.API_URL,
+  baseURL: `${ENV.API_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
