@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BsStarFill } from "react-icons/bs";
 import axios from "axios";
+
+
 const Rental = ({ title, image, price }) => {
   const [data, setData] = useState();
   const fetchData = async () => {
@@ -34,7 +36,6 @@ const Rental = ({ title, image, price }) => {
                   <div className="absolute text-white font-bold bottom-6 left-6 text-[22px] flex items-center gap-2">
                     {title}
                     {/* <span>&#x2022;</span> */}
-                    <p className="text-[18px] text-slate-200"> ${e.price}</p>
                   </div>
                 </div>
               </div>
@@ -43,7 +44,7 @@ const Rental = ({ title, image, price }) => {
                 {/* Left */}
                 <div className="">
                   <p className="max-w-[17rem] font-semibold text-[17px]">
-                    This is a rare find
+                    {e.name}
                   </p>
                   <p className="max-w-[17rem]  text-[16px] -mt-1 text-gray-500">
                     Jan 28 - Aug 9
@@ -55,7 +56,7 @@ const Rental = ({ title, image, price }) => {
                 {/* Right */}
                 <div className="flex items-center space-x-1">
                   <BsStarFill />
-                  <p className="text-[15px]">5.0</p>
+                  <p className="text-[15px]">{e.star}</p>
                 </div>
               </div>
             </div>
