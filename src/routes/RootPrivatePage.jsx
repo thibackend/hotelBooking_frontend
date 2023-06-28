@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 import tokenService from "../services/token.service";
-import Header from "../pages/home/Header";
-import Hero from "../pages/home/Hero";
+import Navbar from "../pages/home1/Navbar";
 
 const RootPrivatePage = () => {
   const isAuth = tokenService.getToken() || undefined
@@ -12,8 +11,6 @@ const RootPrivatePage = () => {
 
   return (
     <Box>
-      <Header />
-      <Hero />
       <Outlet />
     </Box>
   );
