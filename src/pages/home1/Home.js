@@ -3,12 +3,22 @@ import Navbar from './Navbar';
 import Filters from './Filters';
 import Rentals from './Rentals';
 import tokenService from '../../services/token.service';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
   const isAuth = tokenService.getToken() || undefined
   if (!isAuth) {
     return <Navigate to="/auth" />;
+  }else{
+    if(isAuth.username ==='admin'){
+      setTimeout(
+        ()=> {
+          navigate('/admin')
+        },1000
+      )
+    }
+
   }
   return (
     <div className="">
