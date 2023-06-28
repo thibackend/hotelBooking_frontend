@@ -4,6 +4,6 @@ export const loginApi = (data) => {
     return ApiService.post('/login', data)
 }
 
-export const register = (data) => {
+export const RegisterUser = (data) => {
     return ApiService.post('/register', data)
 }

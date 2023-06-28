@@ -1,17 +1,16 @@
-import { Navigate, Outlet } from "react-router-dom";
-import tokenService from '../../services/token.service';
-import { LoginForm } from "./login";
+import { Outlet } from "react-router-dom";
 import { Box, Flex, Heading, IconButton, Text, useColorMode } from "@chakra-ui/react";
 import { useState } from "react";
 import Register from "./resgister";
+import LoginForm from "./login";
 
 const AuthLayout = () => {
   const [login, setLogin] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const isAuth = tokenService.getToken() || undefined
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
+  // const isAuth = tokenService.getToken() || undefined
+  // if (isAuth) {
+  //   return <Navigate to="/" />;
+  // }
   const LoginShow = () => {
     setLogin(true);
   }
@@ -67,7 +66,6 @@ const AuthLayout = () => {
           </Box>
         </Box>
       </Flex >
-      <Outlet />
     </>
   );
 };
