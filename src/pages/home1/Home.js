@@ -1,24 +1,18 @@
-import React, { memo } from 'react';
-import Navbar from './Navbar';
-import Filters from './Filters';
-import Rentals from './Rentals';
-import tokenService from '../../services/token.service';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import React, { memo } from "react";
+import Navbar from "./Navbar";
+import Filters from "./Filters";
+import Rentals from "./Rentals";
+import tokenService from "../../services/token.service";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
-  const isAuth = tokenService.getToken() || undefined
+  const isAuth = tokenService.getToken() || undefined;
   if (!isAuth) {
     return <Navigate to="/auth" />;
-  }else{
-    if(isAuth.username ==='admin'){
-      setTimeout(
-        ()=> {
-          navigate('/admin')
-        },1000
-      )
-    }
-
+  }
+  if (isAuth.username === "admin") {
+    return <Navigate to="/admin" />;
   }
   return (
     <div className="">
@@ -28,8 +22,6 @@ function Home() {
         <Outlet />
       </div>
     </div>
-
-
   );
 }
 export default Home;

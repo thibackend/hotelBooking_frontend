@@ -11,9 +11,20 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import tokenService from '../../../services/token.service';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout= () =>{
+    setTimeout(
+      ()=>{
+        tokenService.removeToken();
+        navigate('/');
+      }
+      ,1000
+    )
+  }
   return (
     <div className='sidebar'>
         <div className='top'>
@@ -72,7 +83,7 @@ const Sidebar = () => {
               <PersonIcon className='icon' />
               <span>Profile</span>
             </li>
-            <li>
+            <li onClick={handleLogout}>
               <ExitToAppIcon className='icon' />
               <span>Logout</span>
             </li>

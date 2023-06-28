@@ -12,6 +12,7 @@ import Admin from "../pages/Admin";
 import Room_management from "../pages/Admin/room_management/room_manag";
 import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import User_manag from "../pages/Admin/User_management/user_manag";
+import Rentals from "../pages/home1/Rentals";
 export const routes = () => [
   {
     path: "/auth",

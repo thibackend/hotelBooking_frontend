@@ -2,14 +2,16 @@ import { Box, Flex, Heading, IconButton, Text, useColorMode } from "@chakra-ui/r
 import { useState } from "react";
 import Register from "./resgister";
 import { LoginForm } from "./login";
+import tokenService from "../../services/token.service";
+import { Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
   const [login, setLogin] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  // const isAuth = tokenService.getToken() || undefined
-  // if (isAuth) {
-  //   return <Navigate to="/" />;
-  // }
+  const isAuth = tokenService.getToken() || undefined
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
   const LoginShow = () => {
     setLogin(true);
   }
