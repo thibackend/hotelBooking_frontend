@@ -40,8 +40,6 @@ export const LoginForm = () => {
       loginApi(data).then((res) => {
         if (res?.email) {
           tokenService.setToken(res);
-          // navigate("/");
-          console.log("token localL:",tokenService.getToken());
         }
       })
     } catch (error) {
