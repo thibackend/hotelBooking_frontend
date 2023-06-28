@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import { Box, Flex, Heading, IconButton, Text, useColorMode } from "@chakra-ui/react";
 import { useState } from "react";
 import Register from "./resgister";
