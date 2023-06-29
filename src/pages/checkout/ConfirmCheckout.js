@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './boking.css';
-
 const ConfirmCheckout = () => {
   const [datacheckout, setDataCheckout] = useState({});
   const [paymentMethod, setPaymentMethod] = useState('');

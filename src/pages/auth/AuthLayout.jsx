@@ -1,10 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
-import tokenService from '../../services/token.service';
-import { LoginForm } from "./login";
 import { Box, Flex, Heading, IconButton, Text, useColorMode } from "@chakra-ui/react";
 import { useState } from "react";
 import Register from "./resgister";
-
+import { LoginForm } from "./login";
+import tokenService from "../../services/token.service";
+import { Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
   const [login, setLogin] = useState(true);
@@ -72,7 +71,6 @@ const AuthLayout = () => {
           </Box>
         </Box>
       </Flex >
-      <Outlet />
     </>
   );
 };
