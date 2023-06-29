@@ -40,6 +40,7 @@ function HotelDetail() {
     }, [hotelData]);
   return (
     <Box p="100px">
+      <h1> Ban dang dặt phòng : {id}</h1>
       {hotelData && imgs && dataRun ? (
         <>
           <Heading>{dataRun.name} phòng {dataRun.star} sao</Heading>

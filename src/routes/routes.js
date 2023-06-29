@@ -29,7 +29,7 @@ export const routes = () => [
     children: [
       { path: "", element: <Rentals /> },
       // { path: "room", element: <Rooms /> },
-      // { path: "detailHotel/:id", element: <HotelDetail /> },
+      { path: "detail/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },
     ],
