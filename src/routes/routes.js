@@ -13,6 +13,7 @@ import Room_management from "../pages/Admin/room_management/room_manag";
 import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import User_manag from "../pages/Admin/User_management/user_manag";
 import Rentals from "../pages/home1/Rentals";
+import About from "../pages/about/about";
 export const routes = () => [
   {
     path: "/auth",
@@ -28,6 +29,7 @@ export const routes = () => [
     element: <Home />,
     children: [
       { path: "", element: <Rentals /> },
+      { path: "about", element: <About/> },
       // { path: "room", element: <Rooms /> },
       // { path: "detailHotel/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },

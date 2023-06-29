@@ -16,8 +16,6 @@ const Navbar = () => {
       }
       ,1000
     )
-
-    
   }
   return (
     <div className="border-b sticky top-0 z-50 bg-white/[95%]">
@@ -27,7 +25,7 @@ const Navbar = () => {
           <img src={logo} className=" object-cover  my-10" />
         </div>
         {/* Middle */}
-        <div className="hidden lg:flex justify-center items-center relative shadow-sm shadow-gray-400 border rounded-full">
+        <div className="hidden lg:flex ml-60 items-center relative shadow-sm shadow-gray-400 border rounded-full">
           <input
             type="search"
             placeholder=""
