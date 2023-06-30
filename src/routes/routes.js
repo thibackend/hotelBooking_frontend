@@ -29,7 +29,6 @@ export const routes = () => [
     element: <Home />,
     children: [
       { path: "", element: <Rentals /> },
-      // { path: "room", element: <Rooms /> },
       { path: "detail", element: <Detail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },
