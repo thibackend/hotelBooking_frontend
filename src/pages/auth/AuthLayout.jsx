@@ -24,19 +24,20 @@ const AuthLayout = () => {
   };
   return (
     <>
-      <Flex minHeight={"100vh"} width={"full"} align={"center"} justifyContent={'center'}>
+      <Flex minHeight={"100vh"} width={"full"} align={"center"} justifyContent={'center'} >
         <Box
           borderWidth={1}
           px={4}
           width={"full"}
           maxWidth={"500px"}
-          borderRadius={4}
+          borderRadius={45}
           textAlign={"center"}
           boxShadow={'lg'}
         >
-          <ThemeSelector />
-          <Box textAlign={"center"}>
-            <Flex align={"center"} justifyContent={'center'} gap={'2'}>
+          <Box textAlign={"center"}
+          marginTop={19}
+          >
+            <Flex align={"center"} justifyContent={'center'} gap={'2'} marginTop={10}>
               <Heading
                 onClick={LoginShow}
                 onMouseLeave={handleMouseLeave}
@@ -74,21 +75,3 @@ export default AuthLayout;
 
 
 
-
-const ThemeSelector = () => {
-  const { toggleColorMode } = useColorMode();
-  return (
-    <Box textAlign={'right'} py={4}>
-      <IconButton
-        colorScheme="cyan"
-        variant={'outline'}
-        aria-label="Color mode switcher"
-        onClick={toggleColorMode}
-      >
-        <Text className="align-items-center" align={'center'} alignItems={'center'}>
-          C
-        </Text>
-      </IconButton>
-    </Box>
-  );
-}

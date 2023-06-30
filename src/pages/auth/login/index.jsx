@@ -118,7 +118,7 @@ export const LoginForm = () => {
 
   }
   return (
-    <Box my={8} textAlign={'left'}>
+    <Box my={8} textAlign={'left'} >
       <form onSubmit={handleSubmit(handleSigin)}>
         {errorrs ?
           <Alert status='error'>
