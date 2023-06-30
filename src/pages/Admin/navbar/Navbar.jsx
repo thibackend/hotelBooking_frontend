@@ -21,8 +21,8 @@ const Navbar = () => {
           <div className="item">
             <Brightness4Icon className='icon' />
           </div>
-          <div className="item">
             <NotificationsActiveIcon className='icon' />
+          <div className="item">
             <div className='counter'>1</div>
           </div>
           <div className="item">
