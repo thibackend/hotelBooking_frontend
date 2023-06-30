@@ -1,0 +1,19 @@
+.admin {
+    display: flex;
+}
+
+.admin .homeContainer {
+    flex: 6;
+}
+
+.admin .homeContainer .widgets,
+.admin .homeContainer .chart {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.admin .homeContainer .charts {
+    display: flex;
+    padding: 5px 20px;
+}
