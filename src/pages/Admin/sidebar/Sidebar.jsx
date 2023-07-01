@@ -14,7 +14,9 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link, useNavigate } from 'react-router-dom';
 import tokenService from '../../../services/token.service';
 
-const Sidebar = () => {
+
+
+function Sidebar(){
   const navigate = useNavigate();
   const handleLogout= () =>{
     setTimeout(

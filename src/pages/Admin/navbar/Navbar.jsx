@@ -16,7 +16,10 @@ const Navbar = () => {
         <div className="items">
           <div className="item">
             <LanguageIcon className='icon' />
-            English
+            <select className="language" id="">
+              <option value="english">English</option>
+              <option value="vietnam">Tiếng Việt</option>
+            </select>
           </div>
           <div className="item">
             <Brightness4Icon className='icon' />

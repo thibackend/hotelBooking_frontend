@@ -8,6 +8,13 @@ import Rooms from "../pages/room";
 import HotelDetail from "../pages/detail/hotelDetail";
 import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
 import Search from "../pages/search";
+import AddRoom from "../pages/admin/room_management/addRoom";
+import Admin from "../pages/admin/index";
+import EditRoom from "../pages/admin/room_management/updateRoom";
+import AdminIndex from "../pages/admin/room_management/adminIndex";
+import AdminPage from "../pages/admin/room_management/adminPage";
+import User_manag from "../pages/admin/User_management/user_manag"
+import Booking_mang from "../pages/admin/booking_management/booking_ma";
 export const routes = () => [
   {
     path: "/auth",
@@ -22,9 +29,9 @@ export const routes = () => [
     path: "/",
     element: <Home />,
     children: [
-      { path: "", element: <Rentals /> },
+      //{ path: "", element: <Rentals /> },
       // { path: "room", element: <Rooms /> },
-      { path: "detail", element: <Detail /> },
+      //{ path: "detail", element: <Detail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },
     ],
@@ -38,8 +45,24 @@ export const routes = () => [
       { path: "detailHotel/:id", element: <HotelDetail /> },
       { path: "confirm", element: <ConfirmCheckout /> },
       { path: "search", element: <Search /> },
-      { path: "admin", element: <Admin /> },
-      { path: "admin/create", element: <AddRoom /> }
+      { path: "", element: <AdminIndex/>,
+      children:[
+        {path:"",element:<AdminPage/>},
+        {path:"create",element:<AddRoom/>}
+       
+      ]},
+      { path:"room_manag/",
+        element:<AdminIndex/>,
+        children:[
+          {path:"",element:<AdminPage/>},
+          {path:"create",element:<AddRoom/>},
+          {path:"edit", element: <EditRoom/>}
+        ]
+      },
+      {path:"user_manag",element:<User_manag/>},
+      {path:"booking_manag",element:<Booking_mang/>},
+      { path: "edit", element: <EditRoom/>},
+      
     ],
   },
   {

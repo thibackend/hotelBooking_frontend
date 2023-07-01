@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import "./styleAdmin.css";
-import Loading from './loading';
+import Loading from '../loading';
 
-function Admin() {
+function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
 
@@ -36,8 +35,7 @@ function Admin() {
           <div className="card">
             <div className="card-header">
               <h4>Danh sách tất cả phòng trong trang web
-              {/*<Link to="/admin/create" className="btn btn-primary float-end">Add room</Link>*/}
-              <button className='btn btn-succ'>Thêm phòng</button>
+              <Link to={`create`} className="btn btn-primary float-end">Thêm phòng</Link>
               </h4>
             </div>
             <div className="card-body">
@@ -70,9 +68,9 @@ function Admin() {
                             />
                           ))}
                         </td>
-                        <td>
-                          <button className="btn btn-success">Edit</button>
-                          <button className="btn btn-danger">Delete</button>
+                        <td className='action-button'>
+                          <Link to={`edit`} className="btn btn-success">Change</Link>
+                          <Link to={`delete`} className="btn btn-danger">Delete</Link>
                         </td>
                       </tr>
                     ))
@@ -91,4 +89,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminPage;

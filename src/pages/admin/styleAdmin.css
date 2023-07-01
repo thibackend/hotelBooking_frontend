@@ -11,4 +11,13 @@
     align-items: center;
     flex-direction: column;
   }
+
+.action-button .btn {
+  display: flex;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  justify-content: center;
+}
   
