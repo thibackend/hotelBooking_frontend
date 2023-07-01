@@ -12,8 +12,8 @@ import Admin from "../pages/Admin";
 import Room_management from "../pages/Admin/room_management/room_manag";
 import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import User_manag from "../pages/Admin/User_management/user_manag";
-import Rentals from "../pages/home1/Rentals";
-import Detail from "../pages/detail/detail";
+import Rentalsnews from "../pages/home1/Rentalsnews";
+import About from "../pages/about/about";
 export const routes = () => [
   {
     path: "/auth",
@@ -28,9 +28,10 @@ export const routes = () => [
     path: "/",
     element: <Home />,
     children: [
-      { path: "", element: <Rentals /> },
+      { path: "", element: <Rentalsnews /> },
+      { path: "about", element: <About/> },
       // { path: "room", element: <Rooms /> },
-      { path: "detail", element: <Detail /> },
+      // { path: "detailHotel/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },
     ],

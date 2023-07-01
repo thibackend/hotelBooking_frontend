@@ -4,21 +4,18 @@ import { ImKey } from "react-icons/im";
 import { HiGlobeAsiaAustralia } from "react-icons/hi2";
 import { BsFillTreeFill } from "react-icons/bs";
 import Filter from "./Filter";
-
+import { Link } from "react-router-dom";
 const Filters = () => {
-  const sorting = [
-    { title: "Boat", icon: <GiFishingBoat /> },
-    { title: "New", icon: <GiMineExplosion /> },
-    { title: "About", icon: <HiGlobeAsiaAustralia /> },
-    { title: "Private", icon: <ImKey /> },
-    { title: "Forest", icon: <BsFillTreeFill /> },
-  ];
+ 
   return (
     <div className="">
       <div className="flex justify-center  gap-3 sm:gap-4  mt-12 ">
-        {sorting.map((obj) => (
-          <Filter title={obj.title} icon={obj.icon} />
-        ))}
+        <Link to="about"><Filter title={"About"} icon={<HiGlobeAsiaAustralia />} /></Link>
+          <Filter title={"Boat"} icon={<GiFishingBoat />} />
+          <Filter title={"New"} icon={<GiMineExplosion />} />
+          <Filter title={"Private"} icon={<ImKey />} />
+          <Filter title={"Forest"} icon={<BsFillTreeFill />} />
+        
       </div>
     </div>
   );
