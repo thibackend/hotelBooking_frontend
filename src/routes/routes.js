@@ -30,10 +30,10 @@ export const routes = () => [
     children: [
       { path: "", element: <Rentalsnews /> },
       { path: "about", element: <About/> },
-      // { path: "room", element: <Rooms /> },
-      // { path: "detailHotel/:id", element: <HotelDetail /> },
-      // { path: "confirm", element: <ConfirmCheckout /> },
-      // { path: "search", element: <Search /> },
+       { path: "room", element: <Rooms /> },
+       { path: "detailHotel/:id", element: <HotelDetail /> },
+       { path: "confirm", element: <ConfirmCheckout /> },
+       { path: "search", element: <Search /> },
     ],
   },
   {
