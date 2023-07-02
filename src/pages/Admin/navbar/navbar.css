@@ -13,7 +13,7 @@
     width: 100%;
     padding: 20px;
     justify-content: space-between;
-    margin-top: -21px;
+    margin-top: -20px;
 }
 
 .navbar .wrapper .search {
@@ -21,12 +21,18 @@
     align-items: center;
     border: 0.5px solid lightgrey;
     padding: 3px;
+    border-radius: 10px;
+    height: 40px;
 }
 
 .navbar .wrapper .search input {
     border: none;
     outline: none;
     background: transparent;
+}
+
+.icon-search {
+    cursor: pointer;
 }
 
 .navbar .wrapper .search input::placeholder {

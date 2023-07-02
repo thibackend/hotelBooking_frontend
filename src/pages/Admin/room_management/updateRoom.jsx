@@ -3,10 +3,11 @@ import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
 
 function EditRoom({ room }) {
-  const [name, setName] = useState(room.name);
-  const [desc, setDesc] = useState(room.desc);
-  const [price, setPrice] = useState(room.price);
-  const [category_id, setCategory_id] = useState(room.category_id);
+  const [name, setName] = useState(room && room.name);
+  const [desc, setDesc] = useState(room && room.desc);
+  const [price, setPrice] = useState(room && room.price);
+  const [category_id, setCategory_id] = useState(room && room.category_id);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNameChange = (e) => {

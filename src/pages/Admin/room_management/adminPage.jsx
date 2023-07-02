@@ -6,6 +6,18 @@ import Loading from '../loading';
 function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentAction, setCurrentAction] = useState(null);
+
+  const openModal = (action) => {
+    setCurrentAction(action);
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setCurrentAction(null);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     axios
@@ -20,10 +32,10 @@ function AdminPage() {
       });
   }, []);
 
-  if(loading) {
+  if (loading) {
     return (
       <div>
-       <Loading />
+        <Loading />
       </div>
     )
   }
@@ -34,17 +46,15 @@ function AdminPage() {
         <div className="col-md-12">
           <div className="card">
             <div className="card-header">
-              <h4>Danh sách tất cả phòng trong trang web
               <Link to={`create`} className="btn btn-primary float-end">Thêm phòng</Link>
-              </h4>
             </div>
             <div className="card-body">
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <td>Stt</td>
+                    <th>Stt</th>
                     <th>Tên phòng</th>
-                    <th>Giá phòng/đêm</th>
+                    <th>Giá</th>
                     <th>Mô tả</th>
                     <th>Hình ảnh phòng</th>
                     <th>Actions</th>

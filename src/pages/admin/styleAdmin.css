@@ -12,6 +12,10 @@
     flex-direction: column;
   }
 
+  .text-loading {
+    margin-left: 100px;
+  }
+
 .action-button .btn {
   display: flex;
   width: 90%;
