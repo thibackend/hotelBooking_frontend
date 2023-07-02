@@ -6,6 +6,7 @@ import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
 import HotelDetail from "../pages/detail/hotelDetail";
+import Detail from "../pages/detail/detail";
 import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
 import Search from "../pages/search";
 import Admin from "../pages/Admin";
