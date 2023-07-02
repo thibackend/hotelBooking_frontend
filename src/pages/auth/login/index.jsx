@@ -20,11 +20,15 @@ import {
   Stack,
   Checkbox,
   Button,
-  resolveStyleConfig
+  resolveStyleConfig,
+  Alert,
+  AlertIcon,
+  AlertDescription
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../../services/auth";
 
+import { useState } from "react";
 
 const Login = () => {
   return (
@@ -85,6 +89,7 @@ const LoginHeader = () => {
   );
 }
 export const LoginForm = () => {
+  const [errorrs, setErrorrs] = useState('' || undefined);
   const schema = yup.object().shape({
     email: yup.string().email().min(4).max(100).required(),
     password: yup.string().min(4).max(40).required(),
@@ -101,15 +106,29 @@ export const LoginForm = () => {
   const handleSigin = (data) => {
     loginApi(data).then(
       res => {
+        setErrorrs(undefined);
         tokenService.setToken(res);
         navigate('/');
       }
     )
+      .catch((errors) => {
+        if (errors?.message) {
+          console.log("errors", errors?.message);
+          setErrorrs(errors.message);
+        }
+      })
 
   }
   return (
     <Box my={8} textAlign={'left'}>
       <form onSubmit={handleSubmit(handleSigin)}>
+        {errorrs ?
+          <Alert status='error'>
+            <AlertIcon />
+            <AlertDescription>{errorrs}</AlertDescription>
+          </Alert>
+          : ''
+        }
         <FormControl>
           <FormLabel>Email sddress </FormLabel>
           <Input
@@ -134,7 +153,6 @@ export const LoginForm = () => {
           </Box>
           <Box>
             <Link>Forgot password</Link> <br />
-            <Link color={'green'}>Sig up</Link>
           </Box>
         </Stack>
         <Button type="submit" colorScheme="green" width={"full"} mt={4}>Sin In</Button>
