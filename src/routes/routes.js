@@ -1,19 +1,15 @@
 import React from "react";
 import NotFound from "../pages/notFound";
 import Home from "../pages/home1/Home";
-import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
-import Rooms from "../pages/room";
-import HotelDetail from "../pages/detail/hotelDetail";
-import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
-import Search from "../pages/search";
 import Admin from "../pages/Admin";
 import Room_management from "../pages/Admin/room_management/room_manag";
 import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import User_manag from "../pages/Admin/User_management/user_manag";
 import Rentalsnews from "../pages/home1/Rentalsnews";
 import About from "../pages/about/about";
+import Detail from "../pages/detail/detail";
 export const routes = () => [
   {
     path: "/auth",
@@ -30,7 +26,7 @@ export const routes = () => [
     children: [
       { path: "", element: <Rentalsnews /> },
       { path: "about", element: <About/> },
-      // { path: "room", element: <Rooms /> },
+      { path: "detail/:id", element: <Detail /> },
       // { path: "detailHotel/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },

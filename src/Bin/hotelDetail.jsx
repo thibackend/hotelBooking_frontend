@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, SimpleGrid, Img, Grid, GridItem } from '@chakra-ui/react';
 import '../../style/detail_room.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 // import { isMotionComponent } from 'framer-motion';
-import { RoomDetail } from './roomDetai';
 export default HotelDetail;
 function HotelDetail() {
   const { id } = useParams();

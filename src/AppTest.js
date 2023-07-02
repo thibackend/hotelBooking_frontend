@@ -1,12 +1,4 @@
-import { ToastContainer } from "react-toastify";
-import { BrowserRouter } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
-import Navbar from "./pages/home1/Navbar";
 // import Footer from "./components/Footer";
-import Filters from "./pages/home1/Filters";
-import Rentals from "./pages/home1/Rentals";
-
-
 const Apptest = () => {
   return (
     // <ChakraProvider>
