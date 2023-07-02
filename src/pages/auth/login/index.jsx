@@ -84,7 +84,7 @@ const ThemeSelector = () => {
 const LoginHeader = () => {
   return (
     <Box textAlign={"center"}>
-      <Heading> Sig In</Heading>
+      <Heading> Sign In</Heading>
     </Box>
   );
 }
@@ -130,7 +130,7 @@ export const LoginForm = () => {
           : ''
         }
         <FormControl>
-          <FormLabel>Email sddress </FormLabel>
+          <FormLabel>Email address </FormLabel>
           <Input
             type="text"
             placeholder="Enter your email address"
@@ -153,13 +153,13 @@ export const LoginForm = () => {
           </Box>
           <Box>
             <Link>Forgot password</Link> <br />
+            <Link color={'green'}>Sign up</Link>
           </Box>
         </Stack>
-        <Button type="submit" colorScheme="green" width={"full"} mt={4}>Sin In</Button>
+        <Button type="submit" colorScheme="green" width={"full"} mt={4}>Sign In</Button>
       </form>
     </Box>
   );
 }
 export default Login;
-
 
