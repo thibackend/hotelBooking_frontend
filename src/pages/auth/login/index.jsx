@@ -27,7 +27,9 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../../services/auth";
+
 import { useState } from "react";
+
 const Login = () => {
   return (
     <ColorModeProvider>
@@ -35,8 +37,6 @@ const Login = () => {
       <LoginArea />
     </ColorModeProvider>
   );
-
-
 }
 
 const LoginArea = () => {
@@ -101,6 +101,8 @@ export const LoginForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
   console.log(errors.email);
+  
+  
   const handleSigin = (data) => {
     loginApi(data).then(
       res => {
