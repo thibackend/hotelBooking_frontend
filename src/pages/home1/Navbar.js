@@ -4,6 +4,7 @@ import { BiWorld, BiUser } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import tokenService from "../../services/token.service";
 import { useNavigate } from "react-router-dom";
+import Filters from "./Filters";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,7 +19,9 @@ const Navbar = () => {
     )
   }
   return (
-    <div className="border-b sticky top-0 z-50 bg-white/[95%]">
+    <div 
+    style={{backgroundImage: "url('https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720')"}}
+    className="border-b sticky top-0 z-50 bg-white/[95%]">
       <div className="flex justify-between items-center sm:mx-6 md:mx-10 lg:mx-12 ">
         {/* Left */}
         <div className="h-20 flex">
@@ -40,6 +43,7 @@ const Navbar = () => {
             <FiSearch className="text-white w-full" />
           </div>
         </div>
+        <Filters/>
         {/* Right */}
         <div 
         className="flex items-center pr-3  font-semibold text-gray-600"
