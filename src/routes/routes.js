@@ -12,7 +12,7 @@ import Admin from "../pages/Admin";
 import Room_management from "../pages/Admin/room_management/room_manag";
 import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import User_manag from "../pages/Admin/User_management/user_manag";
-import Rentals from "../pages/home1/Rentals";
+import Rentalsnews from "../pages/home1/Rentalsnews";
 import About from "../pages/about/about";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +30,7 @@ export const routes = () => [
     path: "/",
     element: <Home />,
     children: [
-      { path: "", element: <Rentals /> },
+      { path: "", element: <Rentalsnews /> },
       { path: "about", element: <About/> },
       // { path: "room", element: <Rooms /> },
       // { path: "detailHotel/:id", element: <HotelDetail /> },
