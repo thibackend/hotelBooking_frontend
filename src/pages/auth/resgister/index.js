@@ -199,7 +199,7 @@ const RegisterForm = () => {
         <br />
 
         <FormControl>
-          <Input type="submit" colorScheme="green" width={"full"} mt={4} />
+          <Input type="submit" value ="Send" colorScheme="green" width={"full"} mt={4} />
         </FormControl>
       </div>
     </form>
