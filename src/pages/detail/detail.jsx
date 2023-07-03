@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import '../../css/roomDetail.css'
 import 'bootstrap'
 import axios from 'axios';
-import { register } from 'swiper/element/bundle';
+// import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, NavLink, Navigate, useParams } from 'react-router-dom'
@@ -11,10 +11,10 @@ import { getRooms } from "../../services/home";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 import Checkout from "../checkout/Checkout";
-import Services from "./services";
+// import Services from "../services";
 
 function Detail() {
-  register();
+  // register();
   const { id } = useParams();
   const [data, setData] = useState(false);
   const [roomrelevant, setRoomrelevant] = useState(null);
@@ -216,7 +216,7 @@ function Detail() {
         <div className="services">
           <h1 className="title">SERVICES</h1>
           <ul className="service-item">
-            <Services id={id} />
+            {/* <Services id={id} /> */}
           </ul>
           <div className="service-item">
 
