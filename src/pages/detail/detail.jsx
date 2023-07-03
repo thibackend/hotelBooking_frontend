@@ -11,6 +11,7 @@ import { getRooms } from "../../services/home";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 import Checkout from "../checkout/Checkout";
+import Services from "./services";
 
 function Detail() {
   register();
@@ -21,7 +22,7 @@ function Detail() {
     await axios.get(`http://localhost:8000/api/getOne-room-and-images/${id}`)
       .then(
         (res) => {
-          console.log("data res:", res.data);
+          console.log("fist data of room detail:", res.data);
           if (res.data) {
             const object = res.data.find((e) => e);
             setData(object);
@@ -44,7 +45,6 @@ function Detail() {
             }
           }
         )
-        console.log("data filter:", reRoom)
         setRoomrelevant(reRoom);
       }
     )
@@ -123,8 +123,10 @@ function Detail() {
                   data.image_path.length > 1
                     ? //if 2
                     data.image_path.map(
-                      e => (
-                        <swiper-slide className='slide-item'>
+                      (e, index) => (
+                        <swiper-slide
+                          key={index}
+                          className='slide-item'>
                           <img
                             src={e}
                           />
@@ -147,7 +149,6 @@ function Detail() {
                 : //else 0
                 <h1>DON'T HAVE DATA HERE!</h1>
               }
-
             </swiper-container>
 
           </div>
@@ -161,10 +162,10 @@ function Detail() {
                     style={{ display: 'flex', flexDirection: 'column-reverse' }}
                   >
                     {roomrelevant.map(
-                      (e) => (
+                      (e, index) => (
 
-                        <swiper-slide>
-                          <Card key={data.id} style={{ width: '100%' }}>
+                        <swiper-slide key={index}>
+                          <Card style={{ width: '100%' }}>
                             <Card.Img variant="top" src={e.image_path[0] ? e.image_path[0] : 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'} />
                             <Card.Body>
                               <div className="star-name"
@@ -213,30 +214,26 @@ function Detail() {
       <hr style={{ margin: "10px" }} />
       <div className="service-price-typeroom">
         <div className="services">
-          <h1>SERVICES</h1>
+          <h1 className="title">SERVICES</h1>
           <ul className="service-item">
-            <li>service 1</li>
-            <li>service 2</li>
-            <li>service 3</li>
-            <li>service 4</li>
-            <li>service 5</li>
+            <Services id={id} />
           </ul>
           <div className="service-item">
 
           </div>
         </div>
         <div className="price">
-          <h1>PRICE</h1>
-          <h3>${data.price}</h3>
-
-
-
+          <h1 className="title">PRICE</h1>
+          <h3>${data.price}  / Day</h3>
         </div>
         <div className="typeroom">
-          <h1>TYPE ROOM</h1>
+          <h1 className="title">TYPE ROOM</h1>
+          <div className="h3">
+            {data ? data.category_name.name : <del> NONE</del>}
+          </div>
         </div>
         <div className="form-booking">
-          <Checkout />
+          <Checkout id={id} />
         </div>
       </div>
     </>
