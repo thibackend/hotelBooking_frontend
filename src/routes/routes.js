@@ -1,21 +1,17 @@
 import React from "react";
 import NotFound from "../pages/notFound";
 import Home from "../pages/home1/Home";
-import RootPrivatePage from "./RootPrivatePage";
 import AuthLayout from "../pages/auth/AuthLayout";
 import { Login, Register } from "../pages/auth";
 import Rooms from "../pages/room";
 import HotelDetail from "../pages/detail/hotelDetail";
 import ConfirmCheckout from "../pages/checkout/ConfirmCheckout";
 import Search from "../pages/search";
-import Admin from "../pages/Admin";
-import Room_management from "../pages/Admin/room_management/room_manag";
-import Booking_mang from "../pages/Admin/booking_management/booking_ma";
-import User_manag from "../pages/Admin/User_management/user_manag";
-import Rentalsnews from "../pages/home1/Rentalsnews";
-import About from "../pages/about/about";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Admin from "../pages/admin/index";
+import AdminIndex from "../pages/admin/room_management/adminIndex";
+import AdminPage from "../pages/admin/room_management/adminPage";
+import User_manag from "../pages/admin/User_management/user_manag"
+import Booking_mang from "../pages/admin/booking_management/booking_ma";
 export const routes = () => [
   {
     path: "/auth",
@@ -31,7 +27,7 @@ export const routes = () => [
     element: <Home />,
     children: [
       { path: "", element: <Rentalsnews /> },
-      { path: "about", element: <About/> },
+      { path: "about", element: <About /> },
       // { path: "room", element: <Rooms /> },
       // { path: "detailHotel/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
@@ -40,12 +36,30 @@ export const routes = () => [
   },
   {
     path: "/admin",
-    element: <Admin/>,
+    element: <Admin />,
     children: [
-      { path: "", element: <Room_management/> },
-      { path: "user_manag", element: <User_manag/> },
-      { path: "room_manag", element: <Room_management/> },
-      { path: "booking_manag", element: <Booking_mang/> },
+      { path: "", element: <Home /> },
+      { path: "room", element: <Rooms /> },
+      { path: "detailHotel/:id", element: <HotelDetail /> },
+      { path: "confirm", element: <ConfirmCheckout /> },
+      { path: "search", element: <Search /> },
+      {
+        path: "", element: <AdminIndex />,
+        children: [
+          { path: "", element: <AdminPage /> },
+
+        ]
+      },
+      {
+        path: "room_manag/",
+        element: <AdminIndex />,
+        children: [
+          { path: "", element: <AdminPage /> },
+        ]
+      },
+      { path: "user_manag", element: <User_manag /> },
+      { path: "booking_manag", element: <Booking_mang /> },
+
     ],
   },
   {

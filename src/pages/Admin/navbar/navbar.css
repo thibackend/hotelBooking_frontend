@@ -1,5 +1,5 @@
 .navbar {
-    height: 50px;
+    height: 60px;
     border-bottom: 0.5px solid rgb(230, 227, 227);
     display: flex;
     align-items: center;
@@ -13,6 +13,7 @@
     width: 100%;
     padding: 20px;
     justify-content: space-between;
+    margin-top: -20px;
 }
 
 .navbar .wrapper .search {
@@ -20,12 +21,18 @@
     align-items: center;
     border: 0.5px solid lightgrey;
     padding: 3px;
+    border-radius: 10px;
+    height: 40px;
 }
 
 .navbar .wrapper .search input {
     border: none;
     outline: none;
     background: transparent;
+}
+
+.icon-search {
+    cursor: pointer;
 }
 
 .navbar .wrapper .search input::placeholder {
@@ -46,6 +53,11 @@
 
 .navbar .wrapper .items .item .icon {
     font-size: 20px;
+}
+
+.language {
+    background-color: rgb(19, 18, 18);
+    border: none;
 }
 
 .navbar .wrapper .items .item .counter {
