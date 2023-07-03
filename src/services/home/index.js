@@ -10,3 +10,8 @@ export const getRoomDetail = () => {
 export const roomdetail = () => {
     return ApiService.get('/room-detail')
 }
+
+// lấy tất cả services thuộc về một room theo room_id;
+export const RommServices = (room_id) => {
+    return ApiService.get(`/get-room-with-services/${room_id}`)
+}
