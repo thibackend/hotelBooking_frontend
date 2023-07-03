@@ -16,6 +16,11 @@
     margin-left: 100px;
   }
 
+  /* CSS for Validation form */
+  .error-message {
+    color: red;
+  }
+
 .action-button .btn {
   display: flex;
   width: 90%;
