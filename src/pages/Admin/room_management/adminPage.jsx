@@ -86,24 +86,24 @@ function AdminPage() {
       setNameError(true);
       hasError = true;
     }
-  
+
     if (desc.trim() === "") {
       setDescError(true);
       hasError = true;
     }
-  
+
     if (price.trim() === "") {
       setPriceError(true);
       hasError = true;
     }
-  
+
     if (currentAction === "create" || currentAction === "edit") {
       if (category_id === "") {
         setCategoryError(true);
         hasError = true;
       }
     }
-  
+
     if (hasError) {
       return;
     }
@@ -167,8 +167,8 @@ function AdminPage() {
         <div className="col-md-12">
           <div className="card">
             <div className="card-header">
-              <h2 className='align-items:center'> Danh sách phòng trong khách sạn 
-              <Button className='button-add float-end' onClick={() => openModal('create', null)}>Thêm phòng mới</Button>
+              <h2 className='align-items:center'> Danh sách phòng trong khách sạn
+                <Button className='button-add float-end' onClick={() => openModal('create', null)}>Thêm phòng mới</Button>
               </h2>
             </div>
             <div className="card-body">
