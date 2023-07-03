@@ -14,7 +14,7 @@ import Checkout from "../checkout/Checkout";
 import Services from "./services";
 
 function Detail() {
-  register();
+  // register();
   const { id } = useParams();
   const [data, setData] = useState(false);
   const [roomrelevant, setRoomrelevant] = useState(null);
