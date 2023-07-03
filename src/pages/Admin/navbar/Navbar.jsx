@@ -11,12 +11,15 @@ const Navbar = () => {
       <div className="wrapper">
         <div className="search">
           <input type="text" placeholder='Search...' />
-          <SearchIcon />
+          <SearchIcon className='icon-search'/>
         </div>
         <div className="items">
           <div className="item">
             <LanguageIcon className='icon' />
-            English
+            <select className="language" id="">
+              <option value="english">English</option>
+              <option value="vietnam">Tiếng Việt</option>
+            </select>
           </div>
           <div className="item">
             <Brightness4Icon className='icon' />

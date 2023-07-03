@@ -1,9 +1,6 @@
-import { Link } from "react-router-dom";
-import house from "../../assets/house.jpg";
 import Rentalnew from "./Rentalnew";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getRooms } from "./../../services/home/index";
-import { FiSearch } from "react-icons/fi";
 
 const Rentals = (props) => {
   const [data, setData] = useState([]);
