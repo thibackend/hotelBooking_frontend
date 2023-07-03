@@ -1,12 +1,13 @@
 import React from "react";
 import { BsStarFill } from "react-icons/bs";
-
+import { Link } from "react-router-dom";
+import '../../css/roomDetail.css'
 const Rentalnew = ({ data: rentalData }) => {
   return (
     <div className="row flex flex-wrap justify-between absolute w-full mt-12 pr-16 pl-6 font-semibold text-gray-600">
       {rentalData ? (
         rentalData.map((rental, index) => (
-          <div className="col-sm-3 mb-10" key={index}>
+          <Link to={`detail/${rental.id}`}  className="room-show col-sm-3 mb-10" key={index}>
             <div className="relative">
               <div className="grad absolute w-full h-full rounded-b-[1.3rem]"></div>
               <div className="flex">
@@ -45,7 +46,7 @@ const Rentalnew = ({ data: rentalData }) => {
                 <p className="text-[15px]">{rental.star || ""}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))
       ) : (
         <h1>No data found</h1>

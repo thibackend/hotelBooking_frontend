@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <div 
     style={{backgroundImage: "url('https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720')"}}
-    className="border-b sticky top-0 z-50 bg-white/[95%]">
+    className="border-b sticky top-0 z-50 bg-white/[100%]">
       <div className="flex justify-between items-center sm:mx-6 md:mx-10 lg:mx-12 ">
         {/* Left */}
         <div className="h-20 flex">
