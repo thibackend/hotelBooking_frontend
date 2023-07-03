@@ -1,8 +1,8 @@
 import "./admin.css";
-import Slidebar from "../Admin/sidebar/Sidebar";
-import Navbar from "../Admin/navbar/Navbar";
-import Widget from "../Admin/widget/Widget";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "./sidebar/Sidebar";
+import Navbar from "./navbar/Navbar";
+import Widget from "./widget/Widget";
+import { Navigate, Outlet} from "react-router-dom";
 import tokenService from "../../services/token.service";
 
 const Admin = () => {
@@ -15,7 +15,7 @@ const Admin = () => {
   }
   return (
     <div className="admin">
-      <Slidebar />
+      <Sidebar />
       <div className="homeContainer">
         <Navbar />
         <div className="widgets">

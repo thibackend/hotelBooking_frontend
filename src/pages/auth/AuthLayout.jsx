@@ -19,6 +19,10 @@ const AuthLayout = () => {
     setLogin(false);
   }
 
+
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
   const handleMouseLeave = () => {
     setIsHovered(false);
   };

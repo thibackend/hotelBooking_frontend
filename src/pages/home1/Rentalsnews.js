@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-import house from "../../assets/house.jpg";
 import Rentalnew from "./Rentalnew";
-import { useEffect, useState, useRef } from "react";
+
+import { useEffect, useState} from "react";
 import { getRooms } from "./../../services/home/index";
-import { FiSearch } from "react-icons/fi";
 
 const Rentals = (props) => {
   const [data, setData] = useState([]);
@@ -103,7 +101,7 @@ const Rentals = (props) => {
           position: "relative",
           top: 0,
           left: 0,
-          width: "100vw",
+          width: "100%",
           height: "600px",
           alignItems: "center",
         }}
@@ -201,9 +199,9 @@ const Rentals = (props) => {
         </div>
       </div>
 
-      <div className="py-3 sm:py-5">
+      <div className="py-3 sm:py-5 container-fluid w-100">
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 "
+          className="grid grid-col-1"
           style={{ flexWrap: "wrap" }}
         >
           {filteredData.length > 0 ? (
