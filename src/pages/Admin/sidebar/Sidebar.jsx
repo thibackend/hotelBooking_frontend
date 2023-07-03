@@ -54,10 +54,6 @@ function Sidebar(){
               <ProductionQuantityLimitsIcon className='icon' />
               <Link to={'booking_manag'}>Booking management</Link> 
             </li>
-            <li>
-              <LocalShippingIcon className='icon' />
-              <span>Delivery</span>
-            </li>
             <p className="title">OTHER MENU</p>
             <li>
               <QueryStatsIcon className='icon' />

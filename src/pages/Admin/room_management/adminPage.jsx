@@ -86,24 +86,24 @@ function AdminPage() {
       setNameError(true);
       hasError = true;
     }
-
+  
     if (desc.trim() === "") {
       setDescError(true);
       hasError = true;
     }
-
+  
     if (price.trim() === "") {
       setPriceError(true);
       hasError = true;
     }
-
+  
     if (currentAction === "create" || currentAction === "edit") {
       if (category_id === "") {
         setCategoryError(true);
         hasError = true;
       }
     }
-
+  
     if (hasError) {
       return;
     }
@@ -167,7 +167,9 @@ function AdminPage() {
         <div className="col-md-12">
           <div className="card">
             <div className="card-header">
-              <Button variant="primary" onClick={() => openModal('create', null)}>Thêm phòng mới</Button>
+              <h2 className='align-items:center'> Danh sách phòng trong khách sạn 
+              <Button className='button-add float-end' onClick={() => openModal('create', null)}>Thêm phòng mới</Button>
+              </h2>
             </div>
             <div className="card-body">
               <table className="table table-striped">
@@ -248,15 +250,13 @@ function AdminPage() {
               <div className="md-3">
                 <label htmlFor="price">Giá phòng/đêm</label>
                 <input
-                  type="number"
+                  type="text"
                   name="price"
                   className="form-control"
                   value={price}
                   onChange={handlePriceChange}
                 />
-                {priceError && (
-                  <p className="error-message">Vui lòng nhập giá phòng *</p>
-                )}
+                {priceError && <p className="error-message">Vui lòng nhập giá phòng *</p>}
               </div>
               {currentAction === 'create' || currentAction === 'edit' ? (
                 <div className="md-3">

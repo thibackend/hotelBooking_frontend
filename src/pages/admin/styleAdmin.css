@@ -29,4 +29,17 @@
   text-align: center;
   justify-content: center;
 }
-  
+
+.card-header h2{
+  /*background: linear-gradient(to left, #087fc4, #b90dc9);
+  background: linear-gradient(to left, rgb(94, 3, 26), red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
+  color: #087fc4;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.card-header .button-add {
+  width: 30%;
+}
