@@ -28,6 +28,21 @@ const Navbar = () => {
           <img src={logo} className=" object-cover  my-10" />
         </div>
         {/* Middle */}
+        <div className="hidden lg:flex ml-25  items-center relative shadow-sm shadow-gray-400 border rounded-full">
+          <input
+            type="search"
+            placeholder=""
+            className="py-2.5 w-[20rem] rounded-full outline-0"
+          />
+          <div className="flex justify-between absolute w-full pr-16 pl-6 font-semibold text-gray-600">
+            <button className="w-full">Place</button>
+            <button className="border-l border-x px-6">Time</button>
+            <button className="w-full text-gray-600/60 pl-2">Group Size</button>
+          </div>
+          <div className="bg-[#ff5a60] p-2 rounded-full mr-2">
+            <FiSearch className="text-white w-full" />
+          </div>
+        </div>
         <Filters/>
         {/* Right */}
         <div 
