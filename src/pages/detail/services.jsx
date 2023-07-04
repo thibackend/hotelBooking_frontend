@@ -10,7 +10,6 @@ function Services(props) {
   // }
   useEffect(() => {
     if (!data) setData(props.services);
-    console.log("in services get services:", data);
   }, [data]);
   return (
     <>

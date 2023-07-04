@@ -5,6 +5,7 @@ import axios from 'axios';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { getRooms } from "../../services/home";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
@@ -13,18 +14,20 @@ import Services from "./services";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Box, Stack } from "@mui/material";
 
 
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState(false);
-  // const [roomrelevant, setRoomrelevant] = useState(null);
+  const [images, setImage] = useState(false);
+  const [roomRelevant, setRoomRelevant] = useState(false);
+
   // hàm này dùng để chúng ta lấy một room và tất cả các ảnh của room đó.
   const fetchRoom = async () => {
     await axios.get(`http://localhost:8000/api/getOne-room-and-images/${id}`)
       .then(
         (res) => {
-          console.log("fist data of room detail:", res.data);
           if (res.data) {
             const object = res.data.find((e) => e);
             setData(object);
@@ -33,24 +36,26 @@ function Detail() {
       )
       .catch(errors => console.log(errors))
   }
-  // const fetchAllRoom = () => {
-  //   getRooms().then(
-  //     res => {
-  //       const reRoom = res.filter(
-  //         (e, index) => {
-  //           if (
-  //             e.star === data.star ||
-  //             e.price === data.price ||
-  //             e.name.includes(data.name)
-  //           ) {
-  //             return e
-  //           }
-  //         }
-  //       )
-  //       setRoomrelevant(reRoom);
-  //     }
-  //   )
-  // }
+
+  // hàm này dùng dể lấy tất cả các room có liên quan tới room hiện tại.
+  const fetchAllRoom = () => {
+    getRooms().then(
+      res => {
+        const reRoom = res.filter(
+          (e) => {
+            if (
+              e.star === data.star ||
+              e.price === data.price ||
+              e.name.includes(data.name)
+            ) {
+              return e
+            }
+          }
+        )
+        setRoomRelevant(reRoom);
+      }
+    ).catch(error => console.log(error))
+  }
 
   // start 5      index<5 
   // index 1 
@@ -68,21 +73,20 @@ function Detail() {
 
   // console.log("chieu dai ",data.image_path.length);
   useEffect(() => {
-
     if (!data) {
       fetchRoom();
     }
-    // if (data && !roomrelevant) {
-    //   fetchAllRoom();
-
-    // }
-    console.log("in detail page get services:", data.services)
-  }, [data]);
-
+    if (data && data.image_path && !images) {
+      setImage(data.image_path);
+    }
+    if (data && !roomRelevant) {
+      fetchAllRoom();
+    }
+  }, [data, roomRelevant, images]);
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container">
         <div className="d-flex">
           <Link className="text-left" to={'/'}><ArrowBackIcon /></Link> <br />
           <hr />
@@ -96,18 +100,18 @@ function Detail() {
                 speed={500}
                 slidesToShow={1}
                 slidesToScroll={1}
+                autoplay={true} // Tự động chạy slide
+                autoplaySpeed={2000}
               >
                 {
-                  data ?
-                    data.img_path || null ?
-                      data.img_path.map(e =>
-                      (
-                        <img key={e.id} src={e.img_path} alt='anh nen' />
-                      )
-                      )
-                      :
-                      <img src={'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_1280.jpg'} alt="anh" />
-                    : <h5>have no data</h5>
+                  images ?
+                    images.map((e, index) =>
+                    (
+                      <img key={index} src={e} alt='Anh tượng trung' />
+                    )
+                    )
+                    :
+                    <img src={'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_1280.jpg'} alt="anh" />
                 }
               </Slider>
               {/* <div>
@@ -120,13 +124,12 @@ function Detail() {
                   <div className="black-border rounded  border-primary">Top Value</div>
                   <div className="black-border rounded  border-primary">Vip room</div>
                   <div className="black-border rounded  border-primary">Top Value</div>
-                  <div className="d-flex flex-row align-items-center">
+                  <div className="d-flex flex-row align-items-center mx-3">
                     <StarIcon style={{ color: 'yellow' }} />
                     <StarIcon style={{ color: 'yellow' }} />
                     <StarIcon style={{ color: 'yellow' }} />
                     <StarIcon style={{ color: 'yellow' }} />
                     <StarIcon style={{ color: 'yellow' }} />
-
                   </div>
                 </div>
                 <h3>{data.name} </h3>
@@ -135,12 +138,13 @@ function Detail() {
           </div>
           <div className="col-md-4 col-sm-12">
             <div className="d-inline-sm-flex">
-              {data && <Checkout id={id} services={data.services} />}
+              {data && <Checkout price={data.price} id={id} services={data.services} />}
 
             </div>
           </div>
         </div>
         <hr style={{ margin: "10px" }} />
+        <h2>Information</h2>
 
         <div className="row">
           <div className="col-md-4 my-3">
@@ -163,8 +167,38 @@ function Detail() {
             <h5 className="title">Comments</h5>
           </div>
         </div>
-        <div className="row">
-          
+        <h2> Phong lien quan</h2>
+        <div className="row justify-content-around">
+          <Slider
+            dots={true}
+            infinite={true}
+            speed={500}
+            slidesToShow={4}
+            slidesToScroll={1}
+            autoplay={true} // Tự động chạy slide
+            autoplaySpeed={0.5}
+          >
+            {
+              roomRelevant ?
+                roomRelevant.map(
+                  (e) => (
+                    <div key={e} className="col-md-3 mx-1">
+                      <Card style={{ width: '20rem' }}>
+                        <Card.Img variant="top" src={e.image_path !== '' ? e.image_path : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'} />
+                        <Card.Body>
+                          <Card.Title>{e.name}</Card.Title>
+                          <Card.Text >
+                            {/* <p className="overflow-hidden">{e.desc}</p> */}
+                          </Card.Text>
+                          <Button variant="primary">detail</Button>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  )
+                )
+                : <h1>Loading ... ... </h1>
+            }
+          </Slider>
         </div>
       </div>
     </>
