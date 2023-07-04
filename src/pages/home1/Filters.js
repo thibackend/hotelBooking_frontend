@@ -2,6 +2,7 @@ import React from "react";
 import { GiMineExplosion } from "react-icons/gi";
 import { ImKey } from "react-icons/im";
 import Filter from "./Filter";
+
 import { Link } from "react-router-dom";
 const Filters = () => {
  

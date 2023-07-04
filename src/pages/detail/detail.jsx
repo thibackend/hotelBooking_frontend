@@ -12,6 +12,7 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 import Checkout from "../checkout/Checkout";
 import Services from "./services";
+import Comments from "../home1/Comments";
 
 function Detail() {
   // register();
@@ -63,6 +64,7 @@ function Detail() {
     }
     return arraystar;
   }
+  
 
   // console.log("chieu dai ",data.image_path.length);
   useEffect(() => {
@@ -235,7 +237,9 @@ function Detail() {
         <div className="form-booking">
           <Checkout id={id} />
         </div>
+       
       </div>
+      <Comments roomId={id} />{console.log(id,'kjjj')} 
     </>
   );
 }

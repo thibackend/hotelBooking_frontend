@@ -1,60 +1,118 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment'; // Thêm import cho thư viện moment
+import '../../css/comment.css';
+import tokenService from "../../services/token.service";
 
-export default function Comments() {
-    const [comments, setComments] = useState([]);
-    const [commentInput, setCommentInput] = useState('');
-    const [roomId, setRoomId] = useState('');
-   
 
-    useEffect(() => {
-        // Lấy danh sách bình luận cho phòng hiện tại
-        axios.get(`http://127.0.0.1:8000/api/comments/${1}`)
-            .then(response => {
-                setComments(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, [roomId]);
+export default function Comments({ roomId }) {
+  const [comments, setComments] = useState([]);
 
-    const handleChangeComment = (event) => {
-        setCommentInput(event.target.value);
-    }
+  const [commentInput, setCommentInput] = useState('');
+  const [userData, setUserData] = useState(null);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+  useEffect(() => {
+    // Fetch comments for the current room
+    axios
+      .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
+      .then(response => {
+        setComments(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [roomId]);
 
-        // Gửi bình luận cho phòng hiện tại
-        axios.post(`http://127.0.0.1:8000/api/comments/`, { content: commentInput, room_id :"1", user_id: '2'})
-            .then(response => {
-                setComments([...comments, response.data]);
-                setCommentInput('');
-            })
-            .catch(error => {
-                console.error(error);
-            });
+  const handleChangeComment = event => {
+    setCommentInput(event.target.value);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    // Send a comment for the current room
+    axios
+      .post(`http://127.0.0.1:8000/api/comments/`, {
+        content: commentInput,
+        room_id: roomId,
+        user_id: userData.id
+      })
+      .then(response => {
+        setCommentInput('');
+        // Fetch comments for the current room after submitting a comment
+        axios
+          .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
+          .then(response => {
+            setComments(response.data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  const user = tokenService.getToken();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/users");
+        const data = response.data;
+        const userItem = data.find(item => item.email === user.email);
+        setUserData(userItem);
+        console.log(userItem.email);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
 
-    const handleSelectRoom = (event) => {
-        setRoomId(event.target.value);
-    }
+    fetchUserData();
+  }, [user]);
 
-    return (
-        <div>
-           
-            <input
-                placeholder='Bình luận...'
-                value={commentInput}
-                onChange={handleChangeComment}
-            />
-            <button type='submit' onClick={handleSubmit}>Gửi</button>
-            <div>
-                <p>Bình luận</p>
-                {comments.map(item => (
-                    <p key={item.id}>{item.content}</p>
-                ))}
+  // Hàm định dạng thời gian hiển thị
+  const formatTime = time => {
+    const now = moment(); // Thời gian hiện tại
+    const commentTime = moment(time); // Thời gian của bình luận
+    const diffHours = now.diff(commentTime, 'hours'); // Số giờ chênh lệch
+
+    if (diffHours < 8) {
+      return commentTime.fromNow(); // Hiển thị "x giờ trước"
+    } else {
+      return commentTime.format('DD/MM/YYYY [lúc] HH:mm'); 
+    }
+  };
+
+  return (
+    <div className="comments-container">
+      <input
+        className="comment-input"
+        placeholder="Bình luận..."
+        value={commentInput}
+        onChange={handleChangeComment}
+      />
+      <button className="comment-submit" type="submit" onClick={handleSubmit}>
+        Gửi
+      </button>
+      <div className="comment-list">
+        <p className="comment-header">Bình luận</p>
+        {comments.map(item => (
+          <div key={item.id} className="comment-item">
+            <div className="comment-user">
+              <img
+                className="comment-avatar"
+                src={userData.image}
+                alt="Avatar"
+              />
+              <p className="comment-username">{item.name}</p>
+              <p className="comment-date">{formatTime(item.created_at)}</p> 
             </div>
-        </div>
-    );
+            <p className="comment-content">{item.content}</p>
+           
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
