@@ -1,0 +1,17 @@
+.right-aligned-modal .modal-dialog {
+    top: 0;
+    margin-right: 50px;
+    padding: 20px;
+}
+
+.title-profile {
+    background: linear-gradient(to left, rgb(94, 3, 26), red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.image-profile {
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
