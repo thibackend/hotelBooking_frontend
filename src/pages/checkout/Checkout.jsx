@@ -148,5 +148,4 @@ const Checkout = (props) => {
         </div>
     )
 }
-
 export default Checkout
