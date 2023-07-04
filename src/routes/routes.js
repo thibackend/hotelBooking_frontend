@@ -10,6 +10,7 @@ import Booking_mang from '../pages/Admin/booking_management/booking_ma';
 import Rentalsnews from "../pages/home1/Rentalsnews";
 import About from "../pages/about/about";
 import Detail from "../pages/detail/detail";
+import RoomManagement from "../pages/Admin/room_management/adminIndex";
 export const routes = () => [
   {
     path: "/auth",
@@ -37,7 +38,8 @@ export const routes = () => [
     path: "/admin",
     element: <Admin />,
     children: [
-      { path: "room_manag/", element: <AdminPage /> },
+      { path: "room_manag/", element: <AdminPage/> },
+     
       { path: "user_manag", element: <User_manag /> },
       { path: "booking_manag", element: <Booking_mang /> }
     ],
