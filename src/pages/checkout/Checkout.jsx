@@ -8,20 +8,28 @@ const Checkout = (props) => {
     // thực hiện khai báo các state được sữ dụng.
     const [services, setServices] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
+    const [total, setTotal] = useState(null);
 
     // tao schema validate cho data.
     const schema = yup.object().shape({
-        CheckIn:
-            yup
-                .date("Phải là kiểu dữ liệu thời!")
-                .required("Cần nhập trường này!")
-                .min(new Date(), "Trường này nên lớn hơn hoặc bằng hiện tại!"),
-        CheckOut:
-            yup
-                .date("trường này nhập ngày tháng!")
-                .required("Cần nhập trường ngày!")
-                .min(yup.ref('CheckIn'), "Ngày trả phải lớn hơn ngày đặt!")
-                .min(new Date(), "Trường này nên lớn hơn hoặc bằng hiện tại!"),
+        CheckIn: yup
+            .date()
+            .typeError('Phải là kiểu dữ liệu thời gian!')
+            .required('Cần nhập trường này!')
+            .min(new Date(), 'Trường này nên lớn hơn hoặc bằng hiện tại!'),
+
+        CheckOut: yup
+            .date()
+            .typeError('Trường này nhập ngày tháng!')
+            .required('Cần nhập trường ngày!')
+            .min(yup.ref('CheckIn'), 'Ngày trả phải lớn hơn ngày đặt!')
+            .min(new Date(), 'Trường này nên lớn hơn hoặc bằng hiện tại!'),
+
+        amountPeople: yup
+            .number('Vui lòng nhập số người.')
+            .typeError('Vui lòng nhập số người.')
+            .min(1, 'Ít nhất 1 người.')
+            .max(4, 'Tối đa 4 người.'),
     });
     // khai báo các chức năng hổ trợ việc validate.
     const {
@@ -33,6 +41,11 @@ const Checkout = (props) => {
     // thực hiện lấy data để xữ lý.
     const handleCheckOut = (data) => {
         console.log("data check out: ", data);
+    }
+
+    // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
+    const handleChangTotal = () => {
+
     }
 
 
@@ -74,6 +87,7 @@ const Checkout = (props) => {
                                                 <input type="date" name="CheckIn"
                                                     {...register('CheckIn')}
                                                     className="checkinday form-control  bg-light"
+                                                // onChange={handleChangTotal}
                                                 />
                                                 {errors.CheckIn?.message && <p className="text-danger">{errors.CheckIn.message}</p>}
                                             </div>
@@ -84,8 +98,10 @@ const Checkout = (props) => {
                                                 {/* Input của checkout -------- */}
                                                 <label>CHECK-OUT</label>
                                                 <input type="date" name="CheckOut"
+                                                    min={new Date()}
                                                     className="checkoutday form-control bg-light"
                                                     {...register('CheckOut')}
+                                                // onChange={handleChangTotal}
                                                 />
                                                 {errors.CheckOut?.message && <p className="text-danger">{errors.CheckOut.message}</p>}
                                             </div>
@@ -120,7 +136,13 @@ const Checkout = (props) => {
                                             <div className="col-md-12 my-3">
                                                 <div className="row justify-content-between align-items-center">
                                                     <div className="col-md-7 border-bottom rounded">
-                                                        <input type="number" className="form-control border-none" name="people" id="people" placeholder="Enter amount people" />
+                                                        <input type="number"
+                                                            {...register('amountPeople')}
+                                                            className="form-control border-none"
+                                                            name="amountPeople"
+                                                            id="amountPeople"
+                                                            placeholder="Enter amount people" />
+                                                        {errors.amountPeople && <p className="text-danger">{errors.amountPeople.message}</p>}
                                                     </div>
                                                     <div className="col-md-5 border-bottom rounded">
                                                         <h6 >total: 3000$</h6>
