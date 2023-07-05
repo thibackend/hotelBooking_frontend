@@ -33,7 +33,7 @@ export default function Comments({ roomId }) {
     event.preventDefault();
     // Send a comment for the current room
     axios
-      .post(`http://127.0.0.1:8000/api/comments/`, {
+      .post(`http://127.0.0.1:8000/api/comments`, {
         content: commentInput,
         room_id: roomId,
         user_id: userData.id
@@ -70,7 +70,7 @@ export default function Comments({ roomId }) {
     if (!userData) {
       fetchUserData();
     }
-  }, [user]);
+  }, [userData]);
 
   // Hàm định dạng thời gian hiển thị
   const formatTime = time => {
@@ -97,7 +97,7 @@ export default function Comments({ roomId }) {
         Gửi
       </button>
       <div className="comment-list" style={{ margin: '3px' }}>
-        <p className="comment-header d-flex">Bình luận ({comments && comments.length >0 ? comments.length  : <p>0</p>})</p>
+        <p className="comment-header d-flex">Bình luận ({comments && comments.length > 0 ? comments.length : <p>0</p>})</p>
         {
           comments && comments.length > 0 ?
             comments.map(item => (
