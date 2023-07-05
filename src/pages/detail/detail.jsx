@@ -2,28 +2,33 @@ import React, { useEffect, useState } from "react";
 import '../../css/roomDetail.css'
 import 'bootstrap'
 import axios from 'axios';
-// import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useParams } from 'react-router-dom'
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { getRooms } from "../../services/home";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 import Checkout from "../checkout/Checkout";
 import Services from "./services";
 import Comments from "../home1/Comments";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { Box, Stack } from "@mui/material";
+
 
 function Detail() {
-  // register();
   const { id } = useParams();
   const [data, setData] = useState(false);
-  const [roomrelevant, setRoomrelevant] = useState(null);
+  const [images, setImage] = useState(false);
+  const [roomRelevant, setRoomRelevant] = useState(false);
+
+  // hàm này dùng để chúng ta lấy một room và tất cả các ảnh của room đó.
   const fetchRoom = async () => {
     await axios.get(`http://localhost:8000/api/getOne-room-and-images/${id}`)
       .then(
         (res) => {
-          console.log("fist data of room detail:", res.data);
           if (res.data) {
             const object = res.data.find((e) => e);
             setData(object);
@@ -32,11 +37,13 @@ function Detail() {
       )
       .catch(errors => console.log(errors))
   }
+
+  // hàm này dùng dể lấy tất cả các room có liên quan tới room hiện tại.
   const fetchAllRoom = () => {
     getRooms().then(
       res => {
         const reRoom = res.filter(
-          (e, index) => {
+          (e) => {
             if (
               e.star === data.star ||
               e.price === data.price ||
@@ -46,196 +53,153 @@ function Detail() {
             }
           }
         )
-        setRoomrelevant(reRoom);
+        setRoomRelevant(reRoom);
       }
-    )
+    ).catch(error => console.log(error))
   }
 
   // start 5      index<5 
   // index 1 
-  const Start = (star) => {
-    const arraystar = [];
-    for (let index = 0; index < 5; index++) {
-      if (star > index)
-        arraystar.push(...arraystar, <StarIcon />)
-      else {
-        arraystar.push(...arraystar, <StarOutlineIcon />)
-      }
-    }
-    return arraystar;
-  }
-  
+  // const Start = (star) => {
+  //   const arraystar = [];
+  //   for (let index = 0; index < 5; index++) {
+  //     if (star > index)
+  //       arraystar.push(...arraystar, <StarIcon />)
+  //     else {
+  //       arraystar.push(...arraystar, <StarOutlineIcon />)
+  //     }
+  //   }
+  //   return arraystar;
+  // }
 
   // console.log("chieu dai ",data.image_path.length);
   useEffect(() => {
     if (!data) {
       fetchRoom();
     }
-    if (data && !roomrelevant) {
-      fetchAllRoom();
-
+    if (data && data.image_path && !images) {
+      setImage(data.image_path);
     }
-    console.log("room relevant:", roomrelevant)
-  }, [data, roomrelevant]);
+    if (data && !roomRelevant) {
+      fetchAllRoom();
+    }
+  }, [data, roomRelevant, images]);
+
   return (
     <>
       <div className="container">
-        <div className="back-icon">
-          <Link className="btn btn-danger" to={'/'}><ArrowBackIcon /></Link> <br />
+        <div className="d-flex">
+          <Link className="text-left" to={'/'}><ArrowBackIcon /></Link> <br />
           <hr />
-          <div className="name-and-relevant-room">
-            <div className="name-slide shadow-sm">
-              <swiper-container
-                autoplay="true"
-                delay="500"
-                loop='true'
+        </div>
+        <div className="row">
+          <div className="col-lg-8 col-sm-12">
+            <div className="col-sm-12">
+              <Slider
+                dots={true}
+                infinite={true}
+                speed={500}
+                slidesToShow={1}
+                slidesToScroll={1}
+                autoplay={true} // Tự động chạy slide
+                autoplaySpeed={2000}
               >
-                <swiper-slide className='slide-name-item'>
-                  <h1 style={{ fontSize: 30 }}>{data ? data.name.toUpperCase() : ''}</h1>
-                </swiper-slide>
-                <swiper-slide className='slide-item'>
-                  <h1 style={{ fontSize: 30 }}>{data ? data.name.toUpperCase() : ''}</h1>
-                </swiper-slide>
-              </swiper-container>
+                {
+                  images ?
+                    images.map((e, index) =>
+                    (
+                      <img key={index} src={`http://127.0.0.1:8000/uploads/images/${e}`} alt='Anh tượng trung' />
+                    )
+                    )
+                    :
+                    <img src={'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_1280.jpg'} alt="anh" />
+                }
+              </Slider>
+              {/* <div>
+                   <img src={img_path} alt="" /> 
+                </div> */}
+              <div className="h-25 p-3 d-text">
+                <div className="d-sm-flex flex-row justify-content-start">
+                  <div className="black-border rounded b-black">5.0</div>
+                  <div className="black-border rounded  border-warning  hover-shadow">Perfect</div>
+                  <div className="black-border rounded  border-primary">Top Value</div>
+                  <div className="black-border rounded  border-primary">Vip room</div>
+                  <div className="black-border rounded  border-primary">Top Value</div>
+                  <div className="d-flex flex-row align-items-center mx-3">
+                    <StarIcon style={{ color: 'yellow' }} />
+                    <StarIcon style={{ color: 'yellow' }} />
+                    <StarIcon style={{ color: 'yellow' }} />
+                    <StarIcon style={{ color: 'yellow' }} />
+                    <StarIcon style={{ color: 'yellow' }} />
+                  </div>
+                </div>
+                <h3>{data.name} </h3>
+              </div>
             </div>
-            <h1 className="title-relevant-room">RELEVANT ROOMS</h1>
           </div>
+          <div className="col-md-4 col-sm-12">
+            <div className="d-inline-sm-flex">
+              {data && <Checkout price={data.price} id={id} services={data.services} />}
 
-          <hr />
+            </div>
+          </div>
         </div>
-        <div className="frame-slide-relevant-room">
-          <div className="slide">
-            <swiper-container // vì là một component của một thư viện khác nên sẽ có tên className riêng của nó.  .swiper-backface-hidden swiper-slide
-              slides-per-view="1"
-              autoplay="true" loop='true'>
-              {data ? // if 0
-                data.image_path.length === 1 ? //if 1
-                  (
-                    // console.log('data image  if -- 1:', data.image_path)
-                    <swiper-slide className='slide-item'>
-                      <img
-                        src={data.image_path[0]}
-                      />
-                      <div className="slide-caption">
-                        <h3>{data.desc}</h3>
-                      </div>
-                    </swiper-slide>
+        <hr style={{ margin: "10px" }} />
+        <h2>Information</h2>
+
+        <div className="row">
+          <div className="col-md-4 my-3">
+            <h5 className="title">Services</h5>
+            {
+              data && <Services services={data.services} />
+            }
+
+          </div>
+          <div className="col-md-2 my-3">
+            <h5 className="title">Price</h5>
+            <h6>${data.price}</h6>
+
+          </div>
+          <div className="col-md-2 my-3">
+            <h5 className="title">Type room</h5>
+            <h6>{data && data.category_name && data.category_name.name}</h6>
+          </div>
+          <div className="col-md-4 my-3">
+            <h5 className="title">Comments</h5>
+          </div>
+        </div>
+        <h2> Phong lien quan</h2>
+        <div className="row justify-content-around">
+          <Slider
+            dots={true}
+            infinite={true}
+            speed={500}
+            slidesToShow={4}
+            slidesToScroll={1}
+            autoplay={true} // Tự động chạy slide
+            autoplaySpeed={0.5}
+          >
+            {
+              roomRelevant ?
+                roomRelevant.map(
+                  (e) => (
+                    <div key={e} className="col-md-3 mx-1">
+                      <Card style={{ width: '20rem' }}>
+                        <Card.Img variant="top" src={e.image_path !== '' ? `http://127.0.0.1:8000/uploads/images/${e.image_path}` : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'} />
+                        <Card.Body>
+                          <Card.Title>{e.name}</Card.Title>
+                          <Card.Text >
+                            {/* <p className="overflow-hidden">{e.desc}</p> */}
+                          </Card.Text>
+                          <Button variant="primary">detail</Button>
+                        </Card.Body>
+                      </Card>
+                    </div>
                   )
-                  : //else 1
-                  data.image_path.length > 1
-                    ? //if 2
-                    data.image_path.map(
-                      (e, index) => (
-                        <swiper-slide
-                          key={index}
-                          className='slide-item'>
-                          <img
-                            src={e}
-                          />
-                          <div className="slide-caption">
-                            <h3>{data.desc}</h3>
-                          </div>
-                        </swiper-slide>
-                      )
-                    )
-                    : //else 2
-                    <swiper-slide className='slide-item'>
-                      <img
-                        src={'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'}
-                      />
-                      <div className="slide-caption">
-                        <h3>THERE ARE NO IMAGE FOR THIS ROOM!</h3>
-                      </div>
-                    </swiper-slide >
-
-                : //else 0
-                <h1>DON'T HAVE DATA HERE!</h1>
-              }
-            </swiper-container>
-
-          </div>
-          <div className="relevant-room">
-            <div className="scroll-bar my-1 mx-2">
-              {
-                roomrelevant ?
-                  <swiper-container
-                    loop="true"
-                    autoplay="true" delay="0.5"
-                    style={{ display: 'flex', flexDirection: 'column-reverse' }}
-                  >
-                    {roomrelevant.map(
-                      (e, index) => (
-
-                        <swiper-slide key={index}>
-                          <Card style={{ width: '100%' }}>
-                            <Card.Img variant="top" src={e.image_path[0] ? e.image_path[0] : 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'} />
-                            <Card.Body>
-                              <div className="star-name"
-                                style={{ display: 'flex', justifyContent: 'space-between' }}
-                              >
-                                <Card.Title>{e.name}</Card.Title>
-                                <Card.Text>
-                                  {Start(e.star)}
-                                </Card.Text>
-                              </div>
-
-                              <Card.Text
-                                style={{
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  whiteSpace: "nowrap",
-                                  maxWidth: "200px",
-                                }}
-                              >
-                                {e.desc}
-                              </Card.Text>
-
-                              <Card.Text>
-                                {e.price}$
-                              </Card.Text>
-                            </Card.Body>
-                            <Card.Body>
-                              <Card.Link href={`/detail/${e.id}`}>Card Link</Card.Link>
-                              <Card.Link href="#">Another Link</Card.Link>
-                            </Card.Body>
-                          </Card>
-                        </swiper-slide>
-                      )
-                    )
-                    }
-
-                  </swiper-container>
-                  :
-                  <h1>Have no room like this room</h1>
-              }
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <hr style={{ margin: "10px" }} />
-      <div className="service-price-typeroom">
-        <div className="services">
-          <h1 className="title">SERVICES</h1>
-          <ul className="service-item">
-            <Services id={id} />
-          </ul>
-          <div className="service-item">
-
-          </div>
-        </div>
-        <div className="price">
-          <h1 className="title">PRICE</h1>
-          <h3>${data.price}  / Day</h3>
-        </div>
-        <div className="typeroom">
-          <h1 className="title">TYPE ROOM</h1>
-          <div className="h3">
-            {data ? data.category_name.name : <del> NONE</del>}
-          </div>
-        </div>
-        <div className="form-booking">
-          <Checkout id={id} />
+                )
+                : <h1>Loading ... ... </h1>
+            }
+          </Slider>
         </div>
        
       </div>
