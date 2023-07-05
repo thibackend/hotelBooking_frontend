@@ -1,49 +1,64 @@
 import React, { useState, useEffect } from "react";
-import logo from '../../assets/logo.jpg';
 import { BiWorld, BiUser } from "react-icons/bi";
-import { FiSearch } from "react-icons/fi";
 import tokenService from "../../services/token.service";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import Filters from "./Filters";
 import axios from "axios";
 import "./profile.css";
+import { getUsers } from "../../services/home";
 
 const Navbar = () => {
-
   const user = tokenService.getToken();
   const navigate = useNavigate();
 
-  const handleLogout= () =>{
-    setTimeout(
-      ()=>{
-        tokenService.removeToken();
-        navigate('/');
-      }
-      ,1000
-    )
+  const handleLogout = () => {
+    setTimeout(() => {
+      tokenService.removeToken();
+      navigate('/');
+    }, 1000);
   }
 
   const [userData, setUserData] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
-  const [editData, setEditData] = useState(null);
   const [editingMode, setEditingMode] = useState(false);
+  const [editData, setEditData] = useState({
+    image: '',
+    name: '',
+    email: '',
+    address: '',
+    phone: ''
+  });
+
+  const fetchUserData = () => {
+    // try {
+    //   const response = await axios.get("http://127.0.0.1:8000/api/users");
+    //   const data = response.data;
+    //   const userItem = data.find(item => item.email === user.email);
+    //   setUserData(userItem);
+    //   console.log(userItem.email);
+    // } catch (error) {
+    //   console.error("Error fetching user data:", error);
+    // }
+    getUsers().then(
+      res => {
+        const userItem = res.find(item => item.email === user.email);
+        setUserData(userItem);
+      }
+    ).catch(
+      err => console.log("ERORR Fetch Data user:", err)
+    )
+  };
+
+
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users");
-        const data = response.data;
-        const userItem = data.find(item => item.email === user.email);
-        setUserData(userItem);
-        console.log(userItem.email);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+    if (!userData) {
+      fetchUserData();
+    }
+  }, [userData]);
 
-    fetchUserData();
-  }, [user]);
+
 
   const handleProfileOpen = () => {
     setShowProfile(true);
@@ -56,32 +71,46 @@ const Navbar = () => {
   const handleEditOpen = () => {
     setEditingMode(true);
     setShowProfile(true);
+    setEditData({ ...userData });
   };
 
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(`http://127.0.0.1:8000/api/users/${userData.id}`, editData);
+      console.log(response.data.message);
+      // Refresh user data
+      const updatedUserData = { ...userData, ...editData };
+      setUserData(updatedUserData);
+      setShowProfile(false);
+      setEditingMode(false);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setEditData({ ...editData, image: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div
       style={{ backgroundImage: "url('https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720')" }}
       className="border-b sticky top-0 z-50 bg-white/[100%]">
       <div className="flex justify-between items-center sm:mx-6 md:mx-10 lg:mx-12 ">
-        <div className="h-20 flex">
-          <img src={logo} className=" object-cover  my-10" alt="Logo" />
+        <div className="h-20 flex" >
+          <Link to="/" >
+            <a className="logo-web" >3TS HOTEL</a>
+          </Link>
         </div>
-        <div className="hidden lg:flex ml-25  items-center relative shadow-sm shadow-gray-400 border rounded-full">
-          <input
-            type="search"
-            placeholder=""
-            className="py-2.5 w-[20rem] rounded-full outline-0"
-          />
-          <div className="flex justify-between absolute w-full pr-16 pl-6 font-semibold text-gray-600">
-            <button className="w-full">Place</button>
-            <button className="border-l border-x px-6">Time</button>
-            <button className="w-full text-gray-600/60 pl-2">Group Size</button>
-          </div>
-          <div className="bg-[#ff5a60] p-2 rounded-full mr-2">
-            <FiSearch className="text-white w-full" />
-          </div>
-        </div>
+
         <Filters />
         <div
           className="flex items-center pr-3  font-semibold text-gray-600"
@@ -113,27 +142,62 @@ const Navbar = () => {
           </Modal.Header>
           <Modal.Body>
             <div>
-              {userData && (
+              {userData && !editingMode && (
                 <>
                   <img className="image-profile" src={userData.image} alt="User Avatar" />
                   <h4>{userData.name}</h4>
-                  <p>Email: {userData.email}</p>
-                  <p>Địa chỉ: {userData.address}</p>
-                  <p>Số điện thoại: {userData.phone}</p>
+                  <p>Email: <span>{userData.email}</span></p>
+                  <p>Địa chỉ: <span>{userData.address}</span></p>
+                  <p>Số điện thoại: <span>{userData.phone}</span></p>
+                </>
+              )}
+              {userData && editingMode && (
+                <>
+                  <img className="image-profile" src={userData.image} alt="User Avatar" />
+                  Hình ảnh:
+                  <input type="file" onChange={(e) => handleFileChange(e)} />
+                  <br />
+                  Tên của bạn:
+                  <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} />
+                  <br />
+                  Email:
+                  <input type="text" value={editData.email} onChange={(e) => setEditData({ ...editData, email: e.target.value })} />
+                  <br />
+                  Địa chỉ:
+                  <input type="text" value={editData.address} onChange={(e) => setEditData({ ...editData, address: e.target.value })} />
+                  <br />
+                  Số điện thoại:
+                  <input type="number" value={editData.phone} onChange={(e) => setEditData({ ...editData, phone: e.target.value })} />
+                  <br />
+
                 </>
               )}
             </div>
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="secondary" onClick={handleEditOpen}>
-              Edit
-            </Button>
-            <Button variant="secondary" onClick={handleProfileClose}>
-              Close
-            </Button>
-            <Button variant="danger" onClick={handleLogout}>
-              Logout
-            </Button>
+            {!editingMode && (
+              <>
+                <Button variant="primary" onClick={handleEditOpen}>
+                  Edit
+                </Button>
+                <Button variant="secondary" onClick={handleProfileClose}>
+                  Close
+                </Button>
+                <Button variant="danger" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </>
+            )}
+            {editingMode && (
+              <>
+                <Button variant="success" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button variant="secondary" onClick={() => setEditingMode(false)}>
+                  Cancel
+                </Button>
+              </>
+            )}
           </Modal.Footer>
         </Modal>
       </div>

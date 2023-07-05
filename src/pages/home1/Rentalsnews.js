@@ -1,4 +1,5 @@
 import Rentalnew from "./Rentalnew";
+import "./Rentals.css";
 
 import { useEffect, useState} from "react";
 import { getRooms } from "./../../services/home/index";
@@ -118,9 +119,10 @@ const Rentals = (props) => {
             justifyContent: "center", // Thêm thuộc tính justifyContent với giá trị 'center'
           }}
         >
-          <h1
+          <h1 className="Title"
             style={{
               fontSize: "80px",
+              paddingTop: "8%",
               lineHeight: 1.2,
               fontWeight: 700,
               fontFamily: "",
