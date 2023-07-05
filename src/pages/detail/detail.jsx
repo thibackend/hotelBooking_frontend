@@ -83,7 +83,7 @@ function Detail() {
     if (data && !roomRelevant) {
       fetchAllRoom();
     }
-  }, [data, roomRelevant, images]);
+  }, [data, roomRelevant, images, id]);
 
   return (
     <>
@@ -203,23 +203,24 @@ function Detail() {
               roomRelevant &&
               roomRelevant.map((e, index) => (
                 <div key={index}>
-                  <Card style={{ width: '20rem' }}>
-                    <Card.Img
-                      variant="top"
-                      src={
-                        e.image_path !== ''
-                          ? `http://127.0.0.1:8000/uploads/images/${e.image_path[0]}`
-                          : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'
-                      }
-                    />
-                    <Card.Body>
-                      <Card.Title>{e.name}</Card.Title>
-                      <Card.Text>
-                        <p className="overflow-hidden">{e.desc}</p>
-                      </Card.Text>
-                      <Button variant="success">detail</Button>
-                    </Card.Body>
-                  </Card>
+                  <Link to={`/detail/${e.id}`} variant="success">
+                    <Card style={{ width: '20rem' }}>
+                      <Card.Img
+                        variant="top"
+                        src={
+                          e.image_path !== ''
+                            ? `http://127.0.0.1:8000/uploads/images/${e.image_path[0]}`
+                            : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'
+                        }
+                      />
+                      <Card.Body>
+                        <Card.Title>{e.name}</Card.Title>
+                        <Card.Text>
+                          <p className="overflow-hidden">{e.desc}</p>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </div>
               ))
             )}

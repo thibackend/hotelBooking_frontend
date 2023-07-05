@@ -55,21 +55,21 @@ export default function Comments({ roomId }) {
       });
   };
   const user = tokenService.getToken();
-
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/users");
+      const data = response.data;
+      const userItem = data.find(item => item.email === user.email);
+      setUserData(userItem);
+      console.log(userItem.email);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users");
-        const data = response.data;
-        const userItem = data.find(item => item.email === user.email);
-        setUserData(userItem);
-        console.log(userItem.email);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
+    if (!userData) {
+      fetchUserData();
+    }
   }, [user]);
 
   // Hàm định dạng thời gian hiển thị
@@ -97,9 +97,9 @@ export default function Comments({ roomId }) {
         Gửi
       </button>
       <div className="comment-list" style={{ margin: '3px' }}>
-        <p className="comment-header">Bình luận ({comments ? comments.length : 0})</p>
+        <p className="comment-header d-flex">Bình luận ({comments && comments.length >0 ? comments.length  : <p>0</p>})</p>
         {
-          comments ?
+          comments && comments.length > 0 ?
             comments.map(item => (
               <div key={item.id} className="comment-item">
                 <div className="comment-user">
