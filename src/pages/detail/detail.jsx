@@ -107,7 +107,7 @@ function Detail() {
                   images ?
                     images.map((e, index) =>
                     (
-                      <img key={index} src={e} alt='Anh tượng trung' />
+                      <img key={index} src={`http://127.0.0.1:8000/uploads/images/${e}`} alt='Anh tượng trung' />
                     )
                     )
                     :
@@ -184,7 +184,7 @@ function Detail() {
                   (e) => (
                     <div key={e} className="col-md-3 mx-1">
                       <Card style={{ width: '20rem' }}>
-                        <Card.Img variant="top" src={e.image_path !== '' ? e.image_path : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'} />
+                        <Card.Img variant="top" src={e.image_path !== '' ? `http://127.0.0.1:8000/uploads/images/${e.image_path}` : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'} />
                         <Card.Body>
                           <Card.Title>{e.name}</Card.Title>
                           <Card.Text >
