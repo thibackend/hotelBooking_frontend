@@ -95,8 +95,8 @@ export default function Comments({ roomId }) {
       <button className="comment-submit" type="submit" onClick={handleSubmit}>
         Gửi
       </button>
-      <div className="comment-list">
-        <p className="comment-header">Bình luận</p>
+      <div className="comment-list" style={{margin:'3px'}}>
+        <p className="comment-header">Bình luận ({comments.length})</p>
         {comments.map(item => (
           <div key={item.id} className="comment-item">
             <div className="comment-user">
