@@ -38,4 +38,10 @@ span {
     -webkit-text-fill-color: transparent;
     font-weight: 800;
     font-size: 52px;
+    cursor: pointer;
+
+}
+
+.logo-web:hover {
+    text-decoration: none;
 }

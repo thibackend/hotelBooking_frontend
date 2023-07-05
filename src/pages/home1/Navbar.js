@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BiWorld, BiUser } from "react-icons/bi";
 import tokenService from "../../services/token.service";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import Filters from "./Filters";
 import axios from "axios";
@@ -92,8 +92,10 @@ const Navbar = () => {
       style={{ backgroundImage: "url('https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720')" }}
       className="border-b sticky top-0 z-50 bg-white/[100%]">
       <div className="flex justify-between items-center sm:mx-6 md:mx-10 lg:mx-12 ">
-        <div className="h-20 flex">
-           <h1 className="logo-web">3TS HOTEL</h1>
+        <div className="h-20 flex" >
+          <Link to="/" >
+           <a className="logo-web" >3TS HOTEL</a>
+           </Link>
         </div>
 
         <Filters />
