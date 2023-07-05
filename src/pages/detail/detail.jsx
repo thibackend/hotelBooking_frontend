@@ -178,26 +178,50 @@ function Detail() {
             autoplay={true} // Tự động chạy slide
             autoplaySpeed={0.5}
           >
-            {
-              roomRelevant ?
-                roomRelevant.map(
-                  (e) => (
-                    <div key={e} className="col-md-3 mx-1">
-                      <Card style={{ width: '20rem' }}>
-                        <Card.Img variant="top" src={e.image_path !== '' ? `http://127.0.0.1:8000/uploads/images/${e.image_path}` : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'} />
-                        <Card.Body>
-                          <Card.Title>{e.name}</Card.Title>
-                          <Card.Text >
-                            {/* <p className="overflow-hidden">{e.desc}</p> */}
-                          </Card.Text>
-                          <Button variant="primary">detail</Button>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  )
-                )
-                : <h1>Loading ... ... </h1>
-            }
+            {roomRelevant && roomRelevant.length === 1 ? (
+              <div>
+                <Card style={{ width: '20rem' }}>
+                  <Card.Img
+                    variant="top"
+                    src={
+                      roomRelevant[0].image_path !== ''
+                        ? `http://127.0.0.1:8000/uploads/images/${roomRelevant[0].image_path[0]}`
+                        : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'
+                    }
+                  />
+                  <Card.Body>
+                    <Card.Title>{roomRelevant[0].name}</Card.Title>
+                    <Card.Text>
+                      <p className="overflow-hidden">{roomRelevant[0].desc}</p>
+                    </Card.Text>
+                    <Button variant="success">detail</Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ) : (
+              roomRelevant &&
+              roomRelevant.map((e, index) => (
+                <div key={index}>
+                  <Card style={{ width: '20rem' }}>
+                    <Card.Img
+                      variant="top"
+                      src={
+                        e.image_path !== ''
+                          ? `http://127.0.0.1:8000/uploads/images/${e.image_path[0]}`
+                          : 'https://nystudio107.com/img/blog/_1200x675_crop_center-center_82_line/image_optimzation.jpg'
+                      }
+                    />
+                    <Card.Body>
+                      <Card.Title>{e.name}</Card.Title>
+                      <Card.Text>
+                        <p className="overflow-hidden">{e.desc}</p>
+                      </Card.Text>
+                      <Button variant="success">detail</Button>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))
+            )}
           </Slider>
         </div>
       </div>
