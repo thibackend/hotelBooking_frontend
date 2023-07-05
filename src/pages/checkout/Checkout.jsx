@@ -22,8 +22,7 @@ const Checkout = (props) => {
             .date()
             .typeError('Trường này nhập ngày tháng!')
             .required('Cần nhập trường ngày!')
-            .min(yup.ref('CheckIn'), 'Ngày trả phải lớn hơn ngày đặt!')
-            .min(new Date(), 'Trường này nên lớn hơn hoặc bằng hiện tại!'),
+            .min(yup.ref('CheckIn'), 'Ngày trả phải lớn hơn ngày đặt!'),
 
         amountPeople: yup
             .number('Vui lòng nhập số người.')
