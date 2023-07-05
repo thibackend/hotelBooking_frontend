@@ -6,22 +6,24 @@ import tokenService from "../../services/token.service";
 
 
 export default function Comments({ roomId }) {
-  const [comments, setComments] = useState([]);
-
+  const [comments, setComments] = useState(null);
   const [commentInput, setCommentInput] = useState('');
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     // Fetch comments for the current room
-    axios
-      .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
-      .then(response => {
-        setComments(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, [roomId]);
+    if (!comments) {
+      axios
+        .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
+        .then(response => {
+          setComments(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+  }, [comments]);
 
   const handleChangeComment = event => {
     setCommentInput(event.target.value);
@@ -29,7 +31,6 @@ export default function Comments({ roomId }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-
     // Send a comment for the current room
     axios
       .post(`http://127.0.0.1:8000/api/comments/`, {
@@ -80,7 +81,7 @@ export default function Comments({ roomId }) {
     if (diffHours < 8) {
       return commentTime.fromNow(); // Hiển thị "x giờ trước"
     } else {
-      return commentTime.format('DD/MM/YYYY [lúc] HH:mm'); 
+      return commentTime.format('DD/MM/YYYY [lúc] HH:mm');
     }
   };
 
@@ -95,23 +96,25 @@ export default function Comments({ roomId }) {
       <button className="comment-submit" type="submit" onClick={handleSubmit}>
         Gửi
       </button>
-      <div className="comment-list" style={{margin:'3px'}}>
-        <p className="comment-header">Bình luận ({comments.length})</p>
-        {comments.map(item => (
-          <div key={item.id} className="comment-item">
-            <div className="comment-user">
-              <img
-                className="comment-avatar"
-                src={userData.image}
-                alt="Avatar"
-              />
-              <p className="comment-username">{item.name}</p>
-              <p className="comment-date">{formatTime(item.created_at)}</p> 
-            </div>
-            <p className="comment-content">{item.content}</p>
-           
-          </div>
-        ))}
+      <div className="comment-list" style={{ margin: '3px' }}>
+        <p className="comment-header">Bình luận ({comments ? comments.length : 0})</p>
+        {
+          comments ?
+            comments.map(item => (
+              <div key={item.id} className="comment-item">
+                <div className="comment-user">
+                  <img
+                    className="comment-avatar"
+                    src={userData.image}
+                    alt="Avatar"
+                  />
+                  <p className="comment-username">{item.name}</p>
+                  <p className="comment-date">{formatTime(item.created_at)}</p>
+                </div>
+                <p className="comment-content">{item.content}</p>
+              </div>
+            ))
+            : <h6>have no comment</h6>}
       </div>
     </div>
   );

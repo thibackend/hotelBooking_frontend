@@ -225,9 +225,12 @@ function Detail() {
             )}
           </Slider>
         </div>
-       
+
       </div>
-      <Comments roomId={id} />{console.log(id,'kjjj')} 
+      {
+
+      }
+      <Comments roomId={id} />
     </>
   );
 }
