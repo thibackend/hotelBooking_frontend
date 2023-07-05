@@ -228,7 +228,7 @@ const RegisterForm = () => {
         <FormControl>
           <Input
             type="submit"
-            value="Send"
+            value="Register"
             colorScheme="green"
             width={"full"}
             mt={4}
