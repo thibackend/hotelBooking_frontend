@@ -13,9 +13,7 @@ const Rentalnew = ({ data: rentalData }) => {
               <div className="flex">
                 {/* Background */}
                 <img
-                  src={
-                    rental.image_path?.[0] ||
-                    "https://us.123rf.com/450wm/dmitryag/dmitryag2106/dmitryag210600432/169715356-woman-taking-pictures-on-camera-sea-in-mountains-back-view.jpg?ver=6"
+                  src={`http://127.0.0.1:8000/uploads/images/${rental.image_path?.[0]}`
                   }
                   alt="#"
                   className="object-cover rounded-[1.3rem] sm:h-[17rem]  md:h-[13rem] w-full"
