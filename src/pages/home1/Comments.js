@@ -1,89 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import moment from 'moment'; // Thêm import cho thư viện moment
-import '../../css/comment.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
+import "../../css/comment.css";
 import tokenService from "../../services/token.service";
-
 
 export default function Comments({ roomId }) {
   const [comments, setComments] = useState([]);
-
-  const [commentInput, setCommentInput] = useState('');
+  const [commentInput, setCommentInput] = useState("");
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     // Fetch comments for the current room
     axios
       .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
-      .then(response => {
+      .then((response) => {
         setComments(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, [roomId]);
 
-  const handleChangeComment = event => {
+  const handleChangeComment = (event) => {
     setCommentInput(event.target.value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Send a comment for the current room
-    axios
-      .post(`http://127.0.0.1:8000/api/comments/`, {
-        content: commentInput,
-        room_id: roomId,
-        user_id: userData.id
-      })
-      .then(response => {
-        setCommentInput('');
-        // Fetch comments for the current room after submitting a comment
-        axios
-          .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
-          .then(response => {
-            setComments(response.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // Kiểm tra xem userData có tồn tại và có thuộc tính 'id' không
+    if (userData && userData.id) {
+      axios
+        .post(`http://127.0.0.1:8000/api/comments/${roomId}`, {
+          content: commentInput,
+          room_id: roomId,
+          user_id: userData.id,
+        })
+        .then((response) => {
+          setCommentInput("");
+          // Fetch comments for the current room after submitting a comment
+          axios
+            .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
+            .then((response) => {
+              setComments(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.error("userData is undefined or does not have 'id' property");
+    }
   };
+
   const user = tokenService.getToken();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users");
-        const data = response.data;
-        const userItem = data.find(item => item.email === user.email);
-        setUserData(userItem);
-        console.log(userItem.email);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/users");
+      const data = response.data;
+      const userItem = data.find((item) => item.email === user.email);
+      setUserData(userItem);
+      console.log(userItem.email);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
-    fetchUserData();
-  }, [user]);
+  useEffect(() => {
+    if (!userData) {
+      fetchUserData();
+    }
+  }, [userData]);
 
   // Hàm định dạng thời gian hiển thị
-  const formatTime = time => {
+  const formatTime = (time) => {
     const now = moment(); // Thời gian hiện tại
     const commentTime = moment(time); // Thời gian của bình luận
-    const diffHours = now.diff(commentTime, 'hours'); // Số giờ chênh lệch
+    const diffHours = now.diff(commentTime, "hours"); // Số giờ chênh lệch
 
     if (diffHours < 8) {
       return commentTime.fromNow(); // Hiển thị "x giờ trước"
     } else {
-      return commentTime.format('DD/MM/YYYY [lúc] HH:mm'); 
+      return commentTime.format("DD/MM/YYYY [lúc] HH:mm");
     }
   };
-
   return (
     <div className="comments-container">
       <input
@@ -95,23 +99,30 @@ export default function Comments({ roomId }) {
       <button className="comment-submit" type="submit" onClick={handleSubmit}>
         Gửi
       </button>
-      <div className="comment-list">
-        <p className="comment-header">Bình luận ({comments.length})</p>
-        {comments.map(item => (
-          <div key={item.id} className="comment-item">
-            <div className="comment-user">
-              <img
-                className="comment-avatar"
-                src={userData.image}
-                alt="Avatar"
-              />
-              <p className="comment-username">{item.name}</p>
-              <p className="comment-date">{formatTime(item.created_at)}</p> 
+      <div className="comment-list" style={{ margin: "3px" }}>
+        <p className="comment-header d-flex">Bình luận ({comments.length})</p>
+        {comments.length > 0 ? (
+          comments.map((item) => (
+            <div key={item.id} className="comment-item">
+              <div className="comment-user">
+                {userData && (
+                  <img
+                    className="comment-avatar"
+                    src={userData.image}
+                    alt="Avatar"
+                  />
+                )}
+                <p className="comment-username">
+                  {item.user && item.user.name}
+                </p>
+                <p className="comment-date">{formatTime(item.created_at)}</p>
+              </div>
+              <p className="comment-content">{item.content}</p>
             </div>
-            <p className="comment-content">{item.content}</p>
-           
-          </div>
-        ))}
+          ))
+        ) : (
+          <h6>Không có bình luận</h6>
+        )}
       </div>
     </div>
   );
