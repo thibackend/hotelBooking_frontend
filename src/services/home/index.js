@@ -15,3 +15,8 @@ export const roomdetail = () => {
 export const RommServices = (room_id) => {
     return ApiService.get(`/get-room-with-services/${room_id}`)
 }
+
+// hàm này để lấy tất cả users
+export const getUsers = () => {
+    return ApiService.get('/users')
+}

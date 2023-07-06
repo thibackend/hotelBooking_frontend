@@ -6,6 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import Filters from "./Filters";
 import axios from "axios";
 import "./profile.css";
+import { getUsers } from "../../services/home";
 
 const Navbar = () => {
   const user = tokenService.getToken();
@@ -29,21 +30,35 @@ const Navbar = () => {
     phone: ''
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users");
-        const data = response.data;
-        const userItem = data.find(item => item.email === user.email);
+  const fetchUserData = () => {
+    // try {
+    //   const response = await axios.get("http://127.0.0.1:8000/api/users");
+    //   const data = response.data;
+    //   const userItem = data.find(item => item.email === user.email);
+    //   setUserData(userItem);
+    //   console.log(userItem.email);
+    // } catch (error) {
+    //   console.error("Error fetching user data:", error);
+    // }
+    getUsers().then(
+      res => {
+        const userItem = res.find(item => item.email === user.email);
         setUserData(userItem);
-        console.log(userItem.email);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
       }
-    };
+    ).catch(
+      err => console.log("ERORR Fetch Data user:", err)
+    )
+  };
 
-    fetchUserData();
-  }, [user]);
+
+
+  useEffect(() => {
+    if (!userData) {
+      fetchUserData();
+    }
+  }, [userData]);
+
+
 
   const handleProfileOpen = () => {
     setShowProfile(true);
@@ -64,11 +79,9 @@ const Navbar = () => {
     try {
       const response = await axios.put(`http://127.0.0.1:8000/api/users/${userData.id}`, editData);
       console.log(response.data.message);
-
       // Refresh user data
       const updatedUserData = { ...userData, ...editData };
       setUserData(updatedUserData);
-
       setShowProfile(false);
       setEditingMode(false);
     } catch (error) {
@@ -94,8 +107,8 @@ const Navbar = () => {
       <div className="flex justify-between items-center sm:mx-6 md:mx-10 lg:mx-12 ">
         <div className="h-20 flex" >
           <Link to="/" >
-           <a className="logo-web" >3TS HOTEL</a>
-           </Link>
+            <a className="logo-web" >3TS HOTEL</a>
+          </Link>
         </div>
 
         <Filters />
