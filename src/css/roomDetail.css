@@ -154,12 +154,10 @@ body {
     width: 10%;
     font-size: 25px;
     font-weight: bold;
-
 }
 
 .typeroom {
     margin-bottom: 20px;
-
     width: 20%;
     font-size: 25px;
     font-weight: bold;
@@ -214,4 +212,35 @@ body {
     padding-right: 8px;
     background: lightgrey;
     --dls19-ui-brand-color: var(--ihf-tp-q);
+}
+
+
+/*Css for hover room in HomePage*/  
+.card-room {
+    margin-top: 20px;
+}
+
+.flex img {
+    transition: transform 0.3s ease;
+    transform-origin: center center;
+}
+
+.flex img:hover {
+    transform: scale(1.1);
+}
+
+.flex {
+    overflow: hidden;
+}
+
+.room-show {
+    transition: box-shadow 0.3s ease;
+}
+
+.room-show:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.relative {
+    padding-top: 13px;
 }
