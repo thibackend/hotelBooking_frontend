@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../css/roomDetail.css';
+import { useNavigate } from "react-router";
 const Checkout = (props) => {
 
     // thực hiện khai báo các state được sữ dụng.
     const [services, setServices] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
+    const navigate = useNavigate();
     // const [total, setTotal] = useState(null);
     // tao schema validate cho data.
     const schema = yup.object().shape({
@@ -28,8 +30,6 @@ const Checkout = (props) => {
             .typeError('Vui lòng nhập số người.')
             .min(1, 'Ít nhất 1 người.')
             .max(4, 'Tối đa 4 người.'),
-        services: yup
-            .array().min(1, 'Vui lòng chọn ít nhất một dịch vụ.'),
     });
     // khai báo các chức năng hổ trợ việc validate.
     const {
@@ -40,8 +40,8 @@ const Checkout = (props) => {
 
     // thực hiện lấy data để xữ lý.
     const handleCheckOut = (data) => {
-        console.log("data check out: ", data);
-        sessionStorage.setItem("dataBook",JSON.stringify(data))
+        sessionStorage.setItem("dataBook", JSON.stringify(data));
+        navigate('/confirm');
     }
 
     // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
@@ -49,17 +49,17 @@ const Checkout = (props) => {
 
     }
     // hàm này kiểm tra người dùng click chọn bao nhiêu services.
-    const handleCheckboxChange = (event) => {
-        const value = event.target.value;
-        const checked = event.target.checked;
-        if (checked) {
-            setSelectedServices([...selectedServices, value]);
-            alert(`Bạn đã chọn dịch vụ: ` + value);
-        } else {
-            setSelectedServices(selectedServices.filter((service) => service !== value));
-            alert('bạn đã bỏ chọn dịch vụ: ' + value);
-        }
-    };
+    // const handleCheckboxChange = (event) => {
+    //     const value = event.target.value;
+    //     const checked = event.target.checked;
+    //     if (checked) {
+    //         setSelectedServices([...selectedServices, value]);
+    //         alert(`Bạn đã chọn dịch vụ: ` + value);
+    //     } else {
+    //         setSelectedServices(selectedServices.filter((service) => service !== value));
+    //         alert('bạn đã bỏ chọn dịch vụ: ' + value);
+    //     }
+    // };
     // ----------------------------------------------------------------------------------------------
 
     // hàm này dùng để kiểm tra thay đổi của credit khi mà người dùng click vào thì chuyển sang trạng thái true và hiện ô nhập số thẻ
@@ -95,7 +95,6 @@ const Checkout = (props) => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group mb-3">
-
                                                 {/* Input của checkout -------- */}
                                                 <label>CHECK-OUT</label>
                                                 <input type="date" name="CheckOut"
@@ -116,9 +115,6 @@ const Checkout = (props) => {
                                                     services.map(
                                                         (e, i) => (
                                                             <div className="col-md-6 my-2" key={e.id}>
-                                                                <label htmlFor="service">
-
-                                                                </label>
                                                                 <input
                                                                     type="checkbox"
                                                                     name="services"
@@ -135,7 +131,6 @@ const Checkout = (props) => {
                                                     : ''
                                                 }
                                                 {errors.services?.message && <p className="text-danger">{errors.services.message}</p>}
-
                                             </div>
                                             {/* show so luong nguoi */}
 
@@ -152,11 +147,8 @@ const Checkout = (props) => {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
-
                                     <div className="col-lg-12">
                                         <div className="form-group text-black">
                                             <button

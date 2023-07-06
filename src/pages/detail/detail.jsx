@@ -115,9 +115,6 @@ function Detail() {
                     <img src={'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_1280.jpg'} alt="anh" />
                 }
               </Slider>
-              {/* <div>
-                   <img src={img_path} alt="" /> 
-                </div> */}
               <div className="h-25 p-3 d-text">
                 <div className="d-sm-flex flex-row justify-content-start">
                   <div className="black-border rounded b-black">5.0</div>
@@ -140,7 +137,6 @@ function Detail() {
           <div className="col-md-4 col-sm-12">
             <div className="d-inline-sm-flex">
               {data && <Checkout price={data.price} id={id} services={data.services} />}
-
             </div>
           </div>
         </div>
@@ -177,7 +173,7 @@ function Detail() {
             slidesToShow={4}
             slidesToScroll={1}
             autoplay={true} // Tự động chạy slide
-            autoplaySpeed={0.5}
+            autoplaySpeed={1500}
           >
             {roomRelevant && roomRelevant.length === 1 ? (
               <div>
