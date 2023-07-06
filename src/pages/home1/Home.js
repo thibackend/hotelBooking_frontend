@@ -14,7 +14,7 @@ function Home() {
   return (
     <div className="">
       <Navbar />
-      <div className="nav-bar ">
+      <div className="nav-bar">
         <Outlet />
       </div>
     </div>
