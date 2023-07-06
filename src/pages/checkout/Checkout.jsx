@@ -8,8 +8,7 @@ const Checkout = (props) => {
     // thực hiện khai báo các state được sữ dụng.
     const [services, setServices] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
-    const [total, setTotal] = useState(null);
-
+    // const [total, setTotal] = useState(null);
     // tao schema validate cho data.
     const schema = yup.object().shape({
         CheckIn: yup
@@ -29,6 +28,8 @@ const Checkout = (props) => {
             .typeError('Vui lòng nhập số người.')
             .min(1, 'Ít nhất 1 người.')
             .max(4, 'Tối đa 4 người.'),
+        services: yup
+            .array().min(1, 'Vui lòng chọn ít nhất một dịch vụ.'),
     });
     // khai báo các chức năng hổ trợ việc validate.
     const {
@@ -40,23 +41,23 @@ const Checkout = (props) => {
     // thực hiện lấy data để xữ lý.
     const handleCheckOut = (data) => {
         console.log("data check out: ", data);
+        sessionStorage.setItem("dataBook",JSON.stringify(data))
     }
 
     // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
     const handleChangTotal = () => {
 
     }
-
-
     // hàm này kiểm tra người dùng click chọn bao nhiêu services.
     const handleCheckboxChange = (event) => {
         const value = event.target.value;
         const checked = event.target.checked;
         if (checked) {
             setSelectedServices([...selectedServices, value]);
-            alert(`Bạn đã chọn dịch vụ: `+ value);
+            alert(`Bạn đã chọn dịch vụ: ` + value);
         } else {
             setSelectedServices(selectedServices.filter((service) => service !== value));
+            alert('bạn đã bỏ chọn dịch vụ: ' + value);
         }
     };
     // ----------------------------------------------------------------------------------------------
@@ -116,20 +117,25 @@ const Checkout = (props) => {
                                                         (e, i) => (
                                                             <div className="col-md-6 my-2" key={e.id}>
                                                                 <label htmlFor="service">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        name="services"
-                                                                        // value={e.id}
-                                                                        id="service"
-                                                                        onChange={handleCheckboxChange}
-                                                                    />
-                                                                    {e.name}
+
                                                                 </label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="services"
+                                                                    // value={e.id}
+                                                                    id="services"
+                                                                    value={e.id}
+                                                                    // onChange={handleCheckboxChange}
+                                                                    {...register('services')}
+                                                                />
+                                                                {e.name}
                                                             </div>
                                                         )
                                                     )
                                                     : ''
                                                 }
+                                                {errors.services?.message && <p className="text-danger">{errors.services.message}</p>}
+
                                             </div>
                                             {/* show so luong nguoi */}
 
@@ -143,9 +149,6 @@ const Checkout = (props) => {
                                                             id="amountPeople"
                                                             placeholder="Enter amount people" />
                                                         {errors.amountPeople && <p className="text-danger">{errors.amountPeople.message}</p>}
-                                                    </div>
-                                                    <div className="col-md-5 border-bottom rounded">
-                                                        <h6 >total: 3000$</h6>
                                                     </div>
                                                 </div>
                                             </div>
