@@ -111,12 +111,12 @@ const Navbar = () => {
 
         <Filters />
         <div
-          className="flex items-center pr-3  font-semibold text-gray-600"
+          className="flex items-center pr-3  font-semibold text-gray-600 "
         >
-          <div className="flex items-center mx-8 gap-1">
+          <div className="flex items-center mx-8 gap-1 ">
             <BiWorld className="" />
             <div className="language">
-              <select className="border px-2 py-1">
+              <select className="border px-2 py-1 rounded bg-gray-600 text-white">
                 <option>English</option>
                 <option>Tiếng Việt</option>
               </select>

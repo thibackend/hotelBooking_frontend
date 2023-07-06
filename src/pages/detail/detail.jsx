@@ -229,6 +229,7 @@ function Detail() {
 
       </div>
       <Comments roomId={id} />
+      {console.log(id,"jhjjj")}
     </>
   );
 }
