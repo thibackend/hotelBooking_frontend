@@ -54,6 +54,7 @@ const Checkout = (props) => {
         const checked = event.target.checked;
         if (checked) {
             setSelectedServices([...selectedServices, value]);
+            alert(`Bạn đã chọn dịch vụ: `+ value);
         } else {
             setSelectedServices(selectedServices.filter((service) => service !== value));
         }
