@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment'; // Thêm import cho thư viện moment
+import moment from 'moment';
 import '../../css/comment.css';
 import tokenService from "../../services/token.service";
 
