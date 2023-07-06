@@ -228,9 +228,6 @@ function Detail() {
         </div>
 
       </div>
-      {
-
-      }
       <Comments roomId={id} />
     </>
   );

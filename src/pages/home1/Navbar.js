@@ -50,8 +50,6 @@ const Navbar = () => {
     )
   };
 
-
-
   useEffect(() => {
     if (!userData) {
       fetchUserData();
