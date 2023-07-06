@@ -27,37 +27,31 @@ export default function Comments({ roomId }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Kiểm tra xem userData có tồn tại và có thuộc tính 'id' không
-    if (userData && userData.id) {
-      axios
-        .post(`http://127.0.0.1:8000/api/comments/${roomId}`, {
-          content: commentInput,
-          room_id: roomId,
-          user_id: userData.id,
-        })
-        .then((response) => {
-          setCommentInput("");
-          // Fetch comments for the current room after submitting a comment
-          axios
-            .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
-            .then((response) => {
-              setComments(response.data);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      console.error("userData is undefined or does not have 'id' property");
-    }
+    // Send a comment for the current room
+    axios
+      .post(`http://127.0.0.1:8000/api/comments`, {
+        content: commentInput,
+        room_id: roomId,
+        user_id: userData.id
+      })
+      .then(response => {
+        setCommentInput('');
+        // Fetch comments for the current room after submitting a comment
+        axios
+          .get(`http://127.0.0.1:8000/api/comments/${roomId}`)
+          .then(response => {
+            setComments(response.data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const user = tokenService.getToken();
-
   const fetchUserData = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/users");
@@ -69,7 +63,6 @@ export default function Comments({ roomId }) {
       console.error("Error fetching user data:", error);
     }
   };
-
   useEffect(() => {
     if (!userData) {
       fetchUserData();

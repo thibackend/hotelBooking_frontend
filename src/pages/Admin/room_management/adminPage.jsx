@@ -14,6 +14,10 @@ function AdminPage() {
   const [price, setPrice] = useState("");
   const [category_id, setCategory_id] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [services, setServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [images, setImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const [nameError, setNameError] = useState(false);
   const [descError, setDescError] = useState(false);
@@ -24,11 +28,22 @@ function AdminPage() {
     setCurrentAction(action);
     setIsModalOpen(true);
     setCurrentRoom(room);
-    if (action === 'edit') {
+    if (action === "create") {
+      setName("");
+      setDesc("");
+      setPrice("");
+      setCategory_id("");
+      setSelectedServices([]);
+      setImages([]);
+      setSelectedImages([]);
+    } else if (action === 'edit') {
       setName(room.name);
       setDesc(room.desc);
       setPrice(room.price);
       setCategory_id(room.category_id);
+      setImages(room.images);
+      setSelectedImages([]);
+
     }
   };
 
@@ -40,10 +55,17 @@ function AdminPage() {
     setDesc('');
     setPrice('');
     setCategory_id('');
+    setSelectedServices([]);
+    setImages([]);
+    setSelectedImages([]);
+
   };
 
   useEffect(() => {
     fetchData();
+    fetchCategories();
+    fetchServices();
+
   }, []);
 
   const fetchData = async () => {
@@ -70,6 +92,46 @@ function AdminPage() {
 
   const handleCategoryChange = (e) => {
     setCategory_id(e.target.value);
+  };
+  const handleServiceSelection = (serviceId) => {
+    setSelectedServices((prevSelectedServices) => {
+      const updatedSelectedServices = prevSelectedServices.includes(serviceId)
+        ? prevSelectedServices.filter((id) => id !== serviceId)
+        : [...prevSelectedServices, serviceId];
+      return updatedSelectedServices;
+    });
+
+
+    setServices((prevServices) => {
+      const updatedServices = prevServices.map((service) => {
+        if (service.id === serviceId) {
+          return {
+            ...service,
+            selected: !service.selected,
+          };
+        }
+        return service;
+      });
+      return updatedServices;
+    });
+  };
+  const handleImageSelection = (imageId) => {
+    setSelectedImages((prevSelectedImages) => {
+      const updatedSelectedImages = prevSelectedImages.includes(imageId)
+        ? prevSelectedImages.filter((id) => id !== imageId)
+        : [...prevSelectedImages, imageId];
+      return updatedSelectedImages;
+    });
+  };
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    setSelectedImages([...selectedImages, ...files]);
+  };
+
+
+  const handleRemoveImage = (image) => {
+    const filteredImages = selectedImages.filter((img) => img !== image);
+    setSelectedImages(filteredImages);
   };
 
   const handleSubmit = async (e) => {
@@ -107,15 +169,36 @@ function AdminPage() {
     if (hasError) {
       return;
     }
+    const formData = new FormData();
+    formData.append("name", name.trim());
+    formData.append("desc", desc.trim());
+    formData.append("price", price.trim());
+    formData.append("category_id", category_id);
+
+    selectedServices.forEach((serviceId) => {
+      formData.append("services[]", serviceId);
+    });
+
+
+    selectedImages.forEach((image) => {
+      formData.append("images[]", image);
+    });
 
     try {
       if (currentAction === 'create') {
-        await axios.post('http://127.0.0.1:8000/api/rooms', {
-          name,
-          desc,
-          price,
-          category_id,
+        await axios.post('http://localhost:8000/api/create-room',formData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
         });
+
       } else if (currentAction === 'edit') {
         const roomId = currentRoom.id;
         await axios.put(`http://127.0.0.1:8000/api/rooms/${roomId}`, {
@@ -156,6 +239,49 @@ function AdminPage() {
       console.log(error);
     }
   };
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/services");
+      const servicesWithSelection = response.data.map((service) => ({
+        ...service,
+        selected: false,
+      }));
+      setServices(servicesWithSelection);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchRoomServices = async (roomId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/room-service?room_id=${roomId}`
+      );
+      const roomServices = response.data;
+
+      // Cập nhật danh sách dịch vụ đã chọn trước đó
+      setSelectedServices(roomServices.map((service) => service.service_id));
+
+      // Cập nhật trạng thái `selected` của các dịch vụ trong mảng `services`
+      setServices((prevServices) => {
+        const updatedServices = prevServices.map((service) => ({
+          ...service,
+          selected: roomServices.some(
+            (roomService) => roomService.service_id === service.id
+          ),
+        }));
+        return updatedServices;
+      });
+    } catch (error) {
+      console.error("Error fetching room services:", error);
+    }
+  };
+
+  // Gọi hàm fetchRoomServices trong useEffect khi roomId thay đổi
+  useEffect(() => {
+    if (currentAction === "edit") {
+      fetchRoomServices(currentRoom.id);
+    }
+  }, [currentRoom]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -195,7 +321,7 @@ function AdminPage() {
                           {room.image_path.map((image, imgIndex) => (
                             <img
                               key={imgIndex}
-                              src={image}
+                              src={`http://localhost:8000/uploads/images/${image}`}
                               alt={`Room ${index + 1}`}
                               style={{ maxWidth: '100px' }}
                             />
@@ -277,6 +403,51 @@ function AdminPage() {
                   {categoryError && <p className="error-message">Vui lòng chọn loại phòng *</p>}
                 </div>
               ) : null}
+              {(currentAction === "create" || currentAction === "edit") && (
+                <div className="mb-3">
+                  <label className="form-label">Services</label>
+                  {services &&
+                    Array.isArray(services) &&
+                    services.map((service) => (
+                      <div key={service.id} className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`service-${service.id}`}
+                          checked={service.selected}
+                          onChange={() => handleServiceSelection(service.id)}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`service-${service.id}`}
+                        >
+                          {service.name}
+                        </label>
+                      </div>
+                    ))}
+                </div>
+              )}
+              <div>
+              <label>Images:</label>
+                <input type="file" multiple onChange={handleImageChange} />
+                {selectedImages.length > 0 && (
+                  <div>
+                    {selectedImages.map((image) => (
+                      <div key={image.name} style={{display:"flex"}}>
+                        <img
+                        width={100} height={100}
+                          src={URL.createObjectURL(image)}
+                          alt={image.name}
+                        />
+                        <p>{image.name}</p>
+                        <button onClick={() => handleRemoveImage(image)}>
+                          X
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
               <Button variant="primary" type="submit">
                 {currentAction === 'create' ? 'Thêm' : 'Lưu'}
               </Button>

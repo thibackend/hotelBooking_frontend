@@ -12,8 +12,6 @@ const App = () => {
         <ToastContainer />
       </BrowserRouter>
     </ChakraProvider>
-
-
   );
 }
 export default App;
