@@ -4,11 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../css/roomDetail.css';
 import { useNavigate } from "react-router";
+import { Button } from "@chakra-ui/react";
+import { BeatLoader } from 'react-spinners';
 const Checkout = (props) => {
 
     // thực hiện khai báo các state được sữ dụng.
     const [services, setServices] = useState(null);
-    const [selectedServices, setSelectedServices] = useState([]);
+    const [Booking, setBooking] = useState(false);
     const navigate = useNavigate();
     // const [total, setTotal] = useState(null);
     // tao schema validate cho data.
@@ -48,24 +50,15 @@ const Checkout = (props) => {
         const numberOfDays = Math.round(timeDifference / millisecondsPerDay);
         data.night = numberOfDays;
         data.price = props.price;
+        data.room_id = props.id;
 
         sessionStorage.setItem("dataBook", JSON.stringify(data));
-        navigate('/confirm');
-    }
+        setTimeout(() => {
+            navigate('/confirm');
+            setBooking(true);
+        }, 2000)
 
-    // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
-    // hàm này kiểm tra người dùng click chọn bao nhiêu services.
-    // const handleCheckboxChange = (event) => {
-    //     const value = event.target.value;
-    //     const checked = event.target.checked;
-    //     if (checked) {
-    //         setSelectedServices([...selectedServices, value]);
-    //         alert(`Bạn đã chọn dịch vụ: ` + value);
-    //     } else {
-    //         setSelectedServices(selectedServices.filter((service) => service !== value));
-    //         alert('bạn đã bỏ chọn dịch vụ: ' + value);
-    //     }
-    // };
+    }
     // ----------------------------------------------------------------------------------------------
 
     // hàm này dùng để kiểm tra thay đổi của credit khi mà người dùng click vào thì chuyển sang trạng thái true và hiện ô nhập số thẻ
@@ -73,7 +66,7 @@ const Checkout = (props) => {
         if (!services) {
             setServices(props.services)
         }
-    }, [services]);
+    }, [services, Booking]);
 
     return (
         <div className="row">
@@ -157,9 +150,23 @@ const Checkout = (props) => {
                                     </div>
                                     <div className="col-lg-12">
                                         <div className="form-group text-black">
-                                            <button
-                                                type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK
-                                            </button>
+                                            {props.status ?
+                                                (Booking ?
+                                                    <Button
+                                                        isLoading
+                                                        colorScheme='blue'
+                                                        spinner={<BeatLoader size={8} color='white' />}
+                                                    >
+                                                        Click me
+                                                    </Button>
+                                                    : <button button
+                                                        type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK
+                                                    </button>)
+
+                                                :
+                                                <h6 className="text-danger my-5 mx-2">This room has already been booked.</h6>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -168,8 +175,8 @@ const Checkout = (props) => {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 export default Checkout

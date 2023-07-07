@@ -4,8 +4,16 @@ import moment from 'moment';
 import { SelectAllServices } from '../../services/home/Serices';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { postDatabooking } from '../../services/home/bills';
+import tokenService from '../../services/token.service';
+import {
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+} from '@chakra-ui/react'
 
 function ConfirmBook() {
+
     // khởi gáng các biến dữ liệu cho trang.
     const dataBook0 = JSON.parse(sessionStorage.getItem('dataBook'));
     const [dataBook, setDataBook] = useState(false);
@@ -13,6 +21,9 @@ function ConfirmBook() {
     const [services, setServices] = useState(null);
     const [total, setTotal] = useState(null);
     const [paymentMethod, setpaymentMethod] = useState();
+    const [user, setUser] = useState(null);
+    const [status, setstatus] = useState(false);
+
     // const [totalServices, setTotalServices] = useState(null);
     const [Paymentmethods, setPaymentMethods] = useState(
         {
@@ -23,18 +34,20 @@ function ConfirmBook() {
             cash: true
         }
     );
-
     const postBookBill = (data) => {
         postDatabooking(data).then(
             (res) => {
                 console.log('res data post: ', res);
+                if (res) setstatus(true);
             }
-        ).catch((err) => console.log('Eroo', err))
+        ).catch((err) => { setstatus(false); console.log('Eroo', err); })
     }
 
     const handleConfirm = () => {
         setMethod();
         const dataPost = {
+            user_id: user.user_id,
+            room_id: dataBook.room_id,
             total_price: total,
             paymentMethod: paymentMethod,
             services: services,
@@ -172,8 +185,36 @@ function ConfirmBook() {
                 configData();
             }
             setMethod();
-        }, [config, services, paymentMethod]);
+            if (!user) setUser(tokenService.getToken());
+        }, [config, services, paymentMethod, status]);
 
+    const AlertSuccessful = (status) => {
+        return (
+            <div className='alert-container'>
+                <Alert
+                    className='alert'
+                    status='success'
+                    variant='subtle'
+                    flexDirection='column'
+                    alignItems='center'
+                    justifyContent='center'
+                    textAlign='center'
+                    height='200px'
+                >
+                    <AlertIcon className='alert-icon' boxSize='40px' mr={0} />
+                    <div className='alert-content'>
+                        <AlertTitle className='alert-title' mt={4} mb={1} fontSize='lg'>
+                            Thank you for booking!
+                        </AlertTitle>
+                        <AlertDescription className='alert-description' maxWidth='sm'>
+                            Hope you'll have a good time.
+                        </AlertDescription>
+                    </div>
+
+                </Alert>
+            </div>
+        )
+    }
     return (
         <div className='container'>
             <div className='btn btn-outline-secondary' onClick={(e) => { e.preventDefault(); window.history.back() }}><ArrowBackIcon /></div>
@@ -270,21 +311,19 @@ function ConfirmBook() {
                                 }
 
                                 {Paymentmethods.cash &&
-                                    <div className='col-md-7'>
-                                        <label htmlFor='cardNumber'>
-                                            <p className='text-secondary'>Thanh toan bang tien mat</p>
-                                            <input type='number' className='form-control' placeholder='0000 / 0000 / 000' />
-                                        </label>
+                                    <div className='col-md-12'>
+                                        <h5>Giao dịch sẽ được thực hiện khi đến nơi! </h5>
+                                        <div className='d-flex justify-content-evenly my-3'>
+                                            <img src='https://i.pinimg.com/564x/be/6a/22/be6a221e037392aec498cc298dfa9bd8.jpg' className='w-20' />
+                                            <img src='https://i.pinimg.com/564x/0a/0f/19/0a0f196fa9c7c23c2996dfd13be46e3f.jpg' className='w-20' />
+                                            <img src='https://i.pinimg.com/564x/aa/63/18/aa63182f62ab528c7180ff0cbe9a519e.jpg' className='w-20' />
+                                        </div>
                                     </div>
                                 }
-
                             </div>
                         </div>
                     </div>
-                    <div className='card-footer d-inline-flex justify-content-end'>
-                        <button className='danger-border btn btn-outline-danger mx-2'>Close</button>
-                        <button className='danger-border btn btn-outline-success' onClick={handleConfirm}> Confirm</button>
-                    </div>
+                    {status ? AlertSuccessful(status) : ''}
                 </div>
                 {/* ben này dùng để lưu các thông tin của dặt phòng*/}
                 <div className='col-md-5 card inline'>
@@ -331,6 +370,10 @@ function ConfirmBook() {
                         <div className='row'>
                             <div className='col-12 d-flex justify-content-end'>
                                 <p className='card-text my-3'>Total: {fortmatMoney(total)}$ </p>
+                            </div>
+                            <div className='card-footer d-inline-flex justify-content-end'>
+                                <button className='danger-border btn btn-outline-danger mx-2' onClick={(e) => { e.preventDefault(); window.history.back() }}>Close</button>
+                                <button className='confirm danger-border btn btn-outline-success' onClick={handleConfirm}> Confirm</button>
                             </div>
                         </div>
                     </div>
