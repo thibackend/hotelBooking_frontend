@@ -254,10 +254,10 @@ function AdminPage() {
   const fetchRoomServices = async (roomId) => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/room-service?room_id=${roomId}`
+        `http://127.0.0.1:8000/get-room-with-services/${{roomId}}`
       );
       const roomServices = response.data;
-
+console.log(roomServices);
       // Cập nhật danh sách dịch vụ đã chọn trước đó
       setSelectedServices(roomServices.map((service) => service.service_id));
 

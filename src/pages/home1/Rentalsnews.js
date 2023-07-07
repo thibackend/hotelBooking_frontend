@@ -187,14 +187,14 @@ const Rentals = (props) => {
               <input
                 type="range"
                 min="0"
-                max="10000"
+                max={Math.max(...data.map(room => room.price))}
                 value={roomPrice}
                 onChange={handlePriceChange}
               />
               <div className="flex justify-between text-xs">
                 <span>$0</span>
+                <span></span>
                 <span>${roomPrice}</span>
-                <span>$1000</span>
               </div>
             </div>
           </label>
