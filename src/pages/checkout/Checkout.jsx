@@ -40,14 +40,20 @@ const Checkout = (props) => {
 
     // thực hiện lấy data để xữ lý.
     const handleCheckOut = (data) => {
+        // Đổi đơn vị thời gian về số mili giây
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        // Tính số mili giây giữa hai ngày
+        const timeDifference = data.CheckOut.getTime() - data.CheckIn.getTime();
+        // Tính số ngày
+        const numberOfDays = Math.round(timeDifference / millisecondsPerDay);
+        data.night = numberOfDays;
+        data.price = props.price;
+
         sessionStorage.setItem("dataBook", JSON.stringify(data));
         navigate('/confirm');
     }
 
     // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
-    const handleChangTotal = () => {
-
-    }
     // hàm này kiểm tra người dùng click chọn bao nhiêu services.
     // const handleCheckboxChange = (event) => {
     //     const value = event.target.value;
@@ -152,7 +158,8 @@ const Checkout = (props) => {
                                     <div className="col-lg-12">
                                         <div className="form-group text-black">
                                             <button
-                                                type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK</button>
+                                                type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
