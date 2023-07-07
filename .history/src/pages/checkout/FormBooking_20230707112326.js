@@ -56,6 +56,56 @@ const FormBooking = () => {
 
   return (
     <div className='container'>
+<<<<<<< HEAD
+      <form onSubmit={handleSubmit} className='containers'>
+        <div className="form-group">
+          <label htmlFor="checkInDate">Ngày đặt:</label>
+          <input
+            type="date"
+            className="form-control"
+            id="checkInDate"
+            value={checkInDate}
+            onChange={(e) => setCheckInDate(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="checkOutDate">Ngày trả:</label>
+          <input
+            type="date"
+            className="form-control"
+            id="checkOutDate"
+            value={checkOutDate}
+            onChange={(e) => setCheckOutDate(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="numberOfGuests">Số lượng người:</label>
+          <input
+            type="number"
+            className="form-control"
+            id="numberOfGuests"
+            value={numberOfGuests}
+            min="1"
+            onChange={(e) => setNumberOfGuests(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Đặt phòng</button>
+        {/* Hiển thị thông báo ngày đặt phòng không hợp lệ */}
+        {invalidDate && (
+          <p className="error-message">Vui lòng chọn ngày đặt phòng không nhỏ hơn ngày hiện tại!</p>
+        )}
+        {/* Hiển thị giá phòng dựa trên số ngày đặt */}
+        {numberOfNights > 0 && (
+          <p className='tex-name'>Giá phòng ({numberOfNights} ngày): {room_price* numberOfNights} VNĐ</p>
+        )}
+        {numberOfNights > 0 && (
+          <p className='tex-name'>Số ngày đặt: {numberOfNights} Ngày</p>
+        )}
+        <p className='tex-name'>Phí vệ sinh: {cleaningFee} VNĐ</p>
+        <p className='tex-name'>Phí dịch vụ: {serviceFee} VNĐ</p>
+        <hr></hr>
+        <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
+=======
       <form onSubmit={handleSubmit} className='containers my-4'>
         <center>
           <div className="form-group">
@@ -99,9 +149,14 @@ const FormBooking = () => {
             <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
           )}
         </center>
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
       </form>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default FormBooking;
+=======
+export default FormBooking;
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82

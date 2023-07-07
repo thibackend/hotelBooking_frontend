@@ -104,4 +104,8 @@ const FormBooking = () => {
   );
 };
 
+<<<<<<< HEAD
 export default FormBooking;
+=======
+export default FormBooking;
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82

@@ -1,4 +1,4 @@
-  .containers{
+.containers{
     border-radius: 10px;
     width: 600px;
     height: auto;
@@ -8,6 +8,10 @@
     color:#222;
     transition: none;
 }
+<<<<<<< HEAD
+.form-group{
+    margin: 25px;
+=======
 .container{
 
     width: 600px;
@@ -32,6 +36,7 @@
   line-height:26px;}
 .form-group{
     margin: 20px;
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
     width: 300px;
 }
 .btn-primary{
@@ -47,8 +52,11 @@
 
 
 
+<<<<<<< HEAD
+=======
  /* confim checkout */
 
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
 .container {
     display: flex;
     justify-content: space-between;
@@ -57,7 +65,10 @@
   }
   
   .main {
+<<<<<<< HEAD
+=======
     margin-top: 30px;
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
     flex-basis: 60%;
   }
   
@@ -137,6 +148,8 @@
     border-radius: 5px;
     cursor: pointer;
   }
+<<<<<<< HEAD
+=======
   .btn-secondary{
     background-color: #c0392b;
     border-radius: 5px;
@@ -147,6 +160,7 @@
     cursor: pointer;
     border: none;
   }
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
   
   
   
