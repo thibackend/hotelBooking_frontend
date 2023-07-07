@@ -1,0 +1,45 @@
+.image-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+  }
+
+  /*CSS for Loading */
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .text-loading {
+    margin-left: 100px;
+  }
+
+  /* CSS for Validation form */
+  .error-message {
+    color: red;
+  }
+
+.action-button .btn {
+  display: flex;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  justify-content: center;
+}
+
+.card-header h2{
+  /*background: linear-gradient(to left, #087fc4, #b90dc9);
+  background: linear-gradient(to left, rgb(94, 3, 26), red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
+  color: #087fc4;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.card-header .button-add {
+  width: 30%;
+}

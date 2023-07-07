@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
+=======
+
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
 import './boking.css';
 import { Navigate, useNavigate } from 'react-router-dom';
 const FormBooking = () => {
@@ -12,7 +16,11 @@ const FormBooking = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [invalidDate, setInvalidDate] = useState(false); // Thêm state để lưu trạng thái ngày đặt phòng không hợp lệ
+<<<<<<< HEAD
 
+=======
+  const currentDate = new Date().toISOString().split('T')[0];
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
   useEffect(() => {
     calculatePrice();
     const currentDate = new Date().toISOString().split('T')[0];
@@ -22,6 +30,7 @@ const FormBooking = () => {
     }
     setInvalidDate(false);
   }, [checkInDate, checkOutDate, numberOfGuests]);
+<<<<<<< HEAD
   // const handleCheckInChange = (event) => {
   //   setCheckInDate(event.target.value);
   // };
@@ -34,6 +43,8 @@ const FormBooking = () => {
   //   setNumberOfGuests(event.target.value);
   // };
 
+=======
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
   const calculatePrice = () => {
     const nights = Math.ceil((new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 3600 * 24)); // Số đêm
     setNumberOfNights(nights);
@@ -47,6 +58,14 @@ const FormBooking = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+<<<<<<< HEAD
+=======
+    if (totalPrice <= 0) {
+      alert('Giá trị không hợp lệ');
+      // Hiển thị thông báo cho người dùng rằng giá trị không hợp lệ
+      return;
+    }
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
     let datacheckout = {
       checkInDate,
       checkOutDate,
@@ -58,11 +77,16 @@ const FormBooking = () => {
       cleaningFee
     }
     localStorage.setItem('datacheckout', JSON.stringify(datacheckout));
+<<<<<<< HEAD
     navigate('/checkout');
+=======
+    navigate('/confirm');
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
   };
 
   return (
     <div className='container'>
+<<<<<<< HEAD
       <form onSubmit={handleSubmit} className='containers'>
         <div className="form-group">
           <label htmlFor="checkInDate">Ngày đặt:</label>
@@ -111,9 +135,58 @@ const FormBooking = () => {
         <p className='tex-name'>Phí dịch vụ: {serviceFee} VNĐ</p>
         <hr></hr>
         <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
+=======
+      <form onSubmit={handleSubmit} className='containers my-4'>
+        <center>
+          <div className="form-group">
+            <label htmlFor="checkInDate">Ngày đặt:</label>
+            <input type="date" className="form-control" id="checkInDate" value={checkInDate} onChange={(e) =>
+              setCheckInDate(e.target.value)} min={currentDate} // Thêm thuộc tính min
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="checkOutDate">Ngày trả:</label>
+            <input type="date" className="form-control" id="checkOutDate"
+              value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)}
+              min={checkInDate} // Thêm thuộc tính min, giá trị là ngày đặt 
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="numberOfGuests">Số lượng người:</label>
+            <input
+              type="number"
+              className="form-control"
+              id="numberOfGuests"
+              value={numberOfGuests}
+              min="1"
+              onChange={(e) => setNumberOfGuests(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Đặt phòng</button>
+          {/* Hiển thị thông báo ngày đặt phòng không hợp lệ */}
+
+          {/* Hiển thị giá phòng dựa trên số ngày đặt */}
+          {numberOfNights > 0 && (
+            <p className='tex-name'>Giá phòng ({numberOfNights} ): {room_price * numberOfNights} VNĐ</p>
+          )}
+          {numberOfNights > 0 && (
+            <p className='tex-name'>Số ngày đặt: {numberOfNights} Ngày</p>
+          )}
+          <p className='tex-name'>Phí vệ sinh: {cleaningFee} VNĐ</p>
+          <p className='tex-name'>Phí dịch vụ: {serviceFee} VNĐ</p>
+          <hr></hr>
+          {totalPrice >= 0 && (
+            <p className='tex-name tex-name2'>Tổng giá: {totalPrice} VNĐ</p>
+          )}
+        </center>
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
       </form>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default FormBooking;
+=======
+export default FormBooking;
+>>>>>>> c153178a60c72961e394b1657cb2fb7e7c854a82
