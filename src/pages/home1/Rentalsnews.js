@@ -1,7 +1,7 @@
 import Rentalnew from "./Rentalnew";
 import "./Rentals.css";
 
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { getRooms } from "./../../services/home/index";
 
 const Rentals = (props) => {
@@ -145,8 +145,8 @@ const Rentals = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",
-            position:"absolute",
-            top:400,
+            position: "absolute",
+            top: 400,
           }}
           className=" bg-white mt-2 w-[30rem] border border-gray-200 rounded-lg shadow-lg"
         >
@@ -163,7 +163,7 @@ const Rentals = (props) => {
           >
             Show All
           </button>
-          
+
           <label style={{ marginBottom: "5px" }}>
             <h3>Room Type</h3>
             <select
@@ -187,14 +187,13 @@ const Rentals = (props) => {
               <input
                 type="range"
                 min="0"
-                max="1000"
+                max={Math.max(...data.map(room => room.price))}
                 value={roomPrice}
                 onChange={handlePriceChange}
               />
               <div className="flex justify-between text-xs">
                 <span>$0</span>
                 <span>${roomPrice}</span>
-                <span>$1000</span>
               </div>
             </div>
           </label>

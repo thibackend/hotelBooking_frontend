@@ -30,6 +30,9 @@ export default function Comments({ roomId }) { //khởi tạo state và biến l
     if (commentInput && roomId && userData.user_id) {
       postComment();
     }
+    // console.log("content:", commentInput);
+    // console.log("room ID:", roomId);
+    // console.log("user_id:", userData.user_id);
   };
 
   const handleChangeComment = (event) => {

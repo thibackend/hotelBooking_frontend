@@ -216,7 +216,7 @@ function Detail() {
                       <Card.Body>
                         <Card.Title>{e.name}</Card.Title>
                         <Card.Text>
-                          <p className="overflow-hidden">{e.desc}</p>
+                          <p className="desc">{e.desc}</p>
                         </Card.Text>
                       </Card.Body>
                     </Card>
