@@ -43,8 +43,6 @@ function ConfirmBook() {
             }))
             , 1000)
     }
-
-
     const fortmatMoney = (money) => {
         const formattedPrice = new Intl.NumberFormat("en-US", {
             style: "currency",

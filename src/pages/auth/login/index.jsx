@@ -149,11 +149,6 @@ export const LoginForm = () => {
         </FormControl>
         <Stack isInline justifyContent={"space-between"} mt={4}>
           <Box>
-            <Checkbox>Remenber Me</Checkbox>
-          </Box>
-          <Box>
-            <Link>Forgot password</Link> <br />
-            <Link color={'green'}>Sign up</Link>
           </Box>
         </Stack>
         <Button type="submit" colorScheme="green" width={"full"} mt={4}>Sign In</Button>

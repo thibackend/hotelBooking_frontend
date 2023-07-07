@@ -1,14 +1,18 @@
 import React from "react";
 import { BsStarFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import '../../css/roomDetail.css';
+import "../../css/roomDetail.css";
 const Rentalnew = ({ data: rentalData }) => {
   return (
     <div className="card-room">
       <div className="row flex flex-wrap justify-between absolute w-full mt-12 pr-10 pl-10 font-semibold text-gray-600">
         {rentalData ? (
           rentalData.map((rental, index) => (
-            <Link to={`detail/${rental.id}`} className="room-show col-sm-3 mb-10" key={index}>
+            <Link
+              to={`detail/${rental.id}`}
+              className="room-show col-sm-3 mb-10"
+              key={index}
+            >
               <div className="relative">
                 <div className="flex">
                   <img
@@ -21,20 +25,19 @@ const Rentalnew = ({ data: rentalData }) => {
                   />
                 </div>
               </div>
-              <div className="pt-3 flex justify-between items-start">
-                <div className="">
+              <p className="desc">{rental.desc}</p>
+              <div className="pt-3 flex justify-between descCha">
+                <div className="dsfs">
                   <p className="max-w-[17rem] font-semibold text-[17px]">
                     {rental.name || ""}
                   </p>
-                  <p className="max-w-[17rem]  text-[16px] -mt-1 text-gray-500">
-                    Jan 28 - Aug 9
-                  </p>
+
                   <p className="max-w-[17rem] font-semibold text-[17px]">
                     {rental.price || ""}$
                   </p>
                 </div>
                 <div className="flex items-center space-x-1">
-                  <BsStarFill />
+                  <BsStarFill style={{ color: "yellow" }} />
                   <p className="text-[15px]">{rental.star || ""}</p>
                 </div>
               </div>
