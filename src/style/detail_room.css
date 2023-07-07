@@ -1,0 +1,49 @@
+.image-top {
+  border-top-right-radius: 10px;
+}
+
+.image-bottom {
+  border-bottom-right-radius: 10px;
+}
+
+.button-move-room {
+  width: 3%;
+  position: relative;
+ }
+
+ .button-move-room .button-move-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -180px;
+  z-index: 1;
+ }
+
+ .button-move-room .button-move-right {
+  position: absolute;
+ 
+
+ }
+
+ .detail-room {
+  border: solid 1px gray;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+ }
+
+ .slider-container {
+  margin: 0 -5px;
+  transition: transform 0.2s ease;
+}
+
+.slider-container.hover {
+  transform: scale(1.05);
+}
+
+.slick-slide div {
+  padding: 5px;
+}
+
+
+
