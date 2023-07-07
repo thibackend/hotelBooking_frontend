@@ -86,7 +86,7 @@ export default function Comments({ roomId }) { //khởi tạo state và biến l
               <div className="comment-user d-flex justify-content-start align-items-baseline h-6">
                 <img
                   className="comment-avatar "
-                  src={item.image}
+                  src={item.image ? item.image : 'https://thuthuatnhanh.com/wp-content/uploads/2020/02/avatar-nguoi-dau-mat-thug-life-ngau-loi-390x390.jpg' }
                   alt="Avatar"
                 />
                 <h6 className="comment-username mx-1">{item.name}</h6>

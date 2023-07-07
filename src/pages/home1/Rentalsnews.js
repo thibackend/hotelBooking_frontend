@@ -146,7 +146,7 @@ const Rentals = (props) => {
             alignItems: "center",
             justifyContent: "space-around",
             position: "absolute",
-            top: 400,
+            top: 455,
           }}
           className=" bg-white mt-2 w-[30rem] border border-gray-200 rounded-lg shadow-lg"
         >

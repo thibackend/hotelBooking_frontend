@@ -116,7 +116,7 @@ const Navbar = () => {
           <div className="flex items-center mx-8 gap-1 ">
             <BiWorld className="" />
             <div className="language">
-              <select className="border px-2 py-1 rounded bg-gray-600 text-white">
+              <select className="px-2 py-1 bg-gray-600 text-white">
                 <option>English</option>
                 <option>Tiếng Việt</option>
               </select>
@@ -125,7 +125,7 @@ const Navbar = () => {
           {userData ? (
             <div onClick={handleProfileOpen} className="flex items-center border px-1 py-1 rounded-full cursor-pointer gap-2 bg-[#ff5a60] 
             text-white font-bold shadow-lg shadow-gray-300 hover:bg-[#f9787c] duration-100 ease-out">
-              <img src={userData.image} alt="Avatar" className="w-12 h-12 rounded-full" />
+              <img src={userData.image ? userData.image : 'https://thuthuatnhanh.com/wp-content/uploads/2020/02/avatar-nguoi-dau-mat-thug-life-ngau-loi-390x390.jpg'} alt="Avatar" className="w-12 h-12 rounded-full" />
             </div>
           ) : (
             <div className="flex items-center border px-3 py-2 rounded-full cursor-pointer gap-2 bg-[#ff5a60] text-white font-bold shadow-lg shadow-gray-300 hover:bg-[#f9787c] duration-100 ease-out">

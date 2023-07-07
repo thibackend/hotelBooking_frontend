@@ -28,8 +28,9 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 100%;
+    max-width: 80%;
 }
+
 
 /* thiết lập css cho bên detail */
 body {
