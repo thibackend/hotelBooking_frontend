@@ -3,6 +3,7 @@ import '../../css/confirmBooking.css';
 import moment from 'moment';
 import { SelectAllServices } from '../../services/home/Serices';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { postDatabooking } from '../../services/home/bills';
 
 function ConfirmBook() {
     // khởi gáng các biến dữ liệu cho trang.
@@ -22,13 +23,36 @@ function ConfirmBook() {
             cash: true
         }
     );
-    const handleConfirm = () => {
-        const dataPost = {
-            
-        }
 
+    const postBookBill = (data) => {
+        postDatabooking(data).then(
+            (res) => {
+                console.log('res data post: ', res);
+            }
+        ).catch((err) => console.log('Eroo', err))
     }
 
+    const handleConfirm = () => {
+        setMethod();
+        const dataPost = {
+            total_price: total,
+            paymentMethod: paymentMethod,
+            services: services,
+            total_night: dataBook.night,
+            room_rate: dataBook.price,
+            CheckIn: dataBook.CheckIn,
+            CheckOut: dataBook.CheckOut
+        }
+        postBookBill(dataPost);
+    }
+
+    const setMethod = () => {
+        if (Paymentmethods.cash) { return setpaymentMethod("Cash"); }
+        if (Paymentmethods.card) { return setpaymentMethod("Card"); }
+        if (Paymentmethods.vnpay) { return setpaymentMethod("VnPay"); }
+        if (Paymentmethods.paypal) { return setpaymentMethod("PayPal"); }
+        if (Paymentmethods.momo) { return setpaymentMethod("MoMo"); }
+    }
     // thông báo payment method chưa hoàn thiện.
     const alerts = () => {
         alerts('Phương thức thanh toán này chưa hoàn thiện');
@@ -43,8 +67,7 @@ function ConfirmBook() {
             }))
             , 1000)
     }
-
-
+    // fortmat cho số tiền.
     const fortmatMoney = (money) => {
         const formattedPrice = new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -148,7 +171,7 @@ function ConfirmBook() {
             if (config && services) {
                 configData();
             }
-            if (dataBook && services) console.log('Services =>>>', services);
+            setMethod();
         }, [config, services, paymentMethod]);
 
     return (
@@ -157,12 +180,11 @@ function ConfirmBook() {
             <div className='row d-flex justify-content-between aligin-items-center my-2 p-2'>
                 <div className='col-md-6 card mx-1'>
                     <div className='row'>
-
                         {/* show ra các payment method */}
                         <h3 className='text-secondary'>Payment method</h3>
                         <div className='d-flex justify-content-between'>
-                            <div className={`opacity-25 card align-items-center method ${Paymentmethods.card ? 'selected' : ''} `}>
-                            {/* onClick={() => handleChangeMethod('card')} */}
+                            <div className={`opacity-25 card align-items-center method ${Paymentmethods.card ? 'selected' : ''} `} onClick={() => alert("Method in progress unable to use")}>
+                                {/* onClick={() => handleChangeMethod('card')} */}
                                 <div className='card-body'>
                                     <img className='w-10' src='https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/credit_cards.png' alt='cards' />
                                 </div>
@@ -170,7 +192,7 @@ function ConfirmBook() {
                                     Card
                                 </p>
                             </div>
-                            <div className={`card align-items-center method ${Paymentmethods.paypal ? 'selected' : ''} `} onClick={() => handleChangeMethod('paypal')}>
+                            <div className={`opacity-25 card align-items-center method ${Paymentmethods.paypal ? 'selected' : ''} `} onClick={() => alert("Method in progress unable to use")}>
                                 <div className='card-body'>
                                     <img className='w-10' src='https://cdn.icon-icons.com/icons2/2699/PNG/512/paypal_logo_icon_170865.png' alt='cards' />
                                 </div>
@@ -178,7 +200,7 @@ function ConfirmBook() {
                                     PayPal
                                 </p>
                             </div>
-                            <div className={`card align-items-center method ${Paymentmethods.momo ? 'selected' : ''} `} onClick={() => handleChangeMethod('momo')}>
+                            <div className={`opacity-25 card align-items-center method ${Paymentmethods.momo ? 'selected' : ''} `} onClick={() => alert("Method in progress unable to use")}>
                                 <div className='card-body'>
                                     <img className='w-10' src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png' alt='cards' />
                                 </div>
@@ -186,8 +208,9 @@ function ConfirmBook() {
                                     Momo
                                 </p>
                             </div>
-                            <div className={`card align-items-center method ${Paymentmethods.vnpay ? 'selected' : ''} `} onClick={() => handleChangeMethod('vnpay')}>
+                            <div className={`opacity-25 card align-items-center method ${Paymentmethods.vnpay ? 'selected' : ''} `} onClick={() => alert("Method in progress unable to use")}>
                                 <div className='card-body'>
+
                                     <img className='w-10' src='https://vnpay.vn/s1/statics.vnpay.vn/2023/6/0oxhzjmxbksr1686814746087.png' alt='cards' />
                                 </div>
                                 <p className='card-text'>
@@ -196,6 +219,7 @@ function ConfirmBook() {
                             </div>
                             <div className={`card align-items-center method ${Paymentmethods.cash ? 'selected' : ''} `} onClick={() => handleChangeMethod('cash')}>
                                 <div className='card-body'>
+                                    {/* {Paymentmethods.cash && setpaymentMethod("Cash")} */}
                                     <img className='w-10' src='https://png.pngtree.com/png-vector/20191028/ourmid/pngtree-cash-in-hand-icon-cartoon-style-png-image_1896492.jpg' alt='cards' />
                                 </div>
                                 <p className='card-text'>
@@ -258,7 +282,7 @@ function ConfirmBook() {
                         </div>
                     </div>
                     <div className='card-footer d-inline-flex justify-content-end'>
-                        <button className='danger-border btn btn-outline-danger mx-2'> Close</button>
+                        <button className='danger-border btn btn-outline-danger mx-2'>Close</button>
                         <button className='danger-border btn btn-outline-success' onClick={handleConfirm}> Confirm</button>
                     </div>
                 </div>

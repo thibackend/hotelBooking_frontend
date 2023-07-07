@@ -160,9 +160,6 @@ function Detail() {
             <h5 className="title">Type room</h5>
             <h6>{data && data.category_name && data.category_name.name}</h6>
           </div>
-          <div className="col-md-4 my-3">
-            <h5 className="title">Comments</h5>
-          </div>
         </div>
         <h2> Phong lien quan</h2>
         <div className="row justify-content-around">
