@@ -10,6 +10,7 @@ import Booking_mang from "../pages/Admin/booking_management/booking_ma";
 import Rentalsnews from "../pages/home1/Rentalsnews";
 import About from "../pages/about/about";
 import Detail from "../pages/detail/detail";
+import ConfirmBook from "../pages/checkout/ConfirmBook";
 export const routes = () => [
   {
     path: "/auth",
@@ -28,6 +29,7 @@ export const routes = () => [
       { path: "about", element: <About /> },
       // { path: "room", element: <Rooms /> },
       { path: "detail/:id", element: <Detail /> },
+      { path: "confirm", element: <ConfirmBook /> },
       // { path: "detailHotel/:id", element: <HotelDetail /> },
       // { path: "confirm", element: <ConfirmCheckout /> },
       // { path: "search", element: <Search /> },

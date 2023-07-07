@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../css/roomDetail.css';
+import { useNavigate } from "react-router";
 const Checkout = (props) => {
 
     // thực hiện khai báo các state được sữ dụng.
     const [services, setServices] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
-    const [total, setTotal] = useState(null);
-
+    const navigate = useNavigate();
+    // const [total, setTotal] = useState(null);
     // tao schema validate cho data.
     const schema = yup.object().shape({
         CheckIn: yup
@@ -39,26 +40,32 @@ const Checkout = (props) => {
 
     // thực hiện lấy data để xữ lý.
     const handleCheckOut = (data) => {
-        console.log("data check out: ", data);
+        // Đổi đơn vị thời gian về số mili giây
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        // Tính số mili giây giữa hai ngày
+        const timeDifference = data.CheckOut.getTime() - data.CheckIn.getTime();
+        // Tính số ngày
+        const numberOfDays = Math.round(timeDifference / millisecondsPerDay);
+        data.night = numberOfDays;
+        data.price = props.price;
+
+        sessionStorage.setItem("dataBook", JSON.stringify(data));
+        navigate('/confirm');
     }
 
     // hàm thực hiện việc tính tổng tiền khi mà chọn ngày và và các dịch vụ xong.
-    const handleChangTotal = () => {
-
-    }
-
-
     // hàm này kiểm tra người dùng click chọn bao nhiêu services.
-    const handleCheckboxChange = (event) => {
-        const value = event.target.value;
-        const checked = event.target.checked;
-        if (checked) {
-            setSelectedServices([...selectedServices, value]);
-            alert(`Bạn đã chọn dịch vụ: `+ value);
-        } else {
-            setSelectedServices(selectedServices.filter((service) => service !== value));
-        }
-    };
+    // const handleCheckboxChange = (event) => {
+    //     const value = event.target.value;
+    //     const checked = event.target.checked;
+    //     if (checked) {
+    //         setSelectedServices([...selectedServices, value]);
+    //         alert(`Bạn đã chọn dịch vụ: ` + value);
+    //     } else {
+    //         setSelectedServices(selectedServices.filter((service) => service !== value));
+    //         alert('bạn đã bỏ chọn dịch vụ: ' + value);
+    //     }
+    // };
     // ----------------------------------------------------------------------------------------------
 
     // hàm này dùng để kiểm tra thay đổi của credit khi mà người dùng click vào thì chuyển sang trạng thái true và hiện ô nhập số thẻ
@@ -94,7 +101,6 @@ const Checkout = (props) => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group mb-3">
-
                                                 {/* Input của checkout -------- */}
                                                 <label>CHECK-OUT</label>
                                                 <input type="date" name="CheckOut"
@@ -115,21 +121,22 @@ const Checkout = (props) => {
                                                     services.map(
                                                         (e, i) => (
                                                             <div className="col-md-6 my-2" key={e.id}>
-                                                                <label htmlFor="service">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        name="services"
-                                                                        // value={e.id}
-                                                                        id="service"
-                                                                        onChange={handleCheckboxChange}
-                                                                    />
-                                                                    {e.name}
-                                                                </label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="services"
+                                                                    // value={e.id}
+                                                                    id="services"
+                                                                    value={e.id}
+                                                                    // onChange={handleCheckboxChange}
+                                                                    {...register('services')}
+                                                                />
+                                                                {e.name}
                                                             </div>
                                                         )
                                                     )
                                                     : ''
                                                 }
+                                                {errors.services?.message && <p className="text-danger">{errors.services.message}</p>}
                                             </div>
                                             {/* show so luong nguoi */}
 
@@ -144,20 +151,15 @@ const Checkout = (props) => {
                                                             placeholder="Enter amount people" />
                                                         {errors.amountPeople && <p className="text-danger">{errors.amountPeople.message}</p>}
                                                     </div>
-                                                    <div className="col-md-5 border-bottom rounded">
-                                                        <h6 >total: 3000$</h6>
-                                                    </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
-
                                     <div className="col-lg-12">
                                         <div className="form-group text-black">
                                             <button
-                                                type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK</button>
+                                                type="submit" className="nutdat dir dir-ltr hover-zoom">BOOK
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
