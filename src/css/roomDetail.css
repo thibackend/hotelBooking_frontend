@@ -24,6 +24,12 @@ body {
     text-decoration: none;
 }
 
+.desc{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
 
 /* thiết lập css cho bên detail */
 body {
