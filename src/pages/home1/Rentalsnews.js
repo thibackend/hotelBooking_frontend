@@ -144,9 +144,9 @@ const Rentals = (props) => {
             marginRight: "auto",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             position:"absolute",
-            top:450,
+            top:400,
           }}
           className=" bg-white mt-2 w-[30rem] border border-gray-200 rounded-lg shadow-lg"
         >
