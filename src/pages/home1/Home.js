@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import tokenService from "../../services/token.service";
 import { Navigate, Outlet } from "react-router-dom";
+import Footer from "./Footer";
 
 function Home() {
   const isAuth = tokenService.getToken() || undefined;
@@ -17,6 +18,7 @@ function Home() {
       <div className="nav-bar">
         <Outlet />
       </div>
+    
     </div>
   );
 }
