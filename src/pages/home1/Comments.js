@@ -83,16 +83,16 @@ export default function Comments({ roomId }) { //khởi tạo state và biến l
         {comments && comments.length > 0 ? (
           comments.map((item, index) => (
             <div key={index} className="comment-item">
-              <div className="comment-user d-flex justify-content-start align-items-baseline h-6">
+              <div className="comment-user d-flex justify-content-start align-items-baseline h-8">
                 <img
                   className="comment-avatar "
-                  src={item.image}
+                  src={item.image ? item.image : 'https://thuthuatnhanh.com/wp-content/uploads/2020/02/avatar-nguoi-dau-mat-thug-life-ngau-loi-390x390.jpg' }
                   alt="Avatar"
                 />
                 <h6 className="comment-username mx-1">{item.name}</h6>
                 <p className="comment-date">{formatTime(item.created_at)}</p>
               </div>
-              <div className="contents mx-0 ">{item.content}</div>
+              <div className="contents ">{item.content}</div>
             </div>
           ))
         ) : (
