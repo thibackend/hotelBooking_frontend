@@ -149,9 +149,7 @@ function Detail() {
           </div>
           <div className="col-md-4 col-sm-12">
             <div className="d-inline-sm-flex">
-              {data && (
-                <Checkout price={data.price} id={id} services={data.services} />
-              )}
+              {data && <Checkout price={data.price} id={id} status ={data.status} services={data.services} />}
             </div>
           </div>
         </div>
